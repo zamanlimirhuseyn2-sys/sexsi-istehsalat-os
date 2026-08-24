@@ -3,34 +3,144 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Anbarlar — Şəxsi İstehsalat OS</title>
 
 <style>
-*{box-sizing:border-box;font-family:Arial,sans-serif}
-body{margin:0;background:#f4f6f8;color:#1f2937}
-.container{max-width:1100px;margin:auto;padding:25px}
-.back{display:inline-block;margin-bottom:20px;text-decoration:none;color:#111827;font-weight:bold}
-h1{margin-bottom:6px}
-.subtitle{color:#6b7280;margin-bottom:25px}
-.tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
-.tab{border:0;border-radius:8px;padding:12px 18px;background:#e5e7eb;cursor:pointer;font-weight:bold}
-.tab.active{background:#111827;color:white}
-.panel{background:white;padding:22px;border-radius:14px;box-shadow:0 3px 12px rgba(0,0,0,.06);margin-bottom:20px}
-.table-wrap{overflow:auto}
-table{width:100%;border-collapse:collapse}
-th,td{text-align:left;padding:13px;border-bottom:1px solid #eee;white-space:nowrap}
-th{color:#6b7280;font-size:13px}
-.balance{font-weight:bold}
-.empty{text-align:center;color:#777;padding:25px}
-.total{font-size:18px;margin-bottom:15px}
+*{
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  margin:0;
+  background:#f4f6f8;
+  color:#1f2937;
+}
+
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:25px;
+}
+
+.back{
+  display:inline-block;
+  margin-bottom:20px;
+  text-decoration:none;
+  color:#111827;
+  font-weight:bold;
+}
+
+h1{
+  margin-bottom:6px;
+}
+
+.subtitle{
+  color:#6b7280;
+  margin-bottom:25px;
+}
+
+.tabs{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:20px;
+}
+
+.tab{
+  border:0;
+  border-radius:8px;
+  padding:12px 18px;
+  background:#e5e7eb;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.tab.active{
+  background:#111827;
+  color:white;
+}
+
+.panel{
+  background:white;
+  padding:22px;
+  border-radius:14px;
+  box-shadow:0 3px 12px rgba(0,0,0,.06);
+  margin-bottom:20px;
+}
+
+.table-wrap{
+  overflow:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+th,td{
+  text-align:left;
+  padding:13px;
+  border-bottom:1px solid #eee;
+  white-space:nowrap;
+}
+
+th{
+  color:#6b7280;
+  font-size:13px;
+}
+
+.balance{
+  font-weight:bold;
+}
+
+.positive{
+  color:#15803d;
+}
+
+.negative{
+  color:#b91c1c;
+}
+
+.empty{
+  text-align:center;
+  color:#777;
+  padding:25px;
+}
+
+.total{
+  font-size:18px;
+  margin-bottom:15px;
+}
+
+.info{
+  padding:12px;
+  background:#f9fafb;
+  border-radius:8px;
+  margin-bottom:15px;
+}
+
+@media(max-width:700px){
+  .container{
+    padding:15px;
+  }
+
+  .tab{
+    flex:1;
+  }
+}
 </style>
+
 </head>
 
 <body>
 
 <div class="container">
 
-<a class="back" href="index.html">← Əsas panelə qayıt</a>
+<a class="back" href="index.html">
+← Əsas panelə qayıt
+</a>
 
 <h1>🏬 Anbarlar</h1>
 
@@ -40,15 +150,18 @@ Məhsulların giriş, çıxış və cari qalıqlarını izləyin.
 
 <div class="tabs">
 
-<button class="tab active" onclick="showWarehouse('Yaş anbar',this)">
+<button class="tab active"
+onclick="showWarehouse('Yaş anbar',this)">
 🥬 Yaş anbar
 </button>
 
-<button class="tab" onclick="showWarehouse('Quru anbar',this)">
+<button class="tab"
+onclick="showWarehouse('Quru anbar',this)">
 🌾 Quru anbar
 </button>
 
-<button class="tab" onclick="showWarehouse('Ədviyyat anbarı',this)">
+<button class="tab"
+onclick="showWarehouse('Ədviyyat anbarı',this)">
 🌶️ Ədviyyat anbarı
 </button>
 
@@ -61,11 +174,17 @@ Cari anbar:
 <strong id="warehouseName">Yaş anbar</strong>
 </div>
 
+<div class="info">
+📥 Girişlərdən gələn məhsullar və 📤 çıxışlardan verilən məhsullar
+avtomatik hesablanır.
+</div>
+
 <div class="table-wrap">
 
 <table>
 
 <thead>
+
 <tr>
 <th>Məhsul</th>
 <th>Giriş</th>
@@ -73,6 +192,7 @@ Cari anbar:
 <th>Qalıq</th>
 <th>Ölçü</th>
 </tr>
+
 </thead>
 
 <tbody id="warehouseTable"></tbody>
@@ -89,81 +209,75 @@ Cari anbar:
 
 let currentWarehouse="Yaş anbar";
 
+
 function getData(name){
-return JSON.parse(localStorage.getItem(name)||"[]");
+
+return JSON.parse(
+localStorage.getItem(name) || "[]"
+);
+
 }
+
 
 function showWarehouse(name,button){
 
 currentWarehouse=name;
 
 document.querySelectorAll(".tab")
-.forEach(x=>x.classList.remove("active"));
+.forEach(function(tab){
+  tab.classList.remove("active");
+});
 
 button.classList.add("active");
 
-document.getElementById("warehouseName").innerText=name;
+document.getElementById("warehouseName")
+.innerText=name;
 
 renderWarehouse();
 
 }
 
+
 function renderWarehouse(){
 
-const products=getData("products");
 const inputs=getData("stock_in");
+
 const outputs=getData("stock_out");
 
 const table=document.getElementById("warehouseTable");
 
 table.innerHTML="";
 
-let rows=[];
 
-products.forEach(product=>{
+/* Bu anbardakı bütün məhsul adlarını tapırıq */
 
-let inputItems=inputs.filter(x=>
-x.warehouse===currentWarehouse &&
-x.product===product.name
-);
+const allItems=[
+  ...inputs.filter(x=>x.warehouse===currentWarehouse),
+  ...outputs.filter(x=>x.warehouse===currentWarehouse)
+];
 
-let outputItems=outputs.filter(x=>
-x.warehouse===currentWarehouse &&
-x.product===product.name
-);
 
-let totalIn=inputItems.reduce(
-(sum,x)=>sum+Number(x.quantity||0),0
-);
+const productNames=[
+  ...new Set(
+    allItems
+    .map(x=>String(x.product || "").trim())
+    .filter(Boolean)
+  )
+];
 
-let totalOut=outputItems.reduce(
-(sum,x)=>sum+Number(x.quantity||0),0
-);
 
-let balance=totalIn-totalOut;
-
-if(totalIn!==0 || totalOut!==0 || Number(product.stock)>0){
-
-rows.push({
-name:product.name,
-input:totalIn,
-output:totalOut,
-balance:balance,
-unit:inputItems[0]?.unit || outputItems[0]?.unit || "kq"
-});
-
-}
-
-});
-
-if(rows.length===0){
+if(productNames.length===0){
 
 table.innerHTML=`
 
 <tr>
+
 <td colspan="5" class="empty">
-Bu anbarda hələ hərəkət yoxdur.
+
+Bu anbarda hələ heç bir məhsul əməliyyatı yoxdur.
+
 </td>
+
 </tr>
 
 `;
@@ -172,25 +286,92 @@ return;
 
 }
 
-rows.forEach(x=>{
 
-let balanceClass=x.balance<0?"style='color:#b91c1c'":"";
+/* Hər məhsulu ayrıca hesablayırıq */
+
+productNames.forEach(function(productName){
+
+const inputItems=inputs.filter(function(item){
+
+return item.warehouse===currentWarehouse &&
+       String(item.product || "").trim()===productName;
+
+});
+
+
+const outputItems=outputs.filter(function(item){
+
+return item.warehouse===currentWarehouse &&
+       String(item.product || "").trim()===productName;
+
+});
+
+
+const totalIn=inputItems.reduce(function(sum,item){
+
+return sum + Number(item.quantity || 0);
+
+},0);
+
+
+const totalOut=outputItems.reduce(function(sum,item){
+
+return sum + Number(item.quantity || 0);
+
+},0);
+
+
+const balance=totalIn-totalOut;
+
+
+/* Ölçü vahidini tapırıq */
+
+let unit="kq";
+
+if(inputItems.length>0){
+
+unit=inputItems[0].unit || "kq";
+
+}
+else if(outputItems.length>0){
+
+unit=outputItems[0].unit || "kq";
+
+}
+
+
+let balanceClass="positive";
+
+if(balance<0){
+
+balanceClass="negative";
+
+}
+
 
 table.innerHTML+=`
 
 <tr>
 
-<td><strong>${x.name}</strong></td>
-
-<td>${x.input} ${x.unit}</td>
-
-<td>${x.output} ${x.unit}</td>
-
-<td class="balance" ${balanceClass}>
-${x.balance} ${x.unit}
+<td>
+<strong>${escapeHTML(productName)}</strong>
 </td>
 
-<td>${x.unit}</td>
+<td>
+${totalIn} ${escapeHTML(unit)}
+</td>
+
+<td>
+${totalOut} ${escapeHTML(unit)}
+</td>
+
+<td class="balance ${balanceClass}">
+${balance} ${escapeHTML(unit)}
+</td>
+
+<td>
+${escapeHTML(unit)}
+</td>
 
 </tr>
 
@@ -200,9 +381,23 @@ ${x.balance} ${x.unit}
 
 }
 
+
+function escapeHTML(value){
+
+return String(value)
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
+}
+
+
 renderWarehouse();
 
 </script>
 
 </body>
 </html>
+
