@@ -1,1 +1,208 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anbarlar — Şəxsi İstehsalat OS</title>
 
+<style>
+*{box-sizing:border-box;font-family:Arial,sans-serif}
+body{margin:0;background:#f4f6f8;color:#1f2937}
+.container{max-width:1100px;margin:auto;padding:25px}
+.back{display:inline-block;margin-bottom:20px;text-decoration:none;color:#111827;font-weight:bold}
+h1{margin-bottom:6px}
+.subtitle{color:#6b7280;margin-bottom:25px}
+.tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.tab{border:0;border-radius:8px;padding:12px 18px;background:#e5e7eb;cursor:pointer;font-weight:bold}
+.tab.active{background:#111827;color:white}
+.panel{background:white;padding:22px;border-radius:14px;box-shadow:0 3px 12px rgba(0,0,0,.06);margin-bottom:20px}
+.table-wrap{overflow:auto}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:13px;border-bottom:1px solid #eee;white-space:nowrap}
+th{color:#6b7280;font-size:13px}
+.balance{font-weight:bold}
+.empty{text-align:center;color:#777;padding:25px}
+.total{font-size:18px;margin-bottom:15px}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<a class="back" href="index.html">← Əsas panelə qayıt</a>
+
+<h1>🏬 Anbarlar</h1>
+
+<p class="subtitle">
+Məhsulların giriş, çıxış və cari qalıqlarını izləyin.
+</p>
+
+<div class="tabs">
+
+<button class="tab active" onclick="showWarehouse('Yaş anbar',this)">
+🥬 Yaş anbar
+</button>
+
+<button class="tab" onclick="showWarehouse('Quru anbar',this)">
+🌾 Quru anbar
+</button>
+
+<button class="tab" onclick="showWarehouse('Ədviyyat anbarı',this)">
+🌶️ Ədviyyat anbarı
+</button>
+
+</div>
+
+<div class="panel">
+
+<div class="total">
+Cari anbar:
+<strong id="warehouseName">Yaş anbar</strong>
+</div>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+<tr>
+<th>Məhsul</th>
+<th>Giriş</th>
+<th>Çıxış</th>
+<th>Qalıq</th>
+<th>Ölçü</th>
+</tr>
+</thead>
+
+<tbody id="warehouseTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+let currentWarehouse="Yaş anbar";
+
+function getData(name){
+return JSON.parse(localStorage.getItem(name)||"[]");
+}
+
+function showWarehouse(name,button){
+
+currentWarehouse=name;
+
+document.querySelectorAll(".tab")
+.forEach(x=>x.classList.remove("active"));
+
+button.classList.add("active");
+
+document.getElementById("warehouseName").innerText=name;
+
+renderWarehouse();
+
+}
+
+function renderWarehouse(){
+
+const products=getData("products");
+const inputs=getData("stock_in");
+const outputs=getData("stock_out");
+
+const table=document.getElementById("warehouseTable");
+
+table.innerHTML="";
+
+let rows=[];
+
+products.forEach(product=>{
+
+let inputItems=inputs.filter(x=>
+x.warehouse===currentWarehouse &&
+x.product===product.name
+);
+
+let outputItems=outputs.filter(x=>
+x.warehouse===currentWarehouse &&
+x.product===product.name
+);
+
+let totalIn=inputItems.reduce(
+(sum,x)=>sum+Number(x.quantity||0),0
+);
+
+let totalOut=outputItems.reduce(
+(sum,x)=>sum+Number(x.quantity||0),0
+);
+
+let balance=totalIn-totalOut;
+
+if(totalIn!==0 || totalOut!==0 || Number(product.stock)>0){
+
+rows.push({
+name:product.name,
+input:totalIn,
+output:totalOut,
+balance:balance,
+unit:inputItems[0]?.unit || outputItems[0]?.unit || "kq"
+});
+
+}
+
+});
+
+if(rows.length===0){
+
+table.innerHTML=`
+
+<tr>
+<td colspan="5" class="empty">
+Bu anbarda hələ hərəkət yoxdur.
+</td>
+</tr>
+
+`;
+
+return;
+
+}
+
+rows.forEach(x=>{
+
+let balanceClass=x.balance<0?"style='color:#b91c1c'":"";
+
+table.innerHTML+=`
+
+<tr>
+
+<td><strong>${x.name}</strong></td>
+
+<td>${x.input} ${x.unit}</td>
+
+<td>${x.output} ${x.unit}</td>
+
+<td class="balance" ${balanceClass}>
+${x.balance} ${x.unit}
+</td>
+
+<td>${x.unit}</td>
+
+</tr>
+
+`;
+
+});
+
+}
+
+renderWarehouse();
+
+</script>
+
+</body>
+</html>
