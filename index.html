@@ -4,9 +4,189 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Şəxsi İstehsalat OS</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f4f6f8;
+      color: #1f2937;
+    }
+
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 240px;
+      height: 100vh;
+      background: #111827;
+      color: white;
+      padding: 25px 15px;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 35px;
+      padding-left: 10px;
+    }
+
+    .menu a {
+      display: block;
+      color: #d1d5db;
+      text-decoration: none;
+      padding: 13px 15px;
+      margin-bottom: 5px;
+      border-radius: 8px;
+    }
+
+    .menu a:hover {
+      background: #1f2937;
+      color: white;
+    }
+
+    .main {
+      margin-left: 240px;
+      padding: 30px;
+    }
+
+    .header {
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .header p {
+      color: #6b7280;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 22px;
+      border-radius: 14px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+    }
+
+    .card span {
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    .card h2 {
+      margin-top: 10px;
+      font-size: 28px;
+    }
+
+    .welcome {
+      margin-top: 30px;
+      background: white;
+      padding: 30px;
+      border-radius: 14px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+    }
+
+    @media (max-width: 900px) {
+      .sidebar {
+        width: 190px;
+      }
+
+      .main {
+        margin-left: 190px;
+      }
+
+      .cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+      }
+
+      .main {
+        margin-left: 0;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
+
 <body>
-  <h1>Şəxsi İstehsalat OS</h1>
-  <p>Sayt uğurla işləyir.</p>
+
+  <aside class="sidebar">
+    <div class="logo">🏭 Şəxsi İstehsalat OS</div>
+
+    <nav class="menu">
+      <a href="#">🏠 Dashboard</a>
+      <a href="#">📦 Məhsullar</a>
+      <a href="#">🛒 Sifarişlər</a>
+      <a href="#">👥 Müştərilər</a>
+      <a href="#">💰 Satışlar</a>
+      <a href="#">📊 Statistika</a>
+      <a href="#">⚙️ Parametrlər</a>
+    </nav>
+  </aside>
+
+  <main class="main">
+
+    <div class="header">
+      <h1>Dashboard</h1>
+      <p>Şəxsi İstehsalat OS idarəetmə panelinə xoş gəlmisiniz.</p>
+    </div>
+
+    <section class="cards">
+
+      <div class="card">
+        <span>Ümumi məhsullar</span>
+        <h2>0</h2>
+      </div>
+
+      <div class="card">
+        <span>Sifarişlər</span>
+        <h2>0</h2>
+      </div>
+
+      <div class="card">
+        <span>Müştərilər</span>
+        <h2>0</h2>
+      </div>
+
+      <div class="card">
+        <span>Ümumi satış</span>
+        <h2>₼0</h2>
+      </div>
+
+    </section>
+
+    <section class="welcome">
+      <h2>🚀 Sistem hazırdır!</h2>
+      <p style="margin-top:10px;">
+        Buradan məhsullarınızı, sifarişlərinizi, müştərilərinizi
+        və satışlarınızı idarə edə bilərsiniz.
+      </p>
+    </section>
+
+  </main>
+
 </body>
 </html>
