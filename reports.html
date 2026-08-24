@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Hesabatlar</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+margin:0;
+background:#f4f6f8;
+color:#1f2937;
+}
+
+.container{
+max-width:1100px;
+margin:auto;
+padding:25px;
+}
+
+.back{
+display:inline-block;
+margin-bottom:20px;
+text-decoration:none;
+color:#111827;
+font-weight:bold;
+}
+
+h1{
+margin-bottom:5px;
+}
+
+.subtitle{
+color:#6b7280;
+margin-bottom:25px;
+}
+
+.panel{
+background:white;
+padding:22px;
+border-radius:14px;
+box-shadow:0 3px 12px rgba(0,0,0,.06);
+margin-bottom:20px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:15px;
+}
+
+label{
+display:block;
+font-weight:bold;
+margin-bottom:6px;
+}
+
+input{
+width:100%;
+padding:12px;
+border:1px solid #ddd;
+border-radius:8px;
+}
+
+button{
+margin-top:15px;
+background:#111827;
+color:white;
+border:0;
+border-radius:8px;
+padding:12px 20px;
+cursor:pointer;
+font-weight:bold;
+}
+
+.table-wrap{
+overflow:auto;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th,td{
+padding:13px;
+text-align:left;
+border-bottom:1px solid #eee;
+white-space:nowrap;
+}
+
+th{
+color:#6b7280;
+font-size:13px;
+}
+
+.empty{
+text-align:center;
+color:#777;
+padding:25px;
+}
+
+.summary{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+margin-bottom:20px;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:14px;
+box-shadow:0 3px 12px rgba(0,0,0,.06);
+}
+
+.card span{
+color:#6b7280;
+font-size:13px;
+}
+
+.card h2{
+margin-top:8px;
+}
+
+@media(max-width:700px){
+
+.grid,
+.summary{
+grid-template-columns:1fr;
+}
+
+.container{
+padding:15px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<a class="back" href="index.html">
+← Əsas panelə qayıt
+</a>
+
+<h1>📊 Hesabatlar</h1>
+
+<p class="subtitle">
+İstənilən tarix üzrə giriş və çıxış məlumatlarını araşdırın.
+</p>
+
+<div class="panel">
+
+<div class="grid">
+
+<div>
+
+<label>Başlanğıc tarix</label>
+
+<input id="from" type="date">
+
+</div>
+
+<div>
+
+<label>Son tarix</label>
+
+<input id="to" type="date">
+
+</div>
+
+</div>
+
+<button onclick="generateReport()">
+📊 Hesabatı göstər
+</button>
+
+</div>
+
+
+<div id="summary"></div>
+
+
+<div class="panel">
+
+<h2>📤 Çıxışlar — Kimə nə verilib?</h2>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Tarix</th>
+<th>Anbar</th>
+<th>Məhsul</th>
+<th>Miqdar</th>
+<th>Kimə verilib?</th>
+<th>Qeyd</th>
+
+</tr>
+
+</thead>
+
+<tbody id="outTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<div class="panel">
+
+<h2>📥 Girişlər</h2>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Tarix</th>
+<th>Anbar</th>
+<th>Məhsul</th>
+<th>Miqdar</th>
+<th>Kimdən</th>
+<th>Qeyd</th>
+
+</tr>
+
+</thead>
+
+<tbody id="inTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+function getData(name){
+
+return JSON.parse(
+localStorage.getItem(name) || "[]"
+);
+
+}
+
+
+function generateReport(){
+
+const from=document.getElementById("from").value;
+
+const to=document.getElementById("to").value;
+
+
+if(!from || !to){
+
+alert("Başlanğıc və son tarixi seçin.");
+
+return;
+
+}
+
+
+const inputs=getData("stock_in");
+
+const outputs=getData("stock_out");
+
+
+const filteredIn=inputs.filter(item=>
+item.date>=from && item.date<=to
+);
+
+
+const filteredOut=outputs.filter(item=>
+item.date>=from && item.date<=to
+);
+
+
+renderInputs(filteredIn);
+
+renderOutputs(filteredOut);
+
+
+const totalIn=filteredIn.reduce(
+(sum,item)=>sum+Number(item.quantity||0),0
+);
+
+
+const totalOut=filteredOut.reduce(
+(sum,item)=>sum+Number(item.quantity||0),0
+);
+
+
+document.getElementById("summary").innerHTML=`
+
+<div class="summary">
+
+<div class="card">
+
+<span>📥 Giriş əməliyyatları</span>
+
+<h2>${filteredIn.length}</h2>
+
+</div>
+
+
+<div class="card">
+
+<span>📤 Çıxış əməliyyatları</span>
+
+<h2>${filteredOut.length}</h2>
+
+</div>
+
+
+<div class="card">
+
+<span>📦 Ümumi hərəkət</span>
+
+<h2>${totalIn+totalOut}</h2>
+
+</div>
+
+</div>
+
+`;
+
+}
+
+
+function renderOutputs(data){
+
+const table=document.getElementById("outTable");
+
+table.innerHTML="";
+
+
+if(data.length===0){
+
+table.innerHTML=`
+
+<tr>
+
+<td colspan="6" class="empty">
+
+Bu tarix aralığında çıxış yoxdur.
+
+</td>
+
+</tr>
+
+`;
+
+return;
+
+}
+
+
+data.slice().reverse().forEach(item=>{
+
+table.innerHTML+=`
+
+<tr>
+
+<td>${item.date}</td>
+
+<td>${item.warehouse}</td>
+
+<td>${item.product}</td>
+
+<td>${item.quantity} ${item.unit}</td>
+
+<td><b>${item.person || "-"}</b></td>
+
+<td>${item.note || "-"}</td>
+
+</tr>
+
+`;
+
+});
+
+}
+
+
+function renderInputs(data){
+
+const table=document.getElementById("inTable");
+
+table.innerHTML="";
+
+
+if(data.length===0){
+
+table.innerHTML=`
+
+<tr>
+
+<td colspan="6" class="empty">
+
+Bu tarix aralığında giriş yoxdur.
+
+</td>
+
+</tr>
+
+`;
+
+return;
+
+}
+
+
+data.slice().reverse().forEach(item=>{
+
+table.innerHTML+=`
+
+<tr>
+
+<td>${item.date}</td>
+
+<td>${item.warehouse}</td>
+
+<td>${item.product}</td>
+
+<td>${item.quantity} ${item.unit}</td>
+
+<td><b>${item.person || "-"}</b></td>
+
+<td>${item.note || "-"}</td>
+
+</tr>
+
+`;
+
+});
+
+}
+
+</script>
+
+</body>
+
+</html>
