@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111827">
+<title>Şəxsi İstehsalat OS 4.0</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0f172a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="İstehsalat OS">
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f3f5f7;color:#17202a}
+header{background:#111827;color:#fff;padding:20px 16px 18px;border-radius:0 0 24px 24px;position:sticky;top:0;z-index:5}
+header h1{margin:0;font-size:23px}header p{margin:5px 0 0;color:#cbd5e1;font-size:13px}
+main{max-width:760px;margin:auto;padding:14px 14px 86px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.card{background:#fff;border-radius:17px;padding:15px;box-shadow:0 3px 14px #0000000b}.card h2{margin:0 0 8px;font-size:17px}
+.value{font-size:22px;font-weight:800}.small{font-size:12px;color:#68707a}.section{margin-top:14px}.hidden{display:none}
+.menu{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:14px}.menu button,.quick button{background:#fff;border:1px solid #e3e7eb;text-align:left;border-radius:14px;padding:13px;font-weight:700;font-size:14px}
+button{border:0;border-radius:12px;padding:12px 14px;font-weight:700;font-size:14px;cursor:pointer}.primary{background:#111827;color:#fff}.danger{color:#b42318}.ok{color:#087443}
+input,select{width:100%;padding:12px;border:1px solid #d7dce2;border-radius:11px;margin:5px 0 9px;font-size:15px;background:#fff}
+.row{display:flex;gap:8px;flex-wrap:wrap}.row>*{flex:1}.wide{width:100%;margin-top:8px}
+table{width:100%;border-collapse:collapse;font-size:12px}th,td{padding:9px 4px;border-bottom:1px solid #eee;text-align:left}
+.scroll{overflow:auto}.quick{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.badge{display:inline-block;background:#eef2ff;border-radius:20px;padding:5px 8px;font-size:11px}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e5e7eb;display:flex;justify-content:space-around;padding:9px 5px;z-index:10}.bottom button{background:none;padding:5px;font-size:11px}
+#toast{position:fixed;left:50%;bottom:70px;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 14px;border-radius:12px;display:none;z-index:20;font-size:13px}
+</style>
+
+<style>
+:root{--bg:#f4f6f8;--surface:#fff;--ink:#101828;--muted:#667085;--line:#e4e7ec;--accent:#111827;--good:#087443;--bad:#b42318}
+body{background:var(--bg);-webkit-tap-highlight-color:transparent}
+header{padding:18px 16px 16px;background:linear-gradient(135deg,#0b1220,#1f2937);box-shadow:0 4px 18px #0002}
+main{padding-bottom:96px}
+.card{box-shadow:0 5px 20px #1018280d;border:1px solid #eef0f3}
+.menu button,.quick button{transition:.15s;min-height:52px}
+button:active{transform:scale(.98)}
+input,select{min-height:46px}
+.bottom{padding-bottom:max(9px,env(safe-area-inset-bottom));backdrop-filter:blur(12px);background:#fffffff2}
+.bottom button{color:#667085}
+.bottom button.active{color:#111827;font-weight:900}
+.kpi{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.searchbox{position:sticky;top:76px;z-index:4;margin:10px 0}
+.searchbox input{box-shadow:0 3px 12px #0000000a}
+.table-actions button{padding:7px 9px;font-size:11px}
+.install-banner{display:none;background:#111827;color:white;padding:12px;border-radius:14px;margin:12px 0}
+.install-banner button{background:white;color:#111827;margin-left:8px}
+@media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}.quick{grid-template-columns:repeat(4,1fr)}.menu{grid-template-columns:repeat(4,1fr)}}
+</style>
+</head>
+<body>
+<header><h1>ŞƏXSİ İSTEHSALAT OS</h1><p>Şəxsi biznes idarəetmə sistemi • 4.2</p></header>
+<main>
+<div id="installBanner" class="install-banner">
+  📱 Telefonuna tətbiq kimi quraşdır
+  <button onclick="installApp()">Quraşdır</button>
+</div>
+<div class="card searchbox">
+  <input id="globalSearch" placeholder="🔎 Müştəri, məhsul və əməliyyat axtar..." oninput="globalSearchFn(this.value)">
+</div>
+<section id="home" class="section">
+<div class="grid">
+<div class="card"><h2>💰 Kassa</h2><div class="value" id="cashTotal">0.00 ₼</div><div class="small">Cari qalıq</div></div>
+<div class="card"><h2>👥 Borclar</h2><div class="value" id="debtTotal">0.00 ₼</div><div class="small">Müştərilərdən alınacaq</div></div>
+<div class="card"><h2>📦 Anbar</h2><div class="value" id="stockTotal">0.00 kq</div><div class="small">3 ayrı anbar</div></div>
+<div class="card"><h2>🛒 Satış</h2><div class="value" id="salesTotal">0.00 ₼</div><div class="small">Toplam satış</div></div>
+</div>
+<div class="quick">
+<button onclick="show('sale')">🛒 Yeni satış</button><button onclick="show('wetFlow')">🥩 Yaş anbar giriş/çıxış</button>
+<button onclick="show('production')">🏭 İstehsalat</button><button onclick="show('cash')">💰 Kassa əməliyyatı</button>
+</div>
+<div class="card section"><h2>📊 Bu gün</h2><p id="todayText" class="small"></p></div>
+<div class="card section"><h2>⚡ Sürətli vəziyyət</h2>
+  <div class="grid" style="grid-template-columns:1fr 1fr">
+    <div><div class="small">Açıq borc</div><b id="dashDebt">0.00 ₼</b></div>
+    <div><div class="small">Bu gün kassa</div><b id="dashCash">0.00 ₼</b></div>
+    <div><div class="small">İstehsalat</div><b id="dashProd">0</b></div>
+    <div><div class="small">Anbar vahidi</div><b id="dashStock">0</b></div>
+  </div>
+</div>
+</section>
+
+<section id="wetFlow" class="section card hidden"><h2>🥩 Yaş anbar — Giriş / Çıxış</h2>
+<p class="small">İdxalçıdan gələn mal Yaş anbara daxil edilir. İstehsalata verilən gündəlik xammal isə Yaş anbardan çıxılır.</p>
+<select id="wetFlowProduct">
+<option>Farş</option><option>Dəri</option><option>Trimiks</option><option>Sala</option><option>File</option>
+</select>
+<select id="wetFlowType"><option value="in">📥 İdxalçıdan giriş</option><option value="out">📤 İstehsalata çıxış</option></select>
+<input id="wetFlowQty" type="number" step="0.01" placeholder="Miqdar (kq)">
+<input id="wetFlowSupplier" placeholder="İdxalçı / təchizatçı">
+<input id="wetFlowPrice" type="number" step="0.01" placeholder="1 kq qiyməti (₼)">
+<input id="wetFlowNote" placeholder="Qeyd / istehsalat nömrəsi">
+<button class="primary wide" onclick="addWetFlow()">Əməliyyatı qeyd et</button>
+<div class="card" style="margin-top:12px"><h2>📊 Yaş anbar qalıqları</h2>
+<div class="scroll"><table><thead><tr><th>Məhsul</th><th>Qalıq</th><th>Maya</th></tr></thead><tbody id="wetFlowStockBody"></tbody></table></div></div>
+<div class="card" style="margin-top:12px"><h2>📜 Giriş / çıxış tarixçəsi</h2>
+<div class="scroll"><table><thead><tr><th>Tarix</th><th>Məhsul</th><th>Növ</th><th>Miqdar</th><th>İdxalçı/Qeyd</th></tr></thead><tbody id="wetFlowHistoryBody"></tbody></table></div></div>
+</section>
+
+<section id="stock" class="section card hidden"><h2>📦 3 Anbar</h2>
+<div class="grid">
+<div class="card"><h2>🥩 Yaş Anbar</h2><div class="small">Farş • Dəri • Trimiks • Sala • File<br>Ölçü: kq</div></div>
+<div class="card"><h2>🌶️ Ədviyyat Anbarı</h2><div class="small">Ədviyyatlar<br>Ölçü: kq</div></div>
+<div class="card"><h2>🌾 Quru Anbar</h2><div class="small">Kolbasa və Sosiska üzlükləri<br>Ölçü: metr</div></div>
+</div>
+<label class="small">Anbar növü</label><select id="stockWarehouse" onchange="updateStockUnit()">
+<option value="dry">🌾 Quru Anbar — Kolbasa və Sosiska üzlükləri</option>
+<option value="wet">🥩 Yaş Anbar — Farş, Dəri, Trimiks, Sala, File</option>
+<option value="spice">🌶️ Ədviyyat Anbarı — Ədviyyatlar</option>
+</select>
+<input id="stockName" placeholder="Məhsul / xammal">
+<input id="stockQty" type="number" step="0.01" placeholder="Miqdar (kq)" oninput="updateStockUnit()">
+<div id="stockUnitHint" class="small">Vahid: kq</div>
+<input id="stockPrice" type="number" step="0.01" placeholder="1 vahid alış qiyməti (₼)">
+<div class="row"><button class="primary" onclick="addStock()">+ Giriş</button><button onclick="clearFields('stock')">Təmizlə</button></div>
+<div class="quick">
+<button onclick="renderWarehouse('dry')">🌾 Quru Anbar</button>
+<button onclick="renderWarehouse('wet')">🥩 Yaş Anbar</button>
+<button onclick="renderWarehouse('spice')">🌶️ Ədviyyat Anbarı</button>
+</div>
+<div id="warehouseSummary" class="grid section">
+<div class="card"><div class="small">🌾 Quru Anbar</div><b id="dryTotal">0.00 metr</b></div>
+<div class="card"><div class="small">🥩 Yaş Anbar</div><b id="wetTotal">0.00 kq</b></div>
+<div class="card"><div class="small">🌶️ Ədviyyat Anbarı</div><b id="spiceTotal">0.00 kq</b></div>
+</div>
+<div id="warehouseTables"></div>
+</section>
+
+<section id="sale" class="section card hidden"><h2>🛒 Satış</h2><p class="small">Satış anbardan müstəqildir. Satış əməliyyatı yalnız satış tarixçəsinə, müştəri borcuna və kassaya təsir edir.</p>
+<input id="saleCustomer" placeholder="Müştəri adı">
+<input id="saleProduct" placeholder="Məhsul">
+<input id="saleQty" type="number" step="0.01" placeholder="Miqdar (kq)">
+<input id="salePrice" type="number" step="0.01" placeholder="1 kq satış qiyməti (₼)">
+<select id="salePayment"><option value="paid">Tam ödəniş</option><option value="debt">Borc</option><option value="partial">Qismən ödəniş</option></select>
+<input id="salePaid" type="number" step="0.01" placeholder="Ödənilən məbləğ (₼)">
+<button class="primary wide" onclick="addSale()">Satışı qeyd et</button>
+<div class="scroll"><table><thead><tr><th>Müştəri</th><th>Məhsul</th><th>kq</th><th>Məbləğ</th></tr></thead><tbody id="saleBody"></tbody></table></div>
+</section>
+
+<section id="production" class="section card hidden"><h2>🏭 İstehsalat</h2>
+<input id="prodName" placeholder="Hazır məhsul (məs: Kolbasa)">
+<input id="prodQty" type="number" step="0.01" placeholder="Hazır məhsul miqdarı (kq)">
+<input id="prodRaw" placeholder="İstifadə olunan xammal: Dana əti:50,Duz:2">
+<button class="primary wide" onclick="addProduction()">İstehsalatı qeyd et</button>
+<p class="small">Format: Məhsul:miqdar,Məhsul:miqdar. Sistem xammalı Ədviyyat/Yaş/Quru anbarlarından tapıb çıxarır. Hazır məhsul ayrıca istehsalat tarixçəsində saxlanılır.</p>
+</section>
+
+<section id="customers" class="section card hidden"><h2>👥 Müştərilər</h2>
+<div class="scroll"><table><thead><tr><th>Müştəri</th><th>Borc</th></tr></thead><tbody id="customerBody"></tbody></table></div>
+<div class="card section"><h2>💳 Borc ödənişi</h2>
+<input id="debtCustomer" placeholder="Müştəri adı">
+<input id="debtAmount" type="number" step="0.01" placeholder="Ödəniş məbləği (₼)">
+<button class="primary wide" onclick="payDebt()">Ödənişi qeyd et</button>
+</div>
+</section>
+
+<section id="cash" class="section card hidden"><h2>💰 Kassa</h2>
+<input id="cashDesc" placeholder="Əməliyyat">
+<input id="cashAmount" type="number" step="0.01" placeholder="Məbləğ (₼)">
+<select id="cashType"><option value="in">Gəlir</option><option value="out">Xərc</option></select>
+<button class="primary wide" onclick="addCash()">Əməliyyatı qeyd et</button>
+<div class="scroll"><table><thead><tr><th>Əməliyyat</th><th>Növ</th><th>Məbləğ</th></tr></thead><tbody id="cashBody"></tbody></table></div>
+</section>
+
+<section id="reports" class="section card hidden"><h2>📊 Hesabat</h2><div id="reportText"></div></section>
+<section id="settings" class="section card hidden"><h2>⚙️ Parametrlər</h2>
+<p class="small">Məlumatlar bu cihazda saxlanılır.</p>
+<button onclick="backup()">💾 Backup yüklə</button>
+<button onclick="document.getElementById('restore').click()">↩️ Backup bərpa et</button>
+<input id="restore" type="file" accept=".json" style="display:none" onchange="restore(this)">
+<button class="danger wide" onclick="resetDB()">⚠️ Bütün məlumatları sil</button>
+</section>
+</main>
+
+<section id="moreMenu" class="section card hidden">
+<h2>☰ Bütün bölmələr</h2>
+<div class="menu">
+<button onclick="show('home')">🏠 Ana səhifə</button>
+<button onclick="show('wetFlow')">🥩 Yaş anbar</button>
+<button onclick="show('stock')">📦 Anbarlar</button>
+<button onclick="show('sale')">🛒 Satış</button>
+<button onclick="show('production')">🏭 İstehsalat</button>
+<button onclick="show('customers')">👥 Müştərilər</button>
+<button onclick="show('cash')">💰 Kassa</button>
+<button onclick="show('reports')">📊 Hesabat</button>
+<button onclick="show('settings')">⚙️ Parametrlər</button>
+</div>
+</section>
+
+<nav class="bottom">
+<button onclick="show('home')">🏠<br>Ana</button><button onclick="show('wetFlow')">🥩<br>Yaş anbar</button><button onclick="show('sale')">🛒<br>Satış</button><button onclick="show('customers')">👥<br>Müştəri</button><button onclick="show('reports')">📊<br>Hesabat</button><button onclick="show('moreMenu')">☰<br>Daha çox</button>
+</nav>
+<div id="toast"></div>
+
+<script>
+const KEY='sexsi_istehsalat_os_v2';
+let db=JSON.parse(localStorage.getItem(KEY)||'{"warehouses":{"spice":{},"wet":{},"dry":{}},"customers":{},"sales":[],"cash":0,"cashOps":[],"production":[]}');
+if(!db.warehouses){
+  db.warehouses={spice:{},wet:{},dry:{}};
+  const legacy=db.stock||{};
+  Object.entries(legacy).forEach(([n,x])=>db.warehouses.wet[n]=x);
+  delete db.stock;
+}
+if(!db.warehouses.spice)db.warehouses.spice={};
+if(!db.warehouses.wet)db.warehouses.wet={};
+if(!db.warehouses.dry)db.warehouses.dry={};
+if(!db.wetFlows)db.wetFlows=[];
+
+function save(){localStorage.setItem(KEY,JSON.stringify(db));render();toast('Yadda saxlanıldı');}
+function money(n){return Number(n||0).toFixed(2)+' ₼'}
+function toast(t){let e=document.getElementById('toast');e.textContent=t;e.style.display='block';setTimeout(()=>e.style.display='none',1600)}
+function show(id){document.querySelectorAll('main section').forEach(x=>x.classList.add('hidden'));document.getElementById(id).classList.remove('hidden');if(id==='reports')renderReport();}
+
+function addWetFlow(){
+ let p=wetFlowProduct.value,t=wetFlowType.value,q=Number(wetFlowQty.value),sup=wetFlowSupplier.value.trim(),price=Number(wetFlowPrice.value)||0,note=wetFlowNote.value.trim();
+ if(!p||q<=0)return alert('Məhsul və miqdar daxil et.');
+ let s=db.warehouses.wet[p]||{qty:0,cost:0};
+ if(t==='out'&&s.qty<q)return alert('Yaş anbarda kifayət qədər '+p+' yoxdur.');
+ if(t==='in'){
+   let total=s.qty*s.cost+q*price;s.qty+=q;s.cost=s.qty?total/s.qty:0;
+ }else{
+   s.qty-=q;
+ }
+ db.warehouses.wet[p]=s;
+ db.wetFlows.push({date:new Date().toISOString(),product:p,type:t,qty:q,supplier:sup,price,note});
+ save();
+ wetFlowQty.value=wetFlowSupplier.value=wetFlowPrice.value=wetFlowNote.value='';
+ renderWetFlow();
+}
+function renderWetFlow(){
+ const rows=['Farş','Dəri','Trimiks','Sala','File'].map(p=>{
+   const s=db.warehouses.wet[p]||{qty:0,cost:0};
+   return `<tr><td>${p}</td><td>${s.qty.toFixed(2)} kq</td><td>${money(s.cost)}</td></tr>`;
+ }).join('');
+ wetFlowStockBody.innerHTML=rows;
+ wetFlowHistoryBody.innerHTML=db.wetFlows.slice(-50).reverse().map(x=>`<tr><td>${new Date(x.date).toLocaleDateString('az-AZ')}</td><td>${esc(x.product)}</td><td>${x.type==='in'?'Giriş':'İstehsalata çıxış'}</td><td>${x.qty.toFixed(2)} kq</td><td>${esc(x.supplier||x.note||'-')}</td></tr>`).join('');
+}
+
+function updateStockUnit(){
+ const wh=document.getElementById('stockWarehouse').value; document.getElementById('stockUnitHint').textContent=wh==='dry'?'Vahid: metr':'Vahid: kq';
+}
+function addStock(){
+ let wh=document.getElementById('stockWarehouse').value,n=stockName.value.trim(),q=Number(stockQty.value),p=Number(stockPrice.value)||0;
+ if(!n||q<=0)return alert('Anbar, məhsul və miqdar daxil et.');
+ let s=db.warehouses[wh][n]||{qty:0,cost:0},total=s.qty*s.cost+q*p;
+ s.qty+=q;s.cost=s.qty?total/s.qty:0;db.warehouses[wh][n]=s;save();
+ stockName.value=stockQty.value=stockPrice.value='';renderWarehouse(wh);
+}
+function addSale(){
+ let c=saleCustomer.value.trim(),p=saleProduct.value.trim(),q=Number(saleQty.value),price=Number(salePrice.value),pay=salePayment.value,paid=Number(salePaid.value)||0;
+ if(!c||!p||q<=0||price<=0)return alert('Müştəri, məhsul, miqdar və qiyməti daxil et.');
+ let total=q*price,actualPaid=pay==='paid'?total:pay==='debt'?0:Math.min(paid,total);
+ if(!db.customers[c])db.customers[c]=0;
+ db.customers[c]+=total-actualPaid;
+ db.cash+=actualPaid;
+ if(actualPaid)db.cashOps.push({d:c+' — satış ödənişi',t:'Gəlir',a:actualPaid,date:new Date().toISOString()});
+ db.sales.push({c,p,q,total,paid:actualPaid,date:new Date().toISOString()});
+ save();
+ ['saleCustomer','saleProduct','saleQty','salePrice','salePaid'].forEach(x=>document.getElementById(x).value='');
+}
+function addProduction(){
+ let n=prodName.value.trim(),q=Number(prodQty.value),raw=prodRaw.value.trim();
+ if(!n||q<=0)return alert('Hazır məhsul və miqdar daxil et.');
+ let parts=raw?raw.split(',').map(x=>x.split(':')).map(x=>({n:x[0].trim(),q:Number(x[1])})):[],
+     found=[];
+ parts.forEach(x=>{
+   for(const wh of ['wet','spice','dry']){
+     if(db.warehouses[wh][x.n]&&db.warehouses[wh][x.n].qty>=x.q){found.push({wh,...x});break;}
+   }
+ });
+ if(found.length!==parts.length)return alert('Xammal məlumatında problem var və ya anbar qalığı çatmır.');
+ found.forEach(x=>{
+   db.warehouses[x.wh][x.n].qty-=x.q;
+   if(x.wh==='wet')db.wetFlows.push({date:new Date().toISOString(),product:x.n,type:'out',qty:x.q,supplier:'',price:db.warehouses.wet[x.n].cost||0,note:'İstehsalat: '+n});
+ });
+ db.production.push({n,q,raw:found,date:new Date().toISOString()});
+ save();prodName.value=prodQty.value=prodRaw.value='';
+}
+function addCash(){
+ let d=cashDesc.value.trim(),a=Number(cashAmount.value),t=cashType.value;if(!d||a<=0)return alert('Əməliyyat və məbləğ daxil et.');
+ db.cash+=t==='in'?a:-a;db.cashOps.push({d,t:t==='in'?'Gəlir':'Xərc',a,date:new Date().toISOString()});save();cashDesc.value=cashAmount.value='';
+}
+function render(){
+ let stockQty=['spice','wet','dry'].reduce((sum,wh)=>sum+Object.values(db.warehouses[wh]).reduce((a,x)=>a+x.qty,0),0),
+     debt=Object.values(db.customers).reduce((a,b)=>a+b,0),
+     sales=db.sales.reduce((a,x)=>a+x.total,0);
+ cashTotal.textContent=money(db.cash);debtTotal.textContent=money(debt);stockTotal.textContent=stockQty.toFixed(2)+' kq';salesTotal.textContent=money(sales);
+ renderWarehouse('wet');renderWetFlow();
+ customerBody.innerHTML=Object.entries(db.customers).map(([n,x])=>`<tr><td>${esc(n)}</td><td class="${x>0?'danger':'ok'}">${money(x)}</td></tr>`).join('');
+ saleBody.innerHTML=db.sales.slice(-30).reverse().map(x=>`<tr><td>${esc(x.c)}</td><td>${esc(x.p)}</td><td>${x.q}</td><td>${money(x.total)}</td></tr>`).join('');
+ cashBody.innerHTML=db.cashOps.slice(-30).reverse().map(x=>`<tr><td>${esc(x.d)}</td><td>${x.t}</td><td>${money(x.a)}</td></tr>`).join('');
+ let today=new Date().toLocaleDateString('az-AZ');let ts=db.sales.filter(x=>new Date(x.date).toLocaleDateString('az-AZ')===today).reduce((a,x)=>a+x.total,0);
+ todayText.innerHTML=`Bu gün satış: <b>${money(ts)}</b><br>İstehsalat əməliyyatları: <b>${db.production.filter(x=>new Date(x.date).toLocaleDateString('az-AZ')===today).length}</b>`;
+}
+function renderWarehouse(wh){
+ const labels={
+    spice:'🌶️ Ədviyyat Anbarı — Ədviyyatlar',
+    wet:'🥩 Yaş Anbar — Farş, Dəri, Trimiks, Sala, File',
+    dry:'🌾 Quru Anbar — Kolbasa və Sosiska üzlükləri'
+ };
+ const unit=wh==='dry'?'metr':'kq';
+ const items=db.warehouses[wh]||{};
+ document.getElementById('warehouseTables').innerHTML=`<div class="card" style="margin-top:12px"><h2>${labels[wh]}</h2><div class="scroll"><table><thead><tr><th>Məhsul</th><th>Qalıq</th><th>1 vahid maya</th></tr></thead><tbody>${Object.entries(items).map(([n,x])=>`<tr><td>${esc(n)}</td><td>${x.qty.toFixed(2)} ${unit}</td><td>${money(x.cost)}</td></tr>`).join('')||'<tr><td colspan="3" class="small">Bu anbarda məhsul yoxdur.</td></tr>'}</tbody></table></div></div>`;
+}
+function renderReport(){
+ let sales=db.sales.reduce((a,x)=>a+x.total,0),expenses=db.cashOps.filter(x=>x.t==='Xərc').reduce((a,x)=>a+x.a,0),income=db.cashOps.filter(x=>x.t==='Gəlir').reduce((a,x)=>a+x.a,0),debt=Object.values(db.customers).reduce((a,b)=>a+b,0);
+ reportText.innerHTML=`<p>Ümumi satış: <b>${money(sales)}</b></p><p>Kassa: <b>${money(db.cash)}</b></p><p>Müştəri borcu: <b>${money(debt)}</b></p><p>Gəlirlər: <b>${money(income)}</b></p><p>Xərclər: <b>${money(expenses)}</b></p><p>İstehsalat sayı: <b>${db.production.length}</b></p><p>Ədviyyat Anbarı: <b>${Object.values(db.warehouses.spice).reduce((a,x)=>a+x.qty,0).toFixed(2)} kq</b></p><p>Yaş Anbar: <b>${Object.values(db.warehouses.wet).reduce((a,x)=>a+x.qty,0).toFixed(2)} kq</b></p><p>Quru Anbar: <b>${Object.values(db.warehouses.dry).reduce((a,x)=>a+x.qty,0).toFixed(2)} metr</b></p><p>Yaş anbar girişləri: <b>${db.wetFlows.filter(x=>x.type==='in').reduce((a,x)=>a+x.qty,0).toFixed(2)} kq</b></p><p>Yaş anbardan istehsalata çıxış: <b>${db.wetFlows.filter(x=>x.type==='out').reduce((a,x)=>a+x.qty,0).toFixed(2)} kq</b></p>`;
+}
+function backup(){let b=new Blob([JSON.stringify(db,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='istehsalat-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();}
+function restore(input){let f=input.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{db=JSON.parse(r.result);save();alert('Backup bərpa edildi.')}catch(e){alert('Backup faylı düzgün deyil.')}};r.readAsText(f)}
+function resetDB(){if(confirm('Bütün məlumatlar silinsin? Bu əməliyyat geri qaytarılmır.')){localStorage.removeItem(KEY);location.reload();}}
+function clearFields(x){document.querySelectorAll('#'+x+' input').forEach(e=>e.value='')}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+
+Object.assign(db.warehouses,{
+  spice: db.warehouses.spice||{},
+  wet: db.warehouses.wet||{},
+  dry: db.warehouses.dry||{}
+});
+
+// ===== 4.0 PHONE APP UPGRADES =====
+let deferredInstallPrompt=null;
+window.addEventListener('beforeinstallprompt', e=>{
+  e.preventDefault(); deferredInstallPrompt=e;
+  document.getElementById('installBanner').style.display='block';
+});
+async function installApp(){
+  if(!deferredInstallPrompt)return;
+  deferredInstallPrompt.prompt();
+  await deferredInstallPrompt.userChoice;
+  deferredInstallPrompt=null;
+  document.getElementById('installBanner').style.display='none';
+}
+if('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+
+function payDebt(){
+  const c=document.getElementById('debtCustomer').value.trim();
+  const a=Number(document.getElementById('debtAmount').value);
+  if(!c||a<=0)return alert('Müştəri və məbləğ daxil et.');
+  if(!db.customers[c])return alert('Bu müştərinin borcu yoxdur.');
+  if(db.customers[c]<a)return alert('Ödəniş borcdan çox ola bilməz.');
+  db.customers[c]-=a;
+  db.cash+=a;
+  db.cashOps.push({d:c+' — borc ödənişi',t:'Gəlir',a,date:new Date().toISOString()});
+  save();
+  document.getElementById('debtCustomer').value='';
+  document.getElementById('debtAmount').value='';
+  toast('Borc ödənişi qeyd edildi');
+}
+
+function globalSearchFn(q){
+  q=q.trim().toLowerCase();
+  if(!q){ render(); return; }
+  const saleRows=db.sales.filter(x=>
+    [x.c,x.p].some(v=>String(v).toLowerCase().includes(q))
+  ).slice(-50).reverse();
+  const custRows=Object.entries(db.customers).filter(([n])=>n.toLowerCase().includes(q));
+  const stockRows=[];
+  for(const wh of ['wet','spice','dry']){
+    for(const [n,x] of Object.entries(db.warehouses[wh]||{})){
+      if(n.toLowerCase().includes(q))stockRows.push([wh,n,x]);
+    }
+  }
+  document.getElementById('saleBody').innerHTML=saleRows.map(x=>`<tr><td>${esc(x.c)}</td><td>${esc(x.p)}</td><td>${x.q}</td><td>${money(x.total)}</td></tr>`).join('')||'<tr><td colspan="4">Nəticə yoxdur</td></tr>';
+  document.getElementById('customerBody').innerHTML=custRows.map(([n,x])=>`<tr><td>${esc(n)}</td><td>${money(x)}</td></tr>`).join('')||'<tr><td colspan="2">Nəticə yoxdur</td></tr>';
+  document.getElementById('warehouseTables').innerHTML=stockRows.map(([wh,n,x])=>
+    `<div class="card" style="margin-top:12px"><b>${esc(n)}</b><div class="small">${wh} • ${x.qty.toFixed(2)} ${wh==='dry'?'metr':'kq'} • maya ${money(x.cost)}</div></div>`
+  ).join('')||'<div class="small">Nəticə yoxdur.</div>';
+}
+
+function render(){
+  let stockQty=['spice','wet','dry'].reduce((sum,wh)=>sum+Object.values(db.warehouses[wh]).reduce((a,x)=>a+x.qty,0),0),
+      debt=Object.values(db.customers).reduce((a,b)=>a+b,0),
+      sales=db.sales.reduce((a,x)=>a+x.total,0);
+  cashTotal.textContent=money(db.cash); debtTotal.textContent=money(debt);
+  stockTotal.textContent=stockQty.toFixed(2)+' vahid'; salesTotal.textContent=money(sales);
+  renderWarehouse('wet'); renderWetFlow();
+  const drySum=Object.values(db.warehouses.dry).reduce((a,x)=>a+x.qty,0);
+  const wetSum=Object.values(db.warehouses.wet).reduce((a,x)=>a+x.qty,0);
+  const spiceSum=Object.values(db.warehouses.spice).reduce((a,x)=>a+x.qty,0);
+  if(document.getElementById('dryTotal')) dryTotal.textContent=drySum.toFixed(2)+' metr';
+  if(document.getElementById('wetTotal')) wetTotal.textContent=wetSum.toFixed(2)+' kq';
+  if(document.getElementById('spiceTotal')) spiceTotal.textContent=spiceSum.toFixed(2)+' kq';
+  customerBody.innerHTML=Object.entries(db.customers).map(([n,x])=>`<tr><td>${esc(n)}</td><td class="${x>0?'danger':'ok'}">${money(x)}</td></tr>`).join('');
+  saleBody.innerHTML=db.sales.slice(-30).reverse().map(x=>`<tr><td>${esc(x.c)}</td><td>${esc(x.p)}</td><td>${x.q}</td><td>${money(x.total)}</td></tr>`).join('');
+  cashBody.innerHTML=db.cashOps.slice(-30).reverse().map(x=>`<tr><td>${esc(x.d)}</td><td>${x.t}</td><td>${money(x.a)}</td></tr>`).join('');
+  let today=new Date().toLocaleDateString('az-AZ');
+  let ts=db.sales.filter(x=>new Date(x.date).toLocaleDateString('az-AZ')===today).reduce((a,x)=>a+x.total,0);
+  let tc=db.cashOps.filter(x=>new Date(x.date).toLocaleDateString('az-AZ')===today)
+                   .reduce((a,x)=>a+(x.t==='Gəlir'?x.a:-x.a),0);
+  todayText.innerHTML=`Bu gün satış: <b>${money(ts)}</b><br>İstehsalat əməliyyatları: <b>${db.production.filter(x=>new Date(x.date).toLocaleDateString('az-AZ')===today).length}</b>`;
+  dashDebt.textContent=money(debt); dashCash.textContent=money(tc);
+  dashProd.textContent=db.production.length; dashStock.textContent=Object.values(db.warehouses).reduce((n,w)=>n+Object.keys(w).length,0);
+}
+const oldShow=show;
+show=function(id){
+  oldShow(id);
+  document.querySelectorAll('.bottom button').forEach(b=>b.classList.remove('active'));
+  const map={home:0,wetFlow:1,sale:2,customers:3,reports:4};
+  if(map[id]!==undefined)document.querySelectorAll('.bottom button')[map[id]].classList.add('active');
+};
+
+render();updateStockUnit();
+</script>
+</body>
+</html>
