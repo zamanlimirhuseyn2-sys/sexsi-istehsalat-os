@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Müdir Paneli — Şəxsi İstehsalat OS</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  margin:0;
+  background:#f4f6f8;
+  color:#1f2937;
+}
+
+.container{
+  max-width:1200px;
+  margin:auto;
+  padding:20px;
+}
+
+.back{
+  display:inline-block;
+  margin-bottom:20px;
+  text-decoration:none;
+  color:#111827;
+  font-weight:bold;
+}
+
+h1{
+  margin-bottom:5px;
+}
+
+.subtitle{
+  color:#6b7280;
+  margin-bottom:25px;
+}
+
+.filters{
+  background:white;
+  padding:20px;
+  border-radius:14px;
+  box-shadow:0 3px 12px rgba(0,0,0,.06);
+  margin-bottom:20px;
+}
+
+.filter-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+}
+
+label{
+  display:block;
+  font-weight:bold;
+  margin-bottom:6px;
+}
+
+input,
+select{
+  width:100%;
+  padding:12px;
+  border:1px solid #ddd;
+  border-radius:8px;
+}
+
+button{
+  margin-top:15px;
+  background:#111827;
+  color:white;
+  border:0;
+  padding:12px 18px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+  margin-bottom:20px;
+}
+
+.card{
+  background:white;
+  padding:20px;
+  border-radius:14px;
+  box-shadow:0 3px 12px rgba(0,0,0,.06);
+}
+
+.card span{
+  color:#6b7280;
+  font-size:13px;
+}
+
+.card h2{
+  margin:8px 0 0;
+}
+
+.panel{
+  background:white;
+  padding:20px;
+  border-radius:14px;
+  box-shadow:0 3px 12px rgba(0,0,0,.06);
+  margin-bottom:20px;
+}
+
+.table-wrap{
+  overflow:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+th,
+td{
+  padding:13px;
+  text-align:left;
+  border-bottom:1px solid #eee;
+  white-space:nowrap;
+}
+
+th{
+  color:#6b7280;
+  font-size:13px;
+}
+
+.empty{
+  text-align:center;
+  color:#777;
+  padding:25px;
+}
+
+.warehouse-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+}
+
+.warehouse{
+  padding:18px;
+  border-radius:12px;
+  background:#f9fafb;
+}
+
+.warehouse h3{
+  margin-top:0;
+}
+
+@media(max-width:800px){
+
+.cards{
+  grid-template-columns:repeat(2,1fr);
+}
+
+.warehouse-grid{
+  grid-template-columns:1fr;
+}
+
+}
+
+@media(max-width:600px){
+
+.filter-grid{
+  grid-template-columns:1fr;
+}
+
+.cards{
+  grid-template-columns:1fr;
+}
+
+.container{
+  padding:15px;
+}
+
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<a class="back" href="index.html">
+← Əsas panelə qayıt
+</a>
+
+<h1>👨‍💼 Müdir Paneli</h1>
+
+<p class="subtitle">
+İstehsalat, anbar, kassa və məhsul hərəkətlərinin ümumi görünüşü.
+</p>
+
+
+<!-- TARİX SEÇİMİ -->
+
+<div class="filters">
+
+<div class="filter-grid">
+
+<div>
+
+<label>Başlanğıc tarix</label>
+
+<input
+id="from"
+type="date">
+
+</div>
+
+
+<div>
+
+<label>Son tarix</label>
+
+<input
+id="to"
+type="date">
+
+</div>
+
+</div>
+
+
+<button onclick="loadDashboard()">
+📊 Hesabatı yenilə
+</button>
+
+</div>
+
+
+<!-- ƏSAS GÖSTƏRİCİLƏR -->
+
+<div class="cards">
+
+<div class="card">
+
+<span>💰 Kassa qalığı</span>
+
+<h2 id="cashBalance">
+0.00 AZN
+</h2>
+
+</div>
+
+
+<div class="card">
+
+<span>📥 Məhsul girişləri</span>
+
+<h2 id="inputCount">
+0
+</h2>
+
+</div>
+
+
+<div class="card">
+
+<span>📤 Məhsul çıxışları</span>
+
+<h2 id="outputCount">
+0
+</h2>
+
+</div>
+
+
+<div class="card">
+
+<span>📦 Ümumi əməliyyat</span>
+
+<h2 id="operationCount">
+0
+</h2>
+
+</div>
+
+</div>
+
+
+<!-- ANBARLAR -->
+
+<div class="panel">
+
+<h2>🏬 Anbarların vəziyyəti</h2>
+
+<div class="warehouse-grid">
+
+<div class="warehouse">
+
+<h3>🥬 Yaş anbar</h3>
+
+<p>
+Məhsul sayı:
+<strong id="wetCount">0</strong>
+</p>
+
+</div>
+
+
+<div class="warehouse">
+
+<h3>🌾 Quru anbar</h3>
+
+<p>
+Məhsul sayı:
+<strong id="dryCount">0</strong>
+</p>
+
+</div>
+
+
+<div class="warehouse">
+
+<h3>🌶️ Ədviyyat anbarı</h3>
+
+<p>
+Məhsul sayı:
+<strong id="spiceCount">0</strong>
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- KİMƏ NƏ VERİLİB -->
+
+<div class="panel">
+
+<h2>📤 Seçilmiş tarixdə kimə nə verilib?</h2>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Tarix</th>
+<th>Anbar</th>
+<th>Məhsul</th>
+<th>Miqdar</th>
+<th>Kimə</th>
+<th>Qeyd</th>
+
+</tr>
+
+</thead>
+
+<tbody id="outputTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<!-- GİRİŞLƏR -->
+
+<div class="panel">
+
+<h2>📥 Seçilmiş tarixdə məhsul girişləri</h2>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Tarix</th>
+<th>Anbar</th>
+<th>Məhsul</th>
+<th>Miqdar</th>
+<th>Kimdən</th>
+<th>Qeyd</th>
+
+</tr>
+
+</thead>
+
+<tbody id="inputTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<!-- KASSA -->
+
+<div class="panel">
+
+<h2>💰 Kassa əməliyyatları</h2>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Tarix</th>
+<th>Əməliyyat</th>
+<th>Məbləğ</th>
+<th>Kimdən/Kimə</th>
+<th>Səbəb</th>
+
+</tr>
+
+</thead>
+
+<tbody id="cashTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+<script>
+
+function getData(name){
+
+return JSON.parse(
+localStorage.getItem(name) || "[]"
+);
+
+}
+
+
+function setToday(){
+
+const today=
+new Date()
+.toISOString()
+.split("T")[0];
+
+document.getElementById("from").value=today;
+
+document.getElementById("to").value=today;
+
+}
+
+
+function loadDashboard(){
+
+const from=
+document.getElementById("from").value;
+
+const to=
+document.getElementById("to").value;
+
+
+if(!from || !to){
+
+alert("Tarixləri seçin.");
+
+return;
+
+}
+
+
+const inputs=getData("stock_in");
+
+const outputs=getData("stock_out");
+
+const cash=getData("cash_operations");
+
+
+const filteredInputs=
+inputs.filter(item=>
+item.date>=from &&
+item.date<=to
+);
+
+
+const filteredOutputs=
+outputs.filter(item=>
+item.date>=from &&
+item.date<=to
+);
+
+
+const filteredCash=
+cash.filter(item=>
+item.date>=from &&
+item.date<=to
+);
+
+
+/* Əməliyyat sayı */
+
+document.getElementById("inputCount")
+.innerText=filteredInputs.length;
+
+
+document.getElementById("outputCount")
+.innerText=filteredOutputs.length;
+
+
+document.getElementById("operationCount")
+.innerText=
+filteredInputs.length+
+filteredOutputs.length;
+
+
+/* KASSA */
+
+let income=0;
+
+let expense=0;
+
+
+cash.forEach(item=>{
+
+if(item.type==="income"){
+
+income+=Number(item.amount||0);
+
+}
+else{
+
+expense+=Number(item.amount||0);
+
+}
+
+});
+
+
+document.getElementById("cashBalance")
+.innerText=
+(income-expense).toFixed(2)+" AZN";
+
+
+/* ANBAR MƏHSUL SAYI */
+
+function countWarehouse(name){
+
+const products=new Set();
+
+
+inputs.forEach(item=>{
+
+if(item.warehouse===name &&
+item.product){
+
+products.add(item.product);
+
+}
+
+});
+
+
+outputs.forEach(item=>{
+
+if(item.warehouse===name &&
+item.product){
+
+products.add(item.product);
+
+}
+
+});
+
+
+return products.size;
+
+}
+
+
+document.getElementById("wetCount")
+.innerText=
+countWarehouse("Yaş anbar");
+
+
+document.getElementById("dryCount")
+.innerText=
+countWarehouse("Quru anbar");
+
+
+document.getElementById("spiceCount")
+.innerText=
+countWarehouse("Ədviyyat anbarı");
+
+
+/* ÇIXIŞ CƏDVƏLİ */
+
+renderOutputs(filteredOutputs);
+
+
+/* GİRİŞ CƏDVƏLİ */
+
+renderInputs(filteredInputs);
+
+
+/* KASSA CƏDVƏLİ */
+
+renderCash(filteredCash);
+
+}
+
+
+function renderOutputs(data){
+
+const table=
+document.getElementById("outputTable");
+
+table.innerHTML="";
+
+
+if(data.length===0){
+
+table.innerHTML=`
+
+<tr>
+
+<td colspan="6" class="empty">
+
+Seçilmiş tarixdə çıxış yoxdur.
+
+</td>
+
+</tr>
+
+`;
+
+return;
+
+}
+
+
+data
+.slice()
+.reverse()
+.forEach(item=>{
+
+table.innerHTML+=`
+
+<tr>
+
+<td>${item.date}</td>
+
+<td>${item.warehouse}</td>
+
+<td>${item.product}</td>
+
+<td>${item.quantity} ${item.unit}</td>
+
+<td><strong>${item.person || "-"}</strong></td>
+
+<td>${item.note || "-"}</td>
+
+</tr>
+
+`;
+
+});
+
+}
+
+
+function renderInputs(data){
+
+const table=
+document.getElementById("inputTable");
+
+table.innerHTML="";
+
+
+if(data.length===0){
+
+table.innerHTML=`
+
+<tr>
+
+<td colspan="6" class="empty">
+
+Seçilmiş tarixdə giriş yoxdur.
+
+</td>
+
+</tr>
+
+`;
+
+return;
+
+}
+
+
+data
+.slice()
+.reverse()
+.forEach(item=>{
+
+table.innerHTML+=`
+
+<tr>
+
+<td>${item.date}</td>
+
+<td>${item.warehouse}</td>
+
+<td>${item.product}</td>
+
+<td>${item.quantity} ${item.unit}</td>
+
+<td><strong>${item.person || "-"}</strong></td>
+
+<td>${item.note || "-"}</td>
+
+</tr>
+
+`;
+
+});
+
+}
+
+
+function renderCash(data){
+
+const table=
+document.getElementById("cashTable");
+
+table.innerHTML="";
+
+
+if(data.length===0){
+
+table.innerHTML=`
+
+<tr>
+
+<td colspan="5" class="empty">
+
+Seçilmiş tarixdə kassa əməliyyatı yoxdur.
+
+</td>
+
+</tr>
+
+`;
+
+return;
+
+}
+
+
+data
+.slice()
+.reverse()
+.forEach(item=>{
+
+const type=
+item.type==="income"
+? "📥 Giriş"
+: "📤 Çıxış";
+
+
+table.innerHTML+=`
+
+<tr>
+
+<td>${item.date}</td>
+
+<td>${type}</td>
+
+<td>${Number(item.amount).toFixed(2)} AZN</td>
+
+<td>${item.person || "-"}</td>
+
+<td>${item.reason || "-"}</td>
+
+</tr>
+
+`;
+
+});
+
+}
+
+
+setToday();
+
+loadDashboard();
+
+</script>
+
+</body>
+  </html>
