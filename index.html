@@ -3,355 +3,1346 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Şəxsi İstehsalat OS</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
-body{background:#f4f6f8;color:#1f2937}
-.sidebar{position:fixed;left:0;top:0;width:240px;height:100vh;background:#111827;color:white;padding:25px 15px}
-.logo{font-size:19px;font-weight:bold;margin-bottom:35px;padding-left:10px}
-.menu a{display:block;color:#d1d5db;text-decoration:none;padding:13px 15px;margin-bottom:5px;border-radius:8px}
-.menu a:hover,.menu a.active{background:#1f2937;color:white}
-.main{margin-left:240px;padding:30px}
-.header{margin-bottom:25px}
-.header h1{font-size:28px;margin-bottom:8px}
-.header p{color:#6b7280}
 
-.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
-.btn{border:0;border-radius:8px;padding:12px 18px;background:#111827;color:white;cursor:pointer;font-weight:bold}
-.btn:hover{opacity:.9}
-.search{padding:12px 15px;border:1px solid #ddd;border-radius:8px;width:260px}
-
-.panel{background:white;border-radius:14px;padding:20px;box-shadow:0 3px 12px rgba(0,0,0,.06)}
-table{width:100%;border-collapse:collapse}
-th,td{text-align:left;padding:14px;border-bottom:1px solid #eee}
-th{color:#6b7280;font-size:14px}
-.product-img{width:50px;height:50px;border-radius:8px;object-fit:cover;background:#eee}
-.action{border:0;padding:7px 10px;border-radius:6px;cursor:pointer;margin-right:5px}
-.edit{background:#e5e7eb}
-.delete{background:#fee2e2;color:#991b1b}
-
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);align-items:center;justify-content:center;padding:20px}
-.modal-box{background:white;width:100%;max-width:450px;padding:25px;border-radius:15px}
-.modal-box h2{margin-bottom:20px}
-.input{width:100%;padding:12px;margin-bottom:12px;border:1px solid #ddd;border-radius:8px}
-.modal-buttons{display:flex;gap:10px;margin-top:10px}
-.cancel{background:#e5e7eb;color:#111827}
-
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:25px}
-.stat{background:white;padding:20px;border-radius:14px;box-shadow:0 3px 12px rgba(0,0,0,.06)}
-.stat span{color:#6b7280;font-size:14px}
-.stat h2{margin-top:8px}
-
-@media(max-width:800px){
-.sidebar{width:190px}
-.main{margin-left:190px;padding:20px}
-.stats{grid-template-columns:1fr}
-.search{width:180px}
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
 }
-@media(max-width:600px){
-.sidebar{position:relative;width:100%;height:auto}
-.main{margin-left:0}
-.topbar{flex-direction:column;gap:10px;align-items:stretch}
-.search{width:100%}
+
+body{
+    background:#f3f4f6;
+    color:#111827;
 }
+
+button{
+    border:0;
+    cursor:pointer;
+}
+
+.hidden{
+    display:none!important;
+}
+
+/* =========================
+   TOPBAR
+========================= */
+
+.topbar{
+    height:65px;
+    background:#111827;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 20px;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.logo{
+    font-size:20px;
+    font-weight:bold;
+}
+
+.user-info{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logout-btn{
+    background:#dc2626;
+    color:white;
+    padding:9px 15px;
+    border-radius:8px;
+}
+
+.logout-btn:hover{
+    background:#b91c1c;
+}
+
+/* =========================
+   LAYOUT
+========================= */
+
+.layout{
+    display:flex;
+    min-height:calc(100vh - 65px);
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar{
+    width:240px;
+    background:#1f2937;
+    padding:15px 10px;
+    color:white;
+}
+
+.menu-btn{
+    width:100%;
+    text-align:left;
+    padding:13px;
+    margin-bottom:5px;
+    background:transparent;
+    color:#d1d5db;
+    border-radius:8px;
+    font-size:15px;
+}
+
+.menu-btn:hover{
+    background:#374151;
+    color:white;
+}
+
+.menu-btn.active{
+    background:#2563eb;
+    color:white;
+}
+
+/* =========================
+   CONTENT
+========================= */
+
+.content{
+    flex:1;
+    padding:20px;
+    overflow-x:hidden;
+}
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+.page-title{
+    font-size:26px;
+    margin-bottom:20px;
+}
+
+/* =========================
+   DASHBOARD CARDS
+========================= */
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.card{
+    background:white;
+    border-radius:14px;
+    padding:20px;
+    box-shadow:0 2px 10px rgba(0,0,0,.06);
+}
+
+.card-title{
+    color:#6b7280;
+    font-size:14px;
+    margin-bottom:10px;
+}
+
+.card-value{
+    font-size:27px;
+    font-weight:bold;
+}
+
+/* =========================
+   PANEL
+========================= */
+
+.panel{
+    background:white;
+    padding:20px;
+    border-radius:14px;
+    margin-bottom:20px;
+    box-shadow:0 2px 10px rgba(0,0,0,.06);
+}
+
+.panel h3{
+    margin-bottom:15px;
+}
+
+/* =========================
+   FORM
+========================= */
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.form-group{
+    margin-bottom:15px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:7px;
+    font-weight:bold;
+}
+
+.form-group input,
+.form-group select,
+
+input,
+select{
+    width:100%;
+    padding:12px;
+    border:1px solid #d1d5db;
+    border-radius:9px;
+    outline:none;
+}
+
+input:focus,
+select:focus{
+    border-color:#2563eb;
+}
+
+.primary-btn{
+    background:#2563eb;
+    color:white;
+    padding:11px 18px;
+    border-radius:9px;
+    font-weight:bold;
+}
+
+.primary-btn:hover{
+    background:#1d4ed8;
+}
+
+.success-btn{
+    background:#16a34a;
+    color:white;
+    padding:9px 13px;
+    border-radius:8px;
+}
+
+.warning-btn{
+    background:#d97706;
+    color:white;
+    padding:9px 13px;
+    border-radius:8px;
+}
+
+.danger-btn{
+    background:#dc2626;
+    color:white;
+    padding:8px 12px;
+    border-radius:8px;
+}
+
+/* =========================
+   TABLE
+========================= */
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    min-width:600px;
+    border-collapse:collapse;
+}
+
+th,
+td{
+    padding:11px;
+    border-bottom:1px solid #e5e7eb;
+    text-align:left;
+}
+
+th{
+    background:#f9fafb;
+}
+
+/* =========================
+   BADGES
+========================= */
+
+.badge{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.badge.green{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.badge.red{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.badge.blue{
+    background:#dbeafe;
+    color:#1e40af;
+}
+
+.badge.orange{
+    background:#ffedd5;
+    color:#9a3412;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+.mobile-menu{
+    display:none;
+    background:#111827;
+    color:white;
+    padding:12px 16px;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.mobile-menu button{
+    background:#374151;
+    color:white;
+    padding:8px 12px;
+    border-radius:7px;
+}
+
+@media(max-width:900px){
+
+    .cards{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .sidebar{
+        width:200px;
+    }
+
+}
+
+@media(max-width:700px){
+
+    .topbar{
+        display:none;
+    }
+
+    .mobile-menu{
+        display:flex;
+    }
+
+    .layout{
+        display:block;
+    }
+
+    .sidebar{
+        display:none;
+        width:100%;
+    }
+
+    .sidebar.open{
+        display:block;
+    }
+
+    .content{
+        padding:12px;
+    }
+
+    .cards{
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+    }
+
+    .card{
+        padding:15px;
+    }
+
+    .card-value{
+        font-size:21px;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
 </style>
 </head>
 
 <body>
 
-<aside class="sidebar">
-<div class="logo">🏭 Şəxsi İstehsalat OS</div>
 
-<nav class="menu">
-<a href="#" class="active" onclick="showPage('dashboard')">🏠 Dashboard</a>
-<a href="#" onclick="showPage('products')">📦 Məhsullar</a>
-<a href="#">🛒 Sifarişlər</a>
-<a href="#">👥 Müştərilər</a>
-<a href="#">💰 Satışlar</a>
-<a href="#">📊 Statistika</a>
-<a href="#">⚙️ Parametrlər</a>
-</nav>
-</aside>
-
-<main class="main">
-
-<section id="dashboard">
-<div class="header">
-<h1>Dashboard</h1>
-<p>Şəxsi İstehsalat OS idarəetmə panelinə xoş gəlmisiniz.</p>
-</div>
-
-<div class="stats">
-<div class="stat"><span>Ümumi məhsullar</span><h2 id="dashProducts">0</h2></div>
-<div class="stat"><span>Ümumi stok</span><h2 id="dashStock">0</h2></div>
-<div class="stat"><span>Məhsul dəyəri</span><h2 id="dashValue">₼0</h2></div>
-</div>
-
-<div class="panel">
-<h2>🚀 Sistem hazırdır!</h2>
-<p style="margin-top:10px;color:#6b7280">
-Məhsullar bölməsindən istehsal etdiyiniz məhsulları idarə edə bilərsiniz.
-</p>
-</div>
-</section>
-
-<section id="products" style="display:none">
-
-<div class="header">
-<h1>📦 Məhsullar</h1>
-<p>Məhsullarınızı idarə edin.</p>
-</div>
+<!-- =========================
+     TOPBAR
+========================= -->
 
 <div class="topbar">
-<input id="search" class="search" placeholder="🔎 Məhsul axtar..." oninput="renderProducts()">
-<button class="btn" onclick="openModal()">＋ Yeni məhsul</button>
+
+    <div class="logo">
+        Şəxsi İstehsalat OS
+    </div>
+
+    <div class="user-info">
+
+        <span id="currentUserName">
+            İstifadəçi
+        </span>
+
+        <button
+            class="logout-btn"
+            onclick="logout()">
+
+            Çıxış
+
+        </button>
+
+    </div>
+
 </div>
 
-<div class="panel">
 
-<table>
-<thead>
-<tr>
-<th>Şəkil</th>
-<th>Məhsul</th>
-<th>Qiymət</th>
-<th>Stok</th>
-<th>Əməliyyat</th>
-</tr>
-</thead>
+<!-- =========================
+     MOBILE MENU
+========================= -->
 
-<tbody id="productList"></tbody>
-</table>
+<div class="mobile-menu">
+
+    <strong>
+        Şəxsi İstehsalat OS
+    </strong>
+
+    <button onclick="toggleSidebar()">
+        ☰
+    </button>
 
 </div>
+
+
+<!-- =========================
+     LAYOUT
+========================= -->
+
+<div class="layout">
+
+
+<!-- =========================
+     SIDEBAR
+========================= -->
+
+<aside
+    class="sidebar"
+    id="sidebar">
+
+
+    <button
+        class="menu-btn active"
+        onclick="showPage('dashboard',this)">
+
+        🏠 Əsas panel
+
+    </button>
+
+
+    <button
+        class="menu-btn"
+        onclick="showPage('products',this)">
+
+        📦 Məhsullar
+
+    </button>
+
+
+    <button
+        class="menu-btn"
+        onclick="showPage('warehouse',this)">
+
+        🏭 Anbar
+
+    </button>
+
+
+    <button
+        class="menu-btn"
+        onclick="showPage('cash',this)">
+
+        💰 Kassa
+
+    </button>
+
+
+    <button
+        class="menu-btn"
+        onclick="showPage('reports',this)">
+
+        📊 Hesabatlar
+
+    </button>
+
+
+    <!-- YALNIZ MÜDİR -->
+
+    <button
+        class="menu-btn manager-only"
+        onclick="showPage('workers',this)">
+
+        👥 İşçilər
+
+    </button>
+
+
+    <button
+        class="menu-btn manager-only"
+        onclick="showPage('manager',this)">
+
+        ⚙️ Müdir paneli
+
+    </button>
+
+
+</aside>
+
+
+<!-- =========================
+     MAIN CONTENT
+========================= -->
+
+<main class="content">
+
+
+<!-- =========================
+     DASHBOARD
+========================= -->
+
+<section
+    id="dashboard"
+    class="page active">
+
+    <h2 class="page-title">
+        Əsas panel
+    </h2>
+
+
+    <div class="cards">
+
+
+        <div class="card">
+
+            <div class="card-title">
+                Məhsul sayı
+            </div>
+
+            <div
+                class="card-value"
+                id="dashboardProducts">
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                Anbar qalığı
+            </div>
+
+            <div
+                class="card-value"
+                id="dashboardStock">
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                Kassa
+            </div>
+
+            <div
+                class="card-value"
+                id="dashboardCash">
+
+                0 ₼
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                İşçi sayı
+            </div>
+
+            <div
+                class="card-value"
+                id="dashboardWorkers">
+
+                0
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="panel">
+
+        <h3>
+            Son əməliyyatlar
+        </h3>
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Tarix
+                        </th>
+
+                        <th>
+                            Əməliyyat
+                        </th>
+
+                        <th>
+                            Məhsul
+                        </th>
+
+                        <th>
+                            Miqdar
+                        </th>
+
+                        <th>
+                            İstifadəçi
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="recentOperations">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
 </section>
+
+
+<!-- =========================
+     PRODUCTS
+========================= -->
+
+<section
+    id="products"
+    class="page">
+
+    <h2 class="page-title">
+        Məhsullar
+    </h2>
+
+
+    <div class="panel">
+
+        <h3>
+            Məhsul əlavə et
+        </h3>
+
+
+        <div class="form-grid">
+
+
+            <div class="form-group">
+
+                <label>
+                    Məhsul adı
+                </label>
+
+                <input
+                    type="text"
+                    id="productName"
+                    placeholder="Məhsul adı">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Miqdar
+                </label>
+
+                <input
+                    type="number"
+                    id="productQuantity"
+                    min="1"
+                    placeholder="0">
+
+            </div>
+
+
+        </div>
+
+
+        <button
+            class="primary-btn"
+            onclick="addProduct()">
+
+            Məhsul əlavə et
+
+        </button>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h3>
+            Məhsul siyahısı
+        </h3>
+
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Məhsul
+                        </th>
+
+                        <th>
+                            Qalıq
+                        </th>
+
+                        <th>
+                            Tarix
+                        </th>
+
+                        <th>
+                            Əməliyyat
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody
+                    id="productsTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     WAREHOUSE
+========================= -->
+
+<section
+    id="warehouse"
+    class="page">
+
+    <h2 class="page-title">
+        Anbar
+    </h2>
+
+
+    <div class="panel">
+
+        <h3>
+            Məhsul çıxışı
+        </h3>
+
+
+        <div class="form-grid">
+
+
+            <div class="form-group">
+
+                <label>
+                    Məhsul
+                </label>
+
+                <select
+                    id="outProduct">
+
+                    <option value="">
+                        Məhsul seçin
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Miqdar
+                </label>
+
+                <input
+                    type="number"
+                    id="outQuantity"
+                    min="1"
+                    placeholder="0">
+
+            </div>
+
+
+        </div>
+
+
+        <button
+            class="warning-btn"
+            onclick="productOut()">
+
+            Anbardan çıxar
+
+        </button>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h3>
+            Anbar qalığı
+        </h3>
+
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Məhsul
+                        </th>
+
+                        <th>
+                            Qalıq
+                        </th>
+
+                        <th>
+                            Vəziyyət
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody
+                    id="warehouseTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     CASH
+========================= -->
+
+<section
+    id="cash"
+    class="page">
+
+    <h2 class="page-title">
+        Kassa
+    </h2>
+
+
+    <div class="cards">
+
+        <div class="card">
+
+            <div class="card-title">
+                Cari kassa
+            </div>
+
+            <div
+                class="card-value"
+                id="cashBalance">
+
+                0 ₼
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h3>
+            Kassa əməliyyatı
+        </h3>
+
+
+        <div class="form-grid">
+
+
+            <div class="form-group">
+
+                <label>
+                    Əməliyyat növü
+                </label>
+
+                <select id="cashType">
+
+                    <option value="income">
+                        Mədaxil
+                    </option>
+
+                    <option value="expense">
+                        Məxaric
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Məbləğ
+                </label>
+
+                <input
+                    type="number"
+                    id="cashAmount"
+                    step="0.01"
+                    placeholder="0.00">
+
+            </div>
+
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Açıqlama
+            </label>
+
+            <input
+                type="text"
+                id="cashDescription"
+                placeholder="Açıqlama">
+
+        </div>
+
+
+        <button
+            class="primary-btn"
+            onclick="cashOperation()">
+
+            Əməliyyatı əlavə et
+
+        </button>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h3>
+            Kassa tarixçəsi
+        </h3>
+
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Tarix
+                        </th>
+
+                        <th>
+                            Növ
+                        </th>
+
+                        <th>
+                            Məbləğ
+                        </th>
+
+                        <th>
+                            Açıqlama
+                        </th>
+
+                        <th>
+                            İstifadəçi
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody
+                    id="cashTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     REPORTS
+========================= -->
+
+<section
+    id="reports"
+    class="page">
+
+    <h2 class="page-title">
+        Hesabatlar
+    </h2>
+
+
+    <div class="panel">
+
+        <h3>
+            Tarix üzrə hesabat
+        </h3>
+
+
+        <div class="form-grid">
+
+
+            <div class="form-group">
+
+                <label>
+                    Başlanğıc tarix
+                </label>
+
+                <input
+                    type="date"
+                    id="reportFrom">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Son tarix
+                </label>
+
+                <input
+                    type="date"
+                    id="reportTo">
+
+            </div>
+
+
+        </div>
+
+
+        <button
+            class="primary-btn"
+            onclick="generateReport()">
+
+            Hesabatı göstər
+
+        </button>
+
+    </div>
+
+
+    <div class="panel">
+
+        <div id="reportResult">
+
+            Tarix seçib hesabat yaradın.
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     WORKERS
+     ONLY MANAGER
+========================= -->
+
+<section
+    id="workers"
+    class="page manager-page">
+
+    <h2 class="page-title">
+        İşçilər
+    </h2>
+
+
+    <div class="panel">
+
+        <h3>
+            Yeni işçi əlavə et
+        </h3>
+
+
+        <div class="form-grid">
+
+
+            <div class="form-group">
+
+                <label>
+                    İşçinin adı
+                </label>
+
+                <input
+                    type="text"
+                    id="workerName"
+                    placeholder="Məsələn: Əli">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    İstifadəçi adı
+                </label>
+
+                <input
+                    type="text"
+                    id="workerUsername"
+                    placeholder="Məsələn: ali">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Giriş kodu
+                </label>
+
+                <input
+                    type="text"
+                    id="workerPassword"
+                    placeholder="Məsələn: 2222">
+
+            </div>
+
+
+        </div>
+
+
+        <button
+            class="primary-btn"
+            onclick="addWorker()">
+
+            İşçi əlavə et
+
+        </button>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h3>
+            İşçilər
+        </h3>
+
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Ad
+                        </th>
+
+                        <th>
+                            İstifadəçi adı
+                        </th>
+
+                        <th>
+                            Rol
+                        </th>
+
+                        <th>
+                            Əməliyyat
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody
+                    id="workersTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     MANAGER PANEL
+========================= -->
+
+<section
+    id="manager"
+    class="page manager-page">
+
+    <h2 class="page-title">
+        Müdir paneli
+    </h2>
+
+
+    <div class="panel">
+
+        <h3>
+            Sistem idarəetməsi
+        </h3>
+
+        <p>
+            Buradan sistemə və işçilərə nəzarət edə bilərsiniz.
+        </p>
+
+        <br>
+
+        <button
+            class="danger-btn"
+            onclick="resetData()">
+
+            Bütün məlumatları sıfırla
+
+        </button>
+
+    </div>
+
+</section>
+
 
 </main>
 
-<div id="modal" class="modal">
-<div class="modal-box">
-
-<h2 id="modalTitle">Yeni məhsul</h2>
-
-<input id="name" class="input" placeholder="Məhsul adı">
-<input id="price" class="input" type="number" placeholder="Qiymət (₼)">
-<input id="stock" class="input" type="number" placeholder="Stok sayı">
-<input id="image" class="input" placeholder="Şəkil URL-si (istəyə görə)">
-
-<div class="modal-buttons">
-<button class="btn cancel" onclick="closeModal()">Ləğv et</button>
-<button class="btn" onclick="saveProduct()">Yadda saxla</button>
 </div>
 
-</div>
-</div>
 
 <script>
 
-let products = JSON.parse(localStorage.getItem("products")) || [];
-let editIndex = -1;
+/* ==================================================
+   İSTİFADƏÇİ
+================================================== */
 
-function showPage(page){
+let currentUser =
+    JSON.parse(
+        sessionStorage.getItem("currentUser")
+    );
 
-document.getElementById("dashboard").style.display =
-page === "dashboard" ? "block" : "none";
 
-document.getElementById("products").style.display =
-page === "products" ? "block" : "none";
+/* ==================================================
+   GİRİŞ YOXDURSA LOGIN-Ə QAYTAR
+================================================== */
 
-document.querySelectorAll(".menu a").forEach(a=>a.classList.remove("active"));
+if(!currentUser){
 
-if(page==="products"){
-document.querySelectorAll(".menu a")[1].classList.add("active");
-renderProducts();
-}
-
-if(page==="dashboard"){
-document.querySelectorAll(".menu a")[0].classList.add("active");
-updateDashboard();
-}
-}
-
-function openModal(index=-1){
-
-editIndex=index;
-
-document.getElementById("modal").style.display="flex";
-
-if(index>=0){
-
-document.getElementById("modalTitle").innerText="Məhsulu redaktə et";
-
-let p=products[index];
-
-document.getElementById("name").value=p.name;
-document.getElementById("price").value=p.price;
-document.getElementById("stock").value=p.stock;
-document.getElementById("image").value=p.image;
-
-}else{
-
-document.getElementById("modalTitle").innerText="Yeni məhsul";
-
-document.getElementById("name").value="";
-document.getElementById("price").value="";
-document.getElementById("stock").value="";
-document.getElementById("image").value="";
-}
+    window.location.href =
+        "login.html";
 
 }
 
-function closeModal(){
-document.getElementById("modal").style.display="none";
-}
 
-function saveProduct(){
+/* ==================================================
+   MƏLUMATLAR
+================================================== */
 
-let name=document.getElementById("name").value.trim();
-let price=Number(document.getElementById("price").value);
-let stock=Number(document.getElementById("stock").value);
-let image=document.getElementById("image").value.trim();
+let users =
+    JSON.parse(
+        localStorage.getItem("users")
+    ) || [
 
-if(!name){
-alert("Məhsul adını yazın.");
-return;
-}
+        {
+            id:1,
+            name:"Müdir",
+            username:"admin",
+            password:"1234",
+            role:"manager"
+        },
 
-let product={
-name:name,
-price:price,
-stock:stock,
-image:image
-};
-
-if(editIndex>=0){
-products[editIndex]=product;
-}else{
-products.push(product);
-}
-
-localStorage.setItem("products",JSON.stringify(products));
-
-closeModal();
-renderProducts();
-updateDashboard();
-
-}
-
-function deleteProduct(index){
-
-if(confirm("Bu məhsulu silmək istəyirsiniz?")){
-
-products.splice(index,1);
-
-localStorage.setItem("products",JSON.stringify(products));
-
-renderProducts();
-updateDashboard();
-
-}
-
-}
-
-function renderProducts(){
-
-let list=document.getElementById("productList");
-
-let search=document.getElementById("search").value.toLowerCase();
-
-let filtered=products
-.map((p,i)=>({p,i}))
-.filter(x=>x.p.name.toLowerCase().includes(search));
-
-list.innerHTML="";
-
-if(filtered.length===0){
-
-list.innerHTML=`
-<tr>
-<td colspan="5" style="text-align:center;padding:30px;color:#777">
-Hələ məhsul yoxdur.
-</td>
-</tr>`;
-
-return;
-}
-
-filtered.forEach(x=>{
-
-let p=x.p;
-
-list.innerHTML+=`
-
-<tr>
-
-<td>
-${p.image
-? `<img class="product-img" src="${p.image}">`
-: `<div class="product-img"></div>`
-}
-</td>
-
-<td><strong>${p.name}</strong></td>
-
-<td>₼${p.price.toFixed(2)}</td>
-
-<td>${p.stock}</td>
-
-<td>
-
-<button class="action edit" onclick="openModal(${x.i})">
-✏️
-</button>
-
-<button class="action delete" onclick="deleteProduct(${x.i})">
-🗑️
-</button>
-
-</td>
-
-</tr>
-
-`;
-
-});
-
-}
-
-function updateDashboard(){
-
-let totalStock=products.reduce((sum,p)=>sum+p.stock,0);
-
-let totalValue=products.reduce((sum,p)=>sum+(p.price*p.stock),0);
-
-document.getElementById("dashProducts").innerText=products.length;
-
-document.getElementById("dashStock").innerText=totalStock;
-
-document.getElementById("dashValue").innerText="₼"+totalValue.toFixed(2);
-
-}
-
-renderProducts();
-updateDashboard();
-
-</script>
-<a href="movement.html" style="display:inline-block;margin:20px;padding:12px 18px;background:#111827;color:white;border-radius:8px;text-decoration:none;">
-📥 Girişlər / 📤 Çıxışlar
-    <a href="reports.html" style="display:inline-block;margin:20px 0;background:#111827;color:white;padding:12px 18px;border-radius:8px;text-decoration:none;font-weight:bold;">
-<a href="manager.html" style="display:inline-block;margin:20px 0;background:#111827;color:#ffffff;padding:12px 18px;border-radius:8px;text-decoration:none;font-weight:bold;">
-👨‍💼 MÜDİR PANELİ
-</a>
-        📊 Hesabatlar
-<a href="cash.html" style="display:inline-block;margin:20px 0;background:#111827;color:#ffffff;padding:12px 18px;border-radius:8px;text-decoration:none;font-weight:bold;">
-💰 KASSA
-</a>
-        <a href="warehouses.html" style="display:inline-block;margin:20px 0;background:#111827;color:white;padding:12px 18px;border-radius:8px;text-decoration:none;font-weight:bold;">
-🏬 Anbarlar
-        </a>
-    </a>
-</a>
-</body>
-</html>
-    
+        {
+            id:2,
+      
