@@ -7,13 +7,9 @@
 
 <style>
 *{box-sizing:border-box}
-body{
-margin:0;
-font-family:Arial,Helvetica,sans-serif;
-background:#f4f7fb;
-color:#111827
-}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f4f6;color:#111827}
 button,input,select{font:inherit}
+button{cursor:pointer}
 
 .login{
 min-height:100vh;
@@ -26,140 +22,102 @@ background:linear-gradient(135deg,#0f172a,#2563eb)
 
 .login-box{
 width:100%;
-max-width:410px;
-background:#fff;
-padding:35px;
-border-radius:24px;
-box-shadow:0 25px 70px #0008
-}
-
-.login-logo{
-width:70px;
-height:70px;
-margin:0 auto 18px;
+max-width:400px;
+background:white;
+padding:30px;
 border-radius:20px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:30px;
-font-weight:bold;
-color:#fff;
-background:linear-gradient(135deg,#2563eb,#7c3aed)
+box-shadow:0 20px 60px #0006
 }
 
-.login-box h1{
-text-align:center;
-margin:0
-}
-
-.login-box p{
-text-align:center;
-color:#64748b;
-margin:8px 0 25px
-}
+.login-box h1{text-align:center;margin:0 0 8px}
+.login-box p{text-align:center;color:#6b7280}
 
 input,select{
 width:100%;
 padding:13px;
-margin:6px 0 12px;
+margin:7px 0;
 border:1px solid #d1d5db;
-border-radius:11px;
+border-radius:10px;
 outline:none
 }
 
-input:focus,select:focus{
-border-color:#2563eb;
-box-shadow:0 0 0 3px #2563eb22
-}
+input:focus,select:focus{border-color:#2563eb}
 
 .btn{
 border:0;
-border-radius:11px;
+border-radius:10px;
 padding:12px 16px;
-cursor:pointer;
 background:#2563eb;
 color:#fff;
 font-weight:bold
 }
 
-.btn:hover{
-opacity:.9
-}
+.btn.success{background:#16a34a}
+.btn.danger{background:#dc2626}
+.btn.dark{background:#111827}
 
-.success{background:#16a34a}
-.danger{background:#dc2626}
-
-.login .btn{
-width:100%;
-margin-top:5px
-}
+.login .btn{width:100%;margin-top:10px}
 
 .error{
+display:none;
 color:#dc2626;
 background:#fee2e2;
 padding:10px;
-border-radius:9px;
+border-radius:8px;
 text-align:center;
-margin-top:12px;
-display:none
+margin-top:12px
 }
 
-.app{
-display:none;
-min-height:100vh
-}
+.app{display:none;min-height:100vh}
 
 .sidebar{
 position:fixed;
 left:0;
 top:0;
 bottom:0;
-width:250px;
-background:#0f172a;
-color:#fff;
-padding:20px 15px;
+width:240px;
+background:#111827;
+color:white;
+padding:20px;
 z-index:10
 }
 
 .logo{
 font-size:19px;
 font-weight:bold;
-padding:8px 10px 25px
+margin-bottom:25px
 }
 
-.logo span{
-color:#60a5fa
-}
+.logo span{color:#60a5fa}
 
 .nav button{
 width:100%;
 padding:12px;
 margin:4px 0;
 border:0;
-border-radius:10px;
+border-radius:9px;
 background:transparent;
-color:#cbd5e1;
-text-align:left;
-cursor:pointer
+color:#d1d5db;
+text-align:left
 }
 
 .nav button:hover,
 .nav button.active{
 background:#2563eb;
-color:#fff
+color:white
 }
 
 .logout{
 position:absolute;
 bottom:20px;
-left:15px;
-right:15px;
+left:20px;
+right:20px;
 background:#dc2626!important;
-color:#fff!important
+color:white!important
 }
 
 .main{
-margin-left:250px;
+margin-left:240px;
 padding:25px
 }
 
@@ -170,25 +128,14 @@ align-items:center;
 margin-bottom:20px
 }
 
-.top h1{
-margin:0
-}
-
 .user{
-background:#fff;
-padding:11px 15px;
-border-radius:11px;
-box-shadow:0 3px 12px #0001;
-font-weight:bold
+background:white;
+padding:10px 15px;
+border-radius:10px
 }
 
-.page{
-display:none
-}
-
-.page.active{
-display:block
-}
+.page{display:none}
+.page.active{display:block}
 
 .cards{
 display:grid;
@@ -197,19 +144,14 @@ gap:15px
 }
 
 .card{
-background:#fff;
+background:white;
 padding:20px;
-border-radius:16px;
-box-shadow:0 3px 15px #0000000d
+border-radius:15px;
+box-shadow:0 2px 8px #0000000d
 }
 
-.card small{
-color:#64748b
-}
-
-.card h2{
-margin:8px 0
-}
+.card small{color:#6b7280}
+.card h2{margin:8px 0}
 
 .grid{
 display:grid;
@@ -219,16 +161,9 @@ margin-top:20px
 }
 
 .panel{
-background:#fff;
+background:white;
 padding:20px;
-border-radius:16px;
-box-shadow:0 3px 15px #0000000d
-}
-
-.form-row{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px
+border-radius:15px
 }
 
 table{
@@ -243,21 +178,22 @@ border-bottom:1px solid #e5e7eb;
 text-align:left
 }
 
-th{
-background:#f8fafc
+th{background:#f9fafb}
+
+.form-row{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px
 }
 
 .notice{
-padding:13px;
+padding:12px;
 background:#eff6ff;
-border-left:4px solid #2563eb;
-border-radius:9px;
+border-radius:10px;
 margin-bottom:15px
 }
 
-.hidden{
-display:none!important
-}
+.hidden{display:none!important}
 
 .permission-list{
 display:grid;
@@ -267,19 +203,19 @@ margin:10px 0 15px
 }
 
 .permission{
-background:#f8fafc;
+background:#f9fafb;
 padding:12px;
 border-radius:10px
 }
 
 .permission input{
 width:auto;
-margin-right:7px
+margin-right:8px
 }
 
 .worker-card{
 border:1px solid #e5e7eb;
-border-radius:13px;
+border-radius:12px;
 padding:15px;
 margin-top:15px
 }
@@ -291,42 +227,34 @@ flex-wrap:wrap
 }
 
 .actions button{
-padding:8px 11px;
+padding:8px 12px;
 border:0;
 border-radius:8px;
-cursor:pointer;
-color:#fff
+color:white
+}
+
+.small{
+font-size:12px;
+color:#6b7280
 }
 
 .badge{
 display:inline-block;
-padding:5px 9px;
+padding:4px 8px;
 border-radius:20px;
 font-size:12px;
 background:#dbeafe;
 color:#1d4ed8
 }
 
-.green{
-background:#dcfce7;
-color:#15803d
-}
+.green{background:#dcfce7;color:#15803d}
+.red{background:#fee2e2;color:#b91c1c}
 
-.red{
-background:#fee2e2;
-color:#b91c1c
-}
-
-.small{
-font-size:12px;
-color:#64748b
-}
-
-@media(max-width:850px){
+@media(max-width:800px){
 
 .sidebar{
 width:70px;
-padding:10px 7px
+padding:10px
 }
 
 .logo{
@@ -334,11 +262,8 @@ font-size:0;
 text-align:center
 }
 
-.logo:before{
-content:"OS";
-font-size:20px;
-color:#60a5fa;
-font-weight:bold
+.logo span{
+font-size:18px
 }
 
 .nav button{
@@ -351,9 +276,9 @@ font-size:20px
 }
 
 .logout{
-left:7px;
-right:7px;
-font-size:0!important
+left:10px;
+right:10px;
+font-size:0
 }
 
 .main{
@@ -370,7 +295,7 @@ grid-template-columns:1fr
 }
 }
 
-@media(max-width:550px){
+@media(max-width:480px){
 
 .cards{
 grid-template-columns:1fr
@@ -384,14 +309,8 @@ grid-template-columns:1fr
 grid-template-columns:1fr
 }
 
-.top{
-align-items:flex-start;
-gap:10px;
-flex-direction:column
-}
-
-.user{
-width:100%
+.top h1{
+font-size:20px
 }
 }
 </style>
@@ -399,60 +318,41 @@ width:100%
 
 <body>
 
-
-<!-- =========================
-     GİRİŞ
-========================= -->
+<!-- LOGIN -->
 
 <div id="login" class="login">
 
 <div class="login-box">
 
-<div class="login-logo">
-OS
-</div>
+<h1>Şəxsi İstehsalat <span style="color:#2563eb">OS</span></h1>
 
-<h1>
-Şəxsi İstehsalat
-<span style="color:#2563eb">OS</span>
-</h1>
-
-<p>
-Sistemə təhlükəsiz giriş
-</p>
+<p>Sistemə giriş</p>
 
 <input
 id="username"
 type="text"
 placeholder="İstifadəçi adı"
-autocomplete="username"
->
+autocomplete="username">
 
 <input
 id="password"
 type="password"
 placeholder="Şifrə"
-autocomplete="current-password"
->
+autocomplete="current-password">
 
-<button
-class="btn"
-id="loginButton"
-onclick="login()"
->
-🔐 Daxil ol
+<button id="loginBtn" class="btn" type="button">
+Daxil ol
 </button>
 
-<div id="error" class="error"></div>
-
+<div id="error" class="error">
+İstifadəçi adı və ya şifrə yanlışdır.
 </div>
 
 </div>
+</div>
 
 
-<!-- =========================
-     APP
-========================= -->
+<!-- APP -->
 
 <div id="app" class="app">
 
@@ -464,51 +364,25 @@ onclick="login()"
 
 <div class="nav">
 
-<button onclick="showPage('dashboard',this)">
-📊 Panel
-</button>
+<button id="dashboardNav" onclick="showPage('dashboard',this)">📊 Panel</button>
 
-<button id="entryNav"
-onclick="showPage('entry',this)">
-📦 Məhsul girişi
-</button>
+<button id="entryNav" onclick="showPage('entry',this)">📦 Məhsul girişi</button>
 
-<button id="exitNav"
-onclick="showPage('exit',this)">
-🚚 Məhsul çıxışı
-</button>
+<button id="exitNav" onclick="showPage('exit',this)">🚚 Məhsul çıxışı</button>
 
-<button id="stockNav"
-onclick="showPage('stock',this)">
-🏭 Anbar
-</button>
+<button id="stockNav" onclick="showPage('stock',this)">🏭 Anbar</button>
 
-<button id="cashNav"
-onclick="showPage('cash',this)">
-💰 Kassa
-</button>
+<button id="cashNav" onclick="showPage('cash',this)">💰 Kassa</button>
 
-<button id="reportsNav"
-onclick="showPage('reports',this)">
-📅 Hesabat
-</button>
+<button id="reportsNav" onclick="showPage('reports',this)">📅 Hesabat</button>
 
-<button id="managerNav"
-onclick="showPage('manager',this)">
-👨‍💼 Müdir paneli
-</button>
+<button id="managerNav" onclick="showPage('manager',this)">👨‍💼 Müdir paneli</button>
 
-<button id="workersNav"
-onclick="showPage('workers',this)">
-👷 İşçilər
-</button>
+<button id="workersNav" onclick="showPage('workers',this)">👷 İşçilər</button>
 
 </div>
 
-<button class="nav button logout"
-onclick="logout()">
-🚪 Çıxış
-</button>
+<button class="nav button logout" onclick="logout()">🚪 Çıxış</button>
 
 </aside>
 
@@ -517,9 +391,7 @@ onclick="logout()">
 
 <div class="top">
 
-<h1 id="pageTitle">
-Əsas panel
-</h1>
+<h1 id="pageTitle">Əsas panel</h1>
 
 <div class="user">
 👤 <span id="currentUser"></span>
@@ -528,16 +400,14 @@ onclick="logout()">
 </div>
 
 
-<!-- PANEL -->
+<!-- DASHBOARD -->
 
 <section id="dashboard" class="page active">
 
-<div id="workerNotice"
-class="notice hidden">
+<div id="workerNotice" class="notice hidden">
 
 <b>👷 İşçi paneli</b><br>
-
-Sizə verilmiş səlahiyyətlər aktivdir.
+Sizə verilmiş səlahiyyətlərə uyğun bölmələr aktivdir.
 
 </div>
 
@@ -568,22 +438,16 @@ Sizə verilmiş səlahiyyətlər aktivdir.
 <div class="grid">
 
 <div class="panel">
-
 <h3>Son əməliyyatlar</h3>
-
 <div id="recent"></div>
-
 </div>
 
 <div class="panel">
-
 <h3>Sistem məlumatı</h3>
-
 <p>
 İstehsalat, anbar və kassa əməliyyatlarını
-vahid sistemdən idarə edin.
+bir yerdən idarə edin.
 </p>
-
 </div>
 
 </div>
@@ -591,35 +455,24 @@ vahid sistemdən idarə edin.
 </section>
 
 
-<!-- GİRİŞ -->
+<!-- ENTRY -->
 
 <section id="entry" class="page">
 
 <div class="panel">
 
-<h2>📦 Məhsul girişi</h2>
+<h2>Məhsul girişi</h2>
 
 <div class="form-row">
 
 <div>
-
 <label>Məhsul</label>
-
-<input
-id="entryProduct"
-placeholder="Məhsul adı">
-
+<input id="entryProduct" placeholder="Məhsul adı">
 </div>
 
 <div>
-
 <label>Miqdar</label>
-
-<input
-id="entryQty"
-type="number"
-placeholder="0">
-
+<input id="entryQty" type="number" placeholder="0">
 </div>
 
 </div>
@@ -627,35 +480,19 @@ placeholder="0">
 <div class="form-row">
 
 <div>
-
 <label>Vahid qiymət</label>
-
-<input
-id="entryPrice"
-type="number"
-step="0.01"
-placeholder="0.00">
-
+<input id="entryPrice" type="number" step="0.01" placeholder="0.00">
 </div>
 
 <div>
-
 <label>Qeyd</label>
-
-<input
-id="entryNote"
-placeholder="Qeyd">
-
+<input id="entryNote" placeholder="Qeyd">
 </div>
 
 </div>
 
-<button
-class="btn success"
-onclick="addEntry()">
-
-＋ Giriş əlavə et
-
+<button class="btn success" onclick="addEntry()">
++ Giriş əlavə et
 </button>
 
 </div>
@@ -663,35 +500,24 @@ onclick="addEntry()">
 </section>
 
 
-<!-- ÇIXIŞ -->
+<!-- EXIT -->
 
 <section id="exit" class="page">
 
 <div class="panel">
 
-<h2>🚚 Məhsul çıxışı</h2>
+<h2>Məhsul çıxışı</h2>
 
 <div class="form-row">
 
 <div>
-
 <label>Məhsul</label>
-
-<input
-id="exitProduct"
-placeholder="Məhsul adı">
-
+<input id="exitProduct" placeholder="Məhsul adı">
 </div>
 
 <div>
-
 <label>Miqdar</label>
-
-<input
-id="exitQty"
-type="number"
-placeholder="0">
-
+<input id="exitQty" type="number" placeholder="0">
 </div>
 
 </div>
@@ -699,35 +525,19 @@ placeholder="0">
 <div class="form-row">
 
 <div>
-
 <label>Satış qiyməti</label>
-
-<input
-id="exitPrice"
-type="number"
-step="0.01"
-placeholder="0.00">
-
+<input id="exitPrice" type="number" step="0.01" placeholder="0.00">
 </div>
 
 <div>
-
 <label>Qeyd</label>
-
-<input
-id="exitNote"
-placeholder="Qeyd">
-
+<input id="exitNote" placeholder="Qeyd">
 </div>
 
 </div>
 
-<button
-class="btn"
-onclick="addExit()">
-
+<button class="btn" onclick="addExit()">
 − Çıxış əlavə et
-
 </button>
 
 </div>
@@ -735,25 +545,23 @@ onclick="addExit()">
 </section>
 
 
-<!-- ANBAR -->
+<!-- STOCK -->
 
 <section id="stock" class="page">
 
 <div class="panel">
 
-<h2>🏭 Anbar qalığı</h2>
+<h2>Anbar qalığı</h2>
 
 <table>
 
 <thead>
-
 <tr>
 <th>Məhsul</th>
 <th>Miqdar</th>
 <th>Orta qiymət</th>
 <th>Məbləğ</th>
 </tr>
-
 </thead>
 
 <tbody id="stockTable"></tbody>
@@ -765,40 +573,28 @@ onclick="addExit()">
 </section>
 
 
-<!-- KASSA -->
+<!-- CASH -->
 
 <section id="cash" class="page">
 
 <div class="panel">
 
-<h2>💰 Kassa</h2>
+<h2>Kassa</h2>
 
 <div class="form-row">
 
 <div>
-
 <label>Məbləğ</label>
-
-<input
-id="cashAmount"
-type="number"
-step="0.01">
-
+<input id="cashAmount" type="number" step="0.01">
 </div>
 
 <div>
-
 <label>Əməliyyat</label>
 
 <select id="cashType">
 
-<option value="in">
-Mədaxil
-</option>
-
-<option value="out">
-Məxaric
-</option>
+<option value="in">Mədaxil</option>
+<option value="out">Məxaric</option>
 
 </select>
 
@@ -806,33 +602,23 @@ Məxaric
 
 </div>
 
-<input
-id="cashNote"
-placeholder="Qeyd">
+<input id="cashNote" placeholder="Qeyd">
 
-<button
-class="btn success"
-onclick="addCash()">
-
-＋ Əməliyyatı əlavə et
-
+<button class="btn success" onclick="addCash()">
+Əməliyyatı əlavə et
 </button>
 
-<h3>
-Kassa əməliyyatları
-</h3>
+<h3>Kassa əməliyyatları</h3>
 
 <table>
 
 <thead>
-
 <tr>
 <th>Tarix</th>
 <th>Əməliyyat</th>
 <th>Məbləğ</th>
 <th>Qeyd</th>
 </tr>
-
 </thead>
 
 <tbody id="cashTable"></tbody>
@@ -844,45 +630,34 @@ Kassa əməliyyatları
 </section>
 
 
-<!-- HESABAT -->
+<!-- REPORT -->
 
 <section id="reports" class="page">
 
 <div class="panel">
 
-<h2>📅 Tarix üzrə hesabat</h2>
+<h2>Tarix üzrə hesabat</h2>
 
 <div class="form-row">
 
-<input
-id="fromDate"
-type="date">
+<input id="fromDate" type="date">
 
-<input
-id="toDate"
-type="date">
+<input id="toDate" type="date">
 
 </div>
 
-<button
-class="btn"
-onclick="report()">
-
-📊 Hesabatı göstər
-
+<button class="btn" onclick="report()">
+Hesabatı göstər
 </button>
 
-<div
-id="reportResult"
-style="margin-top:20px">
-</div>
+<div id="reportResult" style="margin-top:20px"></div>
 
 </div>
 
 </section>
 
 
-<!-- MÜDİR -->
+<!-- MANAGER -->
 
 <section id="manager" class="page">
 
@@ -891,9 +666,7 @@ style="margin-top:20px">
 <h2>👨‍💼 Müdir paneli</h2>
 
 <div class="notice">
-
 Bu bölmə yalnız müdir üçün aktivdir.
-
 </div>
 
 <div class="cards">
@@ -925,7 +698,7 @@ Bu bölmə yalnız müdir üçün aktivdir.
 </section>
 
 
-<!-- İŞÇİLƏR -->
+<!-- WORKERS -->
 
 <section id="workers" class="page">
 
@@ -934,36 +707,21 @@ Bu bölmə yalnız müdir üçün aktivdir.
 <h2>👷 İşçi hesabları</h2>
 
 <div class="notice">
-
-Buradan işçilər üçün ayrıca istifadəçi adı,
-şifrə və səlahiyyət yarada bilərsiniz.
-
+Buradan işçi hesabı yarada və səlahiyyətləri idarə edə bilərsiniz.
 </div>
 
-<h3>
-Yeni işçi hesabı
-</h3>
+<h3>Yeni işçi hesabı</h3>
 
 <div class="form-row">
 
 <div>
-
 <label>İşçinin adı</label>
-
-<input
-id="newWorkerName"
-placeholder="Məsələn: Elvin Məmmədov">
-
+<input id="newWorkerName" placeholder="Məsələn: Elvin Məmmədov">
 </div>
 
 <div>
-
 <label>İstifadəçi adı</label>
-
-<input
-id="newWorkerUsername"
-placeholder="Məsələn: elvin">
-
+<input id="newWorkerUsername" placeholder="Məsələn: elvin">
 </div>
 
 </div>
@@ -971,96 +729,50 @@ placeholder="Məsələn: elvin">
 <div class="form-row">
 
 <div>
-
 <label>Şifrə</label>
-
-<input
-id="newWorkerPassword"
-type="password"
-placeholder="Yeni şifrə">
-
+<input id="newWorkerPassword" type="password">
 </div>
 
 <div>
-
 <label>Şifrəni təsdiqlə</label>
-
-<input
-id="newWorkerPassword2"
-type="password"
-placeholder="Şifrəni təkrar yazın">
-
+<input id="newWorkerPassword2" type="password">
 </div>
 
 </div>
 
-<h3>
-Səlahiyyətlər
-</h3>
+<h3>Səlahiyyətlər</h3>
 
 <div class="permission-list">
 
 <label class="permission">
-
-<input
-type="checkbox"
-id="permEntry"
-checked>
-
+<input type="checkbox" id="permEntry" checked>
 📦 Məhsul girişi
-
 </label>
 
 <label class="permission">
-
-<input
-type="checkbox"
-id="permExit"
-checked>
-
+<input type="checkbox" id="permExit" checked>
 🚚 Məhsul çıxışı
-
 </label>
 
 <label class="permission">
-
-<input
-type="checkbox"
-id="permStock"
-checked>
-
+<input type="checkbox" id="permStock" checked>
 🏭 Anbar
-
 </label>
 
 <label class="permission">
-
-<input
-type="checkbox"
-id="permCash">
-
+<input type="checkbox" id="permCash">
 💰 Kassa
-
 </label>
 
 <label class="permission">
-
-<input
-type="checkbox"
-id="permReports">
-
+<input type="checkbox" id="permReports">
 📅 Hesabat
-
 </label>
 
 </div>
 
-<button
-class="btn success"
-onclick="createWorker()">
-
-＋ İşçi hesabı yarat
-
+<button class="btn success" onclick="createWorker()">
++ İşçi hesabı yarat
 </button>
 
 <h3 style="margin-top:30px">
@@ -1083,99 +795,78 @@ Mövcud işçilər
    MƏLUMATLAR
 ========================= */
 
-let entries=JSON.parse(
-localStorage.getItem("entries")||"[]"
-);
+let entries=[];
+let exits=[];
+let cash=[];
+let workers=[];
 
-let exits=JSON.parse(
-localStorage.getItem("exits")||"[]"
-);
+try{
+entries=JSON.parse(localStorage.getItem("entries")||"[]");
+}catch(e){entries=[]}
 
-let cash=JSON.parse(
-localStorage.getItem("cash")||"[]"
-);
+try{
+exits=JSON.parse(localStorage.getItem("exits")||"[]");
+}catch(e){exits=[]}
 
-let workers=JSON.parse(
-localStorage.getItem("workers")||"[]"
-);
+try{
+cash=JSON.parse(localStorage.getItem("cash")||"[]");
+}catch(e){cash=[]}
+
+try{
+workers=JSON.parse(localStorage.getItem("workers")||"[]");
+}catch(e){workers=[]}
+
 
 let user=null;
 let currentWorker=null;
-
-
-/* =========================
-   MÜDİR
-========================= */
 
 const ADMIN_USERNAME="admin";
 const ADMIN_PASSWORD="1234";
 
 
 /* =========================
-   GİRİŞ
+   LOGIN
 ========================= */
 
 function login(){
 
-const username=document
-.getElementById("username")
-.value
-.trim()
-.toLowerCase();
+const username=
+document.getElementById("username").value.trim();
 
-const password=document
-.getElementById("password")
-.value
-.trim();
+const password=
+document.getElementById("password").value;
 
-const error=document
-.getElementById("error");
+const error=
+document.getElementById("error");
 
 error.style.display="none";
 
 
-/* MÜDİR */
-
-if(
-username===ADMIN_USERNAME &&
-password===ADMIN_PASSWORD
-){
+if(username===ADMIN_USERNAME && password===ADMIN_PASSWORD){
 
 user="admin";
 currentWorker=null;
 
-localStorage.setItem(
-"session",
-"admin"
-);
+localStorage.setItem("session","admin");
 
 startApp();
 
 return;
-
 }
 
 
-/* İŞÇİ */
+const worker=workers.find(function(w){
 
-const worker=workers.find(w=>
+return w.username===username &&
+w.password===password &&
+w.active===true;
 
-String(w.username)
-.trim()
-.toLowerCase()===username &&
-
-String(w.password)
-===password &&
-
-w.active===true
-
-);
+});
 
 
 if(worker){
 
 user="worker";
-
 currentWorker=worker;
 
 localStorage.setItem(
@@ -1189,42 +880,22 @@ id:worker.id
 startApp();
 
 return;
-
 }
 
-
-/* SƏHV */
-
-error.innerHTML=
-"❌ İstifadəçi adı və ya şifrə yanlışdır.";
 
 error.style.display="block";
 
 }
 
 
-/* =========================
-   ENTER
-========================= */
+/* ENTER düyməsi ilə giriş */
 
-document
-.getElementById("username")
-.addEventListener(
-"keydown",
-function(e){
-
-if(e.key==="Enter"){
-document
-.getElementById("password")
-.focus();
-}
-
-}
+document.getElementById("loginBtn").addEventListener(
+"click",
+login
 );
 
-document
-.getElementById("password")
-.addEventListener(
+document.getElementById("password").addEventListener(
 "keydown",
 function(e){
 
@@ -1237,34 +908,31 @@ login();
 
 
 /* =========================
-   APP
+   START
 ========================= */
 
 function startApp(){
 
-document.getElementById("login")
-.style.display="none";
-
-document.getElementById("app")
-.style.display="block";
+document.getElementById("login").style.display="none";
+document.getElementById("app").style.display="block";
 
 
 if(user==="admin"){
 
-document.getElementById("currentUser")
-.textContent="Müdir";
+document.getElementById("currentUser").textContent="Müdir";
 
 setupAdmin();
 
 }else{
 
-document.getElementById("currentUser")
-.textContent=
-currentWorker.name+" • İşçi";
+document.getElementById("currentUser").textContent=
+currentWorker.name+" (İşçi)";
 
 setupWorker();
 
 }
+
+showPage("dashboard");
 
 update();
 
@@ -1277,7 +945,7 @@ update();
 
 function setupAdmin(){
 
-[
+const ids=[
 "entryNav",
 "exitNav",
 "stockNav",
@@ -1285,16 +953,16 @@ function setupAdmin(){
 "reportsNav",
 "managerNav",
 "workersNav"
-].forEach(id=>{
+];
 
-document.getElementById(id)
-.style.display="block";
+ids.forEach(function(id){
+
+document.getElementById(id).style.display="block";
 
 });
 
-document.getElementById(
-"workerNotice"
-).classList.add("hidden");
+document.getElementById("workerNotice")
+.classList.add("hidden");
 
 }
 
@@ -1305,45 +973,28 @@ document.getElementById(
 
 function setupWorker(){
 
-const p=
-currentWorker.permissions||{};
+const p=currentWorker.permissions||{};
 
-document.getElementById(
-"managerNav"
-).style.display="none";
+document.getElementById("managerNav").style.display="none";
+document.getElementById("workersNav").style.display="none";
 
-document.getElementById(
-"workersNav"
-).style.display="none";
-
-document.getElementById(
-"entryNav"
-).style.display=
+document.getElementById("entryNav").style.display=
 p.entry?"block":"none";
 
-document.getElementById(
-"exitNav"
-).style.display=
+document.getElementById("exitNav").style.display=
 p.exit?"block":"none";
 
-document.getElementById(
-"stockNav"
-).style.display=
+document.getElementById("stockNav").style.display=
 p.stock?"block":"none";
 
-document.getElementById(
-"cashNav"
-).style.display=
+document.getElementById("cashNav").style.display=
 p.cash?"block":"none";
 
-document.getElementById(
-"reportsNav"
-).style.display=
+document.getElementById("reportsNav").style.display=
 p.reports?"block":"none";
 
-document.getElementById(
-"workerNotice"
-).classList.remove("hidden");
+document.getElementById("workerNotice")
+.classList.remove("hidden");
 
 }
 
@@ -1359,17 +1010,12 @@ localStorage.removeItem("session");
 user=null;
 currentWorker=null;
 
-document.getElementById("app")
-.style.display="none";
+document.getElementById("app").style.display="none";
+document.getElementById("login").style.display="flex";
 
-document.getElementById("login")
-.style.display="flex";
-
-document.getElementById("username")
-.value="";
-
-document.getElementById("password")
-.value="";
+document.getElementById("username").value="";
+document.getElementById("password").value="";
+document.getElementById("error").style.display="none";
 
 }
 
@@ -1382,33 +1028,34 @@ function showPage(id,btn){
 
 if(!canAccess(id)){
 
-alert(
-"Bu bölməyə giriş icazəniz yoxdur."
-);
+alert("Bu bölməyə giriş icazəniz yoxdur.");
 
 return;
-
 }
 
-document
-.querySelectorAll(".page")
-.forEach(x=>
-x.classList.remove("active")
-);
 
-document
-.getElementById(id)
+document.querySelectorAll(".page")
+.forEach(function(x){
+
+x.classList.remove("active");
+
+});
+
+
+document.getElementById(id)
 .classList.add("active");
 
-document
-.querySelectorAll(".nav button")
-.forEach(x=>
-x.classList.remove("active")
-);
 
-if(btn){
-btn.classList.add("active");
-}
+document.querySelectorAll(".nav button")
+.forEach(function(x){
+
+x.classList.remove("active");
+
+});
+
+
+if(btn)btn.classList.add("active");
+
 
 const names={
 
@@ -1423,9 +1070,8 @@ workers:"İşçi hesabları"
 
 };
 
-document.getElementById(
-"pageTitle"
-).textContent=names[id];
+document.getElementById("pageTitle")
+.textContent=names[id];
 
 update();
 
@@ -1438,40 +1084,18 @@ update();
 
 function canAccess(id){
 
-if(user==="admin"){
-return true;
-}
+if(user==="admin")return true;
 
-if(!currentWorker){
-return false;
-}
+if(!currentWorker)return false;
 
-const p=
-currentWorker.permissions||{};
+const p=currentWorker.permissions||{};
 
-if(id==="dashboard"){
-return true;
-}
-
-if(id==="entry"){
-return p.entry===true;
-}
-
-if(id==="exit"){
-return p.exit===true;
-}
-
-if(id==="stock"){
-return p.stock===true;
-}
-
-if(id==="cash"){
-return p.cash===true;
-}
-
-if(id==="reports"){
-return p.reports===true;
-}
+if(id==="dashboard")return true;
+if(id==="entry")return !!p.entry;
+if(id==="exit")return !!p.exit;
+if(id==="stock")return !!p.stock;
+if(id==="cash")return !!p.cash;
+if(id==="reports")return !!p.reports;
 
 return false;
 
@@ -1508,88 +1132,74 @@ JSON.stringify(workers)
 
 
 /* =========================
-   WORKER CREATE
+   CREATE WORKER
 ========================= */
 
 function createWorker(){
 
 if(user!=="admin"){
+
+alert("Yalnız müdir işçi hesabı yarada bilər.");
 return;
+
 }
 
-const name=document
-.getElementById(
-"newWorkerName"
-).value.trim();
 
-const username=document
-.getElementById(
-"newWorkerUsername"
-).value.trim()
-.toLowerCase();
+const name=
+document.getElementById("newWorkerName").value.trim();
 
-const password=document
-.getElementById(
-"newWorkerPassword"
-).value;
+const username=
+document.getElementById("newWorkerUsername")
+.value.trim().toLowerCase();
 
-const password2=document
-.getElementById(
-"newWorkerPassword2"
-).value;
+const password=
+document.getElementById("newWorkerPassword").value;
+
+const password2=
+document.getElementById("newWorkerPassword2").value;
 
 
 if(!name||!username||!password){
 
-alert(
-"Bütün məlumatları doldurun."
-);
-
+alert("Bütün məlumatları doldurun.");
 return;
+
 }
 
 if(password!==password2){
 
-alert(
-"Şifrələr eyni deyil."
-);
-
+alert("Şifrələr eyni deyil.");
 return;
+
 }
 
 if(password.length<4){
 
-alert(
-"Şifrə ən azı 4 simvol olmalıdır."
-);
-
+alert("Şifrə ən azı 4 simvol olmalıdır.");
 return;
+
 }
 
 if(username==="admin"){
 
-alert(
-"Bu istifadəçi adı istifadə edilə bilməz."
-);
-
+alert("Bu istifadəçi adı istifadə edilə bilməz.");
 return;
+
 }
 
-if(workers.some(
-w=>
-String(w.username)
-.toLowerCase()===username
-)){
+if(workers.some(function(w){
 
-alert(
-"Bu istifadəçi adı artıq mövcuddur."
-);
+return w.username===username;
 
+})){
+
+alert("Bu istifadəçi adı artıq mövcuddur.");
 return;
+
 }
 
 
-const worker={
+workers.push({
 
 id:Date.now(),
 
@@ -1603,49 +1213,29 @@ active:true,
 
 permissions:{
 
-entry:
-document.getElementById(
-"permEntry"
-).checked,
+entry:document.getElementById("permEntry").checked,
 
-exit:
-document.getElementById(
-"permExit"
-).checked,
+exit:document.getElementById("permExit").checked,
 
-stock:
-document.getElementById(
-"permStock"
-).checked,
+stock:document.getElementById("permStock").checked,
 
-cash:
-document.getElementById(
-"permCash"
-).checked,
+cash:document.getElementById("permCash").checked,
 
-reports:
-document.getElementById(
-"permReports"
-).checked
+reports:document.getElementById("permReports").checked
 
 },
 
-created:
-new Date().toISOString()
+created:new Date().toISOString()
 
-};
+});
 
-workers.push(worker);
 
 save();
 
 clearWorkerForm();
-
 renderWorkers();
 
-alert(
-"✅ İşçi hesabı yaradıldı."
-);
+alert("İşçi hesabı yaradıldı.");
 
 }
 
@@ -1656,41 +1246,16 @@ alert(
 
 function clearWorkerForm(){
 
-document.getElementById(
-"newWorkerName"
-).value="";
+document.getElementById("newWorkerName").value="";
+document.getElementById("newWorkerUsername").value="";
+document.getElementById("newWorkerPassword").value="";
+document.getElementById("newWorkerPassword2").value="";
 
-document.getElementById(
-"newWorkerUsername"
-).value="";
-
-document.getElementById(
-"newWorkerPassword"
-).value="";
-
-document.getElementById(
-"newWorkerPassword2"
-).value="";
-
-document.getElementById(
-"permEntry"
-).checked=true;
-
-document.getElementById(
-"permExit"
-).checked=true;
-
-document.getElementById(
-"permStock"
-).checked=true;
-
-document.getElementById(
-"permCash"
-).checked=false;
-
-document.getElementById(
-"permReports"
-).checked=false;
+document.getElementById("permEntry").checked=true;
+document.getElementById("permExit").checked=true;
+document.getElementById("permStock").checked=true;
+document.getElementById("permCash").checked=false;
+document.getElementById("permReports").checked=false;
 
 }
 
@@ -1701,84 +1266,151 @@ document.getElementById(
 
 function renderWorkers(){
 
-if(user!=="admin"){
-return;
-}
+if(user!=="admin")return;
 
-const box=
-document.getElementById(
-"workersList"
-);
+const box=document.getElementById("workersList");
+
 
 if(workers.length===0){
 
-box.innerHTML=
-"<p>Hələ işçi hesabı yoxdur.</p>";
-
+box.innerHTML="<p>Hələ işçi hesabı yaradılmayıb.</p>";
 return;
+
 }
 
-box.innerHTML=
-workers.map(w=>{
 
-const p=
-w.permissions||{};
+box.innerHTML=workers.map(function(w){
 
 return `
 
 <div class="worker-card">
 
+<div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap">
+
+<div>
+
 <b>👤 ${esc(w.name)}</b>
 
 <div class="small">
-İstifadəçi adı:
-${esc(w.username)}
+İstifadəçi adı: ${esc(w.username)}
 </div>
 
-<p>
+</div>
 
-<span class="badge ${
-w.active?"green":"red"
-}">
+<span class="badge ${w.active?"green":"red"}">
 
 ${w.active?"Aktiv":"Deaktiv"}
 
 </span>
 
-</p>
+</div>
 
 <p>
 
-${p.entry?"📦 Giriş ":""}
+<b>Səlahiyyətlər:</b>
 
-${p.exit?"🚚 Çıxış ":""}
-
-${p.stock?"🏭 Anbar ":""}
-
-${p.cash?"💰 Kassa ":""}
-
-${p.reports?"📅 Hesabat ":""}
+${w.permissions.entry?"📦 Giriş ":""}
+${w.permissions.exit?"🚚 Çıxış ":""}
+${w.permissions.stock?"🏭 Anbar ":""}
+${w.permissions.cash?"💰 Kassa ":""}
+${w.permissions.reports?"📅 Hesabat ":""}
 
 </p>
 
 <div class="actions">
 
-<button
-style="background:#2563eb"
+<button style="background:#2563eb"
 onclick="changeWorkerPassword(${w.id})">
-
 🔑 Şifrə
-
 </button>
 
-<button
-style="background:${w.active?"#dc2626":"#16a34a"}"
+<button style="background:${w.active?"#dc2626":"#16a34a"}"
 onclick="toggleWorker(${w.id})">
-
-${w.active?"Deaktiv et":"Aktiv et"}
-
+${w.active?"⛔ Deaktiv et":"✅ Aktiv et"}
 </button>
 
-<button
-style="background:#111827"
-onclick="editWorkerPermissions(${w.id
+<button style="background:#111827"
+onclick="editWorkerPermissions(${w.id})">
+⚙️ Səlahiyyət
+</button>
+
+<button style="background:#dc2626"
+onclick="deleteWorker(${w.id})">
+🗑️ Sil
+</button>
+
+</div>
+
+</div>
+
+`;
+
+}).join("");
+
+}
+
+
+/* =========================
+   PASSWORD
+========================= */
+
+function changeWorkerPassword(id){
+
+if(user!=="admin")return;
+
+const worker=workers.find(function(w){
+return w.id===id;
+});
+
+if(!worker)return;
+
+const password=prompt(
+worker.name+" üçün yeni şifrə:"
+);
+
+if(password===null)return;
+
+if(password.length<4){
+
+alert("Şifrə ən azı 4 simvol olmalıdır.");
+return;
+
+}
+
+worker.password=password;
+
+save();
+renderWorkers();
+
+alert("Şifrə dəyişdirildi.");
+
+}
+
+
+/* =========================
+   TOGGLE
+========================= */
+
+function toggleWorker(id){
+
+if(user!=="admin")return;
+
+const worker=workers.find(function(w){
+return w.id===id;
+});
+
+if(!worker)return;
+
+worker.active=!worker.active;
+
+save();
+renderWorkers();
+
+}
+
+
+/* =========================
+   DELETE
+========================= */
+
+function deleteWorker(id)
