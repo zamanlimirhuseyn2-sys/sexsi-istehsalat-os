@@ -10,11 +10,13 @@ body{margin:0;font-family:Arial,sans-serif;background:#f3f4f6;color:#111827}
 button,input,select{font:inherit}
 .login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(135deg,#111827,#374151)}
 .login-box{width:100%;max-width:390px;background:white;padding:30px;border-radius:20px;box-shadow:0 20px 50px #0005}
-.login-box h1{text-align:center;margin:0 0 8px}.login-box p{text-align:center;color:#6b7280}
+.login-box h1{text-align:center;margin:0 0 8px}
+.login-box p{text-align:center;color:#6b7280}
 input,select{width:100%;padding:12px;margin:7px 0;border:1px solid #d1d5db;border-radius:10px;outline:none}
 input:focus,select:focus{border-color:#2563eb}
 .btn{border:0;border-radius:10px;padding:11px 15px;cursor:pointer;background:#2563eb;color:white;font-weight:bold}
-.btn:hover{opacity:.9}.danger{background:#dc2626}.success{background:#16a34a}.dark{background:#111827}
+.btn:hover{opacity:.9}
+.danger{background:#dc2626}.success{background:#16a34a}.dark{background:#111827}
 .login .btn{width:100%;margin-top:10px}
 .error{color:#dc2626;text-align:center;margin-top:10px;display:none}
 
@@ -28,6 +30,7 @@ input:focus,select:focus{border-color:#2563eb}
 .main{margin-left:235px;padding:25px}
 .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
 .user{background:white;padding:10px 15px;border-radius:10px}
+.role{font-size:12px;color:#6b7280;margin-left:5px}
 .page{display:none}.page.active{display:block}
 .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
 .card{background:white;padding:20px;border-radius:15px;box-shadow:0 2px 8px #0000000b}
@@ -39,285 +42,1271 @@ th,td{padding:11px;border-bottom:1px solid #e5e7eb;text-align:left}
 th{background:#f9fafb}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .badge{display:inline-block;padding:4px 8px;border-radius:20px;font-size:12px;background:#dbeafe;color:#1d4ed8}
+.badge.green{background:#dcfce7;color:#15803d}
+.badge.red{background:#fee2e2;color:#b91c1c}
 .notice{padding:12px;background:#eff6ff;border-radius:10px;margin-bottom:15px}
+.worker-box{background:#fff7ed;border:1px solid #fed7aa;padding:15px;border-radius:12px;margin-bottom:20px}
+.hidden{display:none!important}
+
 @media(max-width:800px){
-.sidebar{width:70px;padding:10px}.logo{font-size:0;text-align:center}.logo span{font-size:20px}
-.nav button{font-size:0;text-align:center}.nav button:first-letter{font-size:20px}
-.logout{left:10px;right:10px;font-size:0}.main{margin-left:70px;padding:15px}
-.cards{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}
+.sidebar{width:70px;padding:10px}
+.logo{font-size:0;text-align:center}
+.logo span{font-size:20px}
+.nav button{font-size:0;text-align:center}
+.nav button:first-letter{font-size:20px}
+.logout{left:10px;right:10px;font-size:0}
+.main{margin-left:70px;padding:15px}
+.cards{grid-template-columns:1fr 1fr}
+.grid{grid-template-columns:1fr}
 }
-@media(max-width:480px){.cards{grid-template-columns:1fr}.form-row{grid-template-columns:1fr}.top h1{font-size:20px}}
+@media(max-width:480px){
+.cards{grid-template-columns:1fr}
+.form-row{grid-template-columns:1fr}
+.top h1{font-size:20px}
+}
 </style>
 </head>
+
 <body>
 
+<!-- GİRİŞ -->
 <div id="login" class="login">
-  <div class="login-box">
-    <h1>Şəxsi İstehsalat <span style="color:#2563eb">OS</span></h1>
-    <p>Sistemə giriş</p>
-    <input id="username" placeholder="İstifadəçi adı">
-    <input id="password" type="password" placeholder="Şifrə">
-    <button class="btn" onclick="login()">Daxil ol</button>
-    <div id="error" class="error">İstifadəçi adı və ya şifrə yanlışdır.</div>
-    <p style="font-size:12px;margin-top:20px">Müdir: admin / 1234<br>İşçi: isci / 1234</p>
-  </div>
+<div class="login-box">
+<h1>Şəxsi İstehsalat <span style="color:#2563eb">OS</span></h1>
+<p>Sistemə giriş</p>
+
+<input id="username" placeholder="İstifadəçi adı">
+<input id="password" type="password" placeholder="Şifrə">
+
+<button class="btn" onclick="login()">Daxil ol</button>
+
+<div id="error" class="error">
+İstifadəçi adı və ya şifrə yanlışdır.
 </div>
 
+<p style="font-size:12px;margin-top:20px">
+Müdir: admin / 1234<br>
+İşçi: isci / 1234
+</p>
+</div>
+</div>
+
+
+<!-- TƏTBİQ -->
 <div id="app" class="app">
+
 <aside class="sidebar">
-  <div class="logo">Şəxsi <span>İstehsalat OS</span></div>
-  <div class="nav">
-    <button onclick="showPage('dashboard',this)">📊 Panel</button>
-    <button onclick="showPage('entry',this)">📦 Məhsul girişi</button>
-    <button onclick="showPage('exit',this)">🚚 Məhsul çıxışı</button>
-    <button onclick="showPage('stock',this)">🏭 Anbar</button>
-    <button onclick="showPage('cash',this)">💰 Kassa</button>
-    <button onclick="showPage('reports',this)">📅 Hesabat</button>
-    <button id="managerNav" onclick="showPage('manager',this)">👨‍💼 Müdir paneli</button>
-  </div>
-  <button class="nav button logout" onclick="logout()">🚪 Çıxış</button>
+
+<div class="logo">
+Şəxsi <span>İstehsalat OS</span>
+</div>
+
+<div class="nav">
+
+<button onclick="showPage('dashboard',this)">
+📊 Panel
+</button>
+
+<button id="entryNav" onclick="showPage('entry',this)">
+📦 Məhsul girişi
+</button>
+
+<button id="exitNav" onclick="showPage('exit',this)">
+🚚 Məhsul çıxışı
+</button>
+
+<button id="stockNav" onclick="showPage('stock',this)">
+🏭 Anbar
+</button>
+
+<button id="cashNav" onclick="showPage('cash',this)">
+💰 Kassa
+</button>
+
+<button id="reportsNav" onclick="showPage('reports',this)">
+📅 Hesabat
+</button>
+
+<button id="managerNav" onclick="showPage('manager',this)">
+👨‍💼 Müdir paneli
+</button>
+
+</div>
+
+<button class="nav button logout" onclick="logout()">
+🚪 Çıxış
+</button>
+
 </aside>
 
+
 <main class="main">
+
 <div class="top">
-  <h1 id="pageTitle">Əsas panel</h1>
-  <div class="user">👤 <span id="currentUser"></span></div>
+<h1 id="pageTitle">Əsas panel</h1>
+
+<div class="user">
+👤 <span id="currentUser"></span>
+<span class="role" id="currentRole"></span>
+</div>
 </div>
 
+
+<!-- PANEL -->
 <section id="dashboard" class="page active">
+
+<div id="workerNotice" class="worker-box hidden">
+<b>👷 İşçi paneli</b>
+<br>
+Sizə verilmiş səlahiyyətlər daxilində əməliyyat edə bilərsiniz.
+</div>
+
 <div class="cards">
-<div class="card"><small>Anbar məhsulları</small><h2 id="stockCount">0</h2></div>
-<div class="card"><small>Girişlər</small><h2 id="entryCount">0</h2></div>
-<div class="card"><small>Çıxışlar</small><h2 id="exitCount">0</h2></div>
-<div class="card"><small>Kassa</small><h2 id="cashCount">0 ₼</h2></div>
+
+<div class="card">
+<small>Anbar məhsulları</small>
+<h2 id="stockCount">0</h2>
 </div>
+
+<div class="card">
+<small>Girişlər</small>
+<h2 id="entryCount">0</h2>
+</div>
+
+<div class="card">
+<small>Çıxışlar</small>
+<h2 id="exitCount">0</h2>
+</div>
+
+<div class="card">
+<small>Kassa</small>
+<h2 id="cashCount">0 ₼</h2>
+</div>
+
+</div>
+
 <div class="grid">
-<div class="panel"><h3>Son əməliyyatlar</h3><div id="recent"></div></div>
-<div class="panel"><h3>Sistem məlumatı</h3><p>İstehsalat, anbar və kassa əməliyyatlarını bir yerdən idarə edin.</p></div>
+
+<div class="panel">
+<h3>Son əməliyyatlar</h3>
+<div id="recent"></div>
+</div>
+
+<div class="panel">
+<h3>Sistem məlumatı</h3>
+<p>
+İstehsalat, anbar və kassa əməliyyatlarını
+bir yerdən idarə edin.
+</p>
+</div>
+
 </div>
 </section>
 
+
+<!-- GİRİŞ -->
 <section id="entry" class="page">
+
 <div class="panel">
+
 <h2>Məhsul girişi</h2>
+
 <div class="form-row">
-<div><label>Məhsul</label><input id="entryProduct" placeholder="Məhsul adı"></div>
-<div><label>Miqdar</label><input id="entryQty" type="number" placeholder="0"></div>
+
+<div>
+<label>Məhsul</label>
+<input id="entryProduct" placeholder="Məhsul adı">
 </div>
+
+<div>
+<label>Miqdar</label>
+<input id="entryQty" type="number" placeholder="0">
+</div>
+
+</div>
+
 <div class="form-row">
-<div><label>Vahid qiymət</label><input id="entryPrice" type="number" step="0.01" placeholder="0.00"></div>
-<div><label>Qeyd</label><input id="entryNote" placeholder="Qeyd"></div>
+
+<div>
+<label>Vahid qiymət</label>
+<input id="entryPrice" type="number" step="0.01" placeholder="0.00">
 </div>
-<button class="btn success" onclick="addEntry()">+ Giriş əlavə et</button>
+
+<div>
+<label>Qeyd</label>
+<input id="entryNote" placeholder="Qeyd">
+</div>
+
+</div>
+
+<button class="btn success" onclick="addEntry()">
++ Giriş əlavə et
+</button>
+
 </div>
 </section>
 
+
+<!-- ÇIXIŞ -->
 <section id="exit" class="page">
+
 <div class="panel">
+
 <h2>Məhsul çıxışı</h2>
+
 <div class="form-row">
-<div><label>Məhsul</label><input id="exitProduct" placeholder="Məhsul adı"></div>
-<div><label>Miqdar</label><input id="exitQty" type="number" placeholder="0"></div>
+
+<div>
+<label>Məhsul</label>
+<input id="exitProduct" placeholder="Məhsul adı">
 </div>
+
+<div>
+<label>Miqdar</label>
+<input id="exitQty" type="number" placeholder="0">
+</div>
+
+</div>
+
 <div class="form-row">
-<div><label>Satış qiyməti</label><input id="exitPrice" type="number" step="0.01" placeholder="0.00"></div>
-<div><label>Qeyd</label><input id="exitNote" placeholder="Qeyd"></div>
+
+<div>
+<label>Satış qiyməti</label>
+<input id="exitPrice" type="number" step="0.01" placeholder="0.00">
 </div>
-<button class="btn" onclick="addExit()">− Çıxış əlavə et</button>
+
+<div>
+<label>Qeyd</label>
+<input id="exitNote" placeholder="Qeyd">
+</div>
+
+</div>
+
+<button class="btn" onclick="addExit()">
+− Çıxış əlavə et
+</button>
+
 </div>
 </section>
 
+
+<!-- ANBAR -->
 <section id="stock" class="page">
+
 <div class="panel">
+
 <h2>Anbar qalığı</h2>
-<table><thead><tr><th>Məhsul</th><th>Miqdar</th><th>Orta qiymət</th><th>Məbləğ</th></tr></thead>
-<tbody id="stockTable"></tbody></table>
+
+<table>
+<thead>
+<tr>
+<th>Məhsul</th>
+<th>Miqdar</th>
+<th>Orta qiymət</th>
+<th>Məbləğ</th>
+</tr>
+</thead>
+
+<tbody id="stockTable"></tbody>
+</table>
+
 </div>
 </section>
 
+
+<!-- KASSA -->
 <section id="cash" class="page">
+
 <div class="panel">
+
 <h2>Kassa</h2>
+
 <div class="form-row">
-<div><label>Məbləğ</label><input id="cashAmount" type="number" step="0.01"></div>
-<div><label>Əməliyyat</label><select id="cashType"><option value="in">Mədaxil</option><option value="out">Məxaric</option></select></div>
+
+<div>
+<label>Məbləğ</label>
+<input id="cashAmount" type="number" step="0.01">
 </div>
+
+<div>
+<label>Əməliyyat</label>
+
+<select id="cashType">
+<option value="in">Mədaxil</option>
+<option value="out">Məxaric</option>
+</select>
+
+</div>
+
+</div>
+
 <input id="cashNote" placeholder="Qeyd">
-<button class="btn success" onclick="addCash()">Əməliyyatı əlavə et</button>
+
+<button class="btn success" onclick="addCash()">
+Əməliyyatı əlavə et
+</button>
+
 <h3>Kassa əməliyyatları</h3>
-<table><thead><tr><th>Tarix</th><th>Əməliyyat</th><th>Məbləğ</th><th>Qeyd</th></tr></thead><tbody id="cashTable"></tbody></table>
+
+<table>
+
+<thead>
+<tr>
+<th>Tarix</th>
+<th>Əməliyyat</th>
+<th>Məbləğ</th>
+<th>Qeyd</th>
+</tr>
+</thead>
+
+<tbody id="cashTable"></tbody>
+
+</table>
+
 </div>
 </section>
 
+
+<!-- HESABAT -->
 <section id="reports" class="page">
+
 <div class="panel">
+
 <h2>Tarix üzrə hesabat</h2>
+
 <div class="form-row">
+
 <input id="fromDate" type="date">
 <input id="toDate" type="date">
+
 </div>
-<button class="btn" onclick="report()">Hesabatı göstər</button>
+
+<button class="btn" onclick="report()">
+Hesabatı göstər
+</button>
+
 <div id="reportResult" style="margin-top:20px"></div>
+
 </div>
 </section>
 
+
+<!-- MÜDİR -->
 <section id="manager" class="page">
+
 <div class="panel">
+
 <h2>👨‍💼 Müdir paneli</h2>
-<div class="notice">Bu bölmə yalnız müdir üçün aktivdir.</div>
-<div class="cards">
-<div class="card"><small>Ümumi giriş</small><h2 id="mEntry">0</h2></div>
-<div class="card"><small>Ümumi çıxış</small><h2 id="mExit">0</h2></div>
-<div class="card"><small>Kassa</small><h2 id="mCash">0 ₼</h2></div>
-<div class="card"><small>Əməliyyat</small><h2 id="mOps">0</h2></div>
+
+<div class="notice">
+Bu bölmə yalnız müdir üçün aktivdir.
 </div>
-<h3 style="margin-top:25px">İşçi hesabları</h3>
-<table><thead><tr><th>İstifadəçi</th><th>Rol</th><th>Status</th></tr></thead>
-<tbody><tr><td>admin</td><td>Müdir</td><td><span class="badge">Aktiv</span></td></tr>
-<tr><td>isci</td><td>İşçi</td><td><span class="badge">Aktiv</span></td></tr></tbody></table>
+
+<div class="cards">
+
+<div class="card">
+<small>Ümumi giriş</small>
+<h2 id="mEntry">0</h2>
+</div>
+
+<div class="card">
+<small>Ümumi çıxış</small>
+<h2 id="mExit">0</h2>
+</div>
+
+<div class="card">
+<small>Kassa</small>
+<h2 id="mCash">0 ₼</h2>
+</div>
+
+<div class="card">
+<small>Əməliyyat</small>
+<h2 id="mOps">0</h2>
+</div>
+
+</div>
+
+
+<h3 style="margin-top:25px">
+İşçi hesabları
+</h3>
+
+<table>
+
+<thead>
+<tr>
+<th>İstifadəçi</th>
+<th>Rol</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>admin</td>
+<td>Müdir</td>
+<td>
+<span class="badge green">Aktiv</span>
+</td>
+</tr>
+
+<tr>
+<td>isci</td>
+<td>İşçi</td>
+<td>
+<span class="badge green">Aktiv</span>
+</td>
+</tr>
+
+</tbody>
+
+</table>
+
+
+<h3 style="margin-top:30px">
+🔐 İşçi səlahiyyətləri
+</h3>
+
+<table>
+
+<thead>
+<tr>
+<th>Səlahiyyət</th>
+<th>İşçi</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>Məhsul girişi</td>
+<td>
+<span class="badge green">İcazə var</span>
+</td>
+</tr>
+
+<tr>
+<td>Məhsul çıxışı</td>
+<td>
+<span class="badge green">İcazə var</span>
+</td>
+</tr>
+
+<tr>
+<td>Anbar</td>
+<td>
+<span class="badge green">İcazə var</span>
+</td>
+</tr>
+
+<tr>
+<td>Kassa</td>
+<td>
+<span class="badge red">İcazə yoxdur</span>
+</td>
+</tr>
+
+<tr>
+<td>Hesabat</td>
+<td>
+<span class="badge red">İcazə yoxdur</span>
+</td>
+</tr>
+
+<tr>
+<td>Müdir paneli</td>
+<td>
+<span class="badge red">İcazə yoxdur</span>
+</td>
+</tr>
+
+</tbody>
+
+</table>
+
 </div>
 </section>
 
 </main>
 </div>
 
+
 <script>
+
 let entries=JSON.parse(localStorage.getItem("entries")||"[]");
 let exits=JSON.parse(localStorage.getItem("exits")||"[]");
 let cash=JSON.parse(localStorage.getItem("cash")||"[]");
+
 let user=null;
 
+
+/* GİRİŞ */
+
 function login(){
- const u=document.getElementById("username").value.trim();
- const p=document.getElementById("password").value;
- if((u==="admin"||u==="isci")&&p==="1234"){
-   user=u;
-   localStorage.setItem("session",u);
-   startApp();
- }else document.getElementById("error").style.display="block";
+
+const u=document.getElementById("username").value.trim();
+const p=document.getElementById("password").value;
+
+if((u==="admin"||u==="isci")&&p==="1234"){
+
+user=u;
+
+localStorage.setItem("session",u);
+
+startApp();
+
+}else{
+
+document.getElementById("error").style.display="block";
+
 }
+
+}
+
+
+/* SİSTEMİ BAŞLAT */
 
 function startApp(){
- document.getElementById("login").style.display="none";
- document.getElementById("app").style.display="block";
- document.getElementById("currentUser").textContent=user==="admin"?"Müdir":"İşçi";
- document.getElementById("managerNav").style.display=user==="admin"?"block":"none";
- update();
+
+document.getElementById("login").style.display="none";
+document.getElementById("app").style.display="block";
+
+const isAdmin=user==="admin";
+
+document.getElementById("currentUser").textContent=
+isAdmin?"Müdir":"İşçi";
+
+document.getElementById("currentRole").textContent=
+isAdmin?"(Tam səlahiyyət)":"(İşçi)";
+
+
+/* İŞÇİ SƏLAHİYYƏTLƏRİ */
+
+document.getElementById("managerNav").style.display=
+isAdmin?"block":"none";
+
+document.getElementById("cashNav").style.display=
+isAdmin?"block":"none";
+
+document.getElementById("reportsNav").style.display=
+isAdmin?"block":"none";
+
+document.getElementById("workerNotice").classList.toggle(
+"hidden",
+isAdmin
+);
+
+update();
+
 }
+
+
+/* ÇIXIŞ */
 
 function logout(){
- localStorage.removeItem("session");
- location.reload();
+
+localStorage.removeItem("session");
+
+location.reload();
+
 }
+
+
+/* SƏHİFƏ */
 
 function showPage(id,btn){
- document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
- document.getElementById(id).classList.add("active");
- document.querySelectorAll(".nav button").forEach(x=>x.classList.remove("active"));
- if(btn)btn.classList.add("active");
- const names={dashboard:"Əsas panel",entry:"Məhsul girişi",exit:"Məhsul çıxışı",stock:"Anbar qalığı",cash:"Kassa",reports:"Tarix üzrə hesabat",manager:"Müdir paneli"};
- document.getElementById("pageTitle").textContent=names[id];
- update();
+
+/* İşçi qoruması */
+
+if(user==="isci" &&
+(id==="manager"||id==="cash"||id==="reports")){
+
+alert("Bu bölməyə giriş icazəniz yoxdur.");
+
+return;
+
 }
+
+document.querySelectorAll(".page")
+.forEach(x=>x.classList.remove("active"));
+
+document.getElementById(id)
+.classList.add("active");
+
+document.querySelectorAll(".nav button")
+.forEach(x=>x.classList.remove("active"));
+
+if(btn)btn.classList.add("active");
+
+const names={
+
+dashboard:"Əsas panel",
+entry:"Məhsul girişi",
+exit:"Məhsul çıxışı",
+stock:"Anbar qalığı",
+cash:"Kassa",
+reports:"Tarix üzrə hesabat",
+manager:"Müdir paneli"
+
+};
+
+document.getElementById("pageTitle")
+.textContent=names[id];
+
+update();
+
+}
+
+
+/* SAXLA */
 
 function save(){
- localStorage.setItem("entries",JSON.stringify(entries));
- localStorage.setItem("exits",JSON.stringify(exits));
- localStorage.setItem("cash",JSON.stringify(cash));
+
+localStorage.setItem(
+"entries",
+JSON.stringify(entries)
+);
+
+localStorage.setItem(
+"exits",
+JSON.stringify(exits)
+);
+
+localStorage.setItem(
+"cash",
+JSON.stringify(cash)
+);
+
 }
+
+
+/* GİRİŞ ƏLAVƏ ET */
 
 function addEntry(){
- const product=document.getElementById("entryProduct").value.trim();
- const qty=Number(document.getElementById("entryQty").value);
- const price=Number(document.getElementById("entryPrice").value)||0;
- if(!product||qty<=0)return alert("Məhsul və miqdar daxil edin.");
- entries.push({product,qty,price,note:document.getElementById("entryNote").value,date:new Date().toISOString()});
- save(); clear(["entryProduct","entryQty","entryPrice","entryNote"]); update(); alert("Məhsul girişi əlavə edildi.");
+
+const product=
+document.getElementById("entryProduct")
+.value.trim();
+
+const qty=
+Number(document.getElementById("entryQty").value);
+
+const price=
+Number(document.getElementById("entryPrice").value)||0;
+
+if(!product||qty<=0){
+
+return alert("Məhsul və miqdar daxil edin.");
+
 }
+
+entries.push({
+
+product,
+qty,
+price,
+note:
+document.getElementById("entryNote").value,
+
+date:new Date().toISOString(),
+
+user:user
+
+});
+
+save();
+
+clear([
+"entryProduct",
+"entryQty",
+"entryPrice",
+"entryNote"
+]);
+
+update();
+
+alert("Məhsul girişi əlavə edildi.");
+
+}
+
+
+/* ÇIXIŞ ƏLAVƏ ET */
 
 function addExit(){
- const product=document.getElementById("exitProduct").value.trim();
- const qty=Number(document.getElementById("exitQty").value);
- const price=Number(document.getElementById("exitPrice").value)||0;
- if(!product||qty<=0)return alert("Məhsul və miqdar daxil edin.");
- const available=getStock()[product]?.qty||0;
- if(qty>available)return alert("Anbarda kifayət qədər məhsul yoxdur.");
- exits.push({product,qty,price,note:document.getElementById("exitNote").value,date:new Date().toISOString()});
- save(); clear(["exitProduct","exitQty","exitPrice","exitNote"]); update(); alert("Məhsul çıxışı əlavə edildi.");
+
+const product=
+document.getElementById("exitProduct")
+.value.trim();
+
+const qty=
+Number(document.getElementById("exitQty").value);
+
+const price=
+Number(document.getElementById("exitPrice").value)||0;
+
+if(!product||qty<=0){
+
+return alert("Məhsul və miqdar daxil edin.");
+
 }
+
+const available=
+getStock()[product]?.qty||0;
+
+if(qty>available){
+
+return alert(
+"Anbarda kifayət qədər məhsul yoxdur."
+);
+
+}
+
+exits.push({
+
+product,
+qty,
+price,
+
+note:
+document.getElementById("exitNote").value,
+
+date:new Date().toISOString(),
+
+user:user
+
+});
+
+save();
+
+clear([
+"exitProduct",
+"exitQty",
+"exitPrice",
+"exitNote"
+]);
+
+update();
+
+alert("Məhsul çıxışı əlavə edildi.");
+
+}
+
+
+/* KASSA */
 
 function addCash(){
- const amount=Number(document.getElementById("cashAmount").value);
- if(amount<=0)return alert("Məbləğ daxil edin.");
- cash.push({amount,type:document.getElementById("cashType").value,note:document.getElementById("cashNote").value,date:new Date().toISOString()});
- save(); clear(["cashAmount","cashNote"]); update(); alert("Kassa əməliyyatı əlavə edildi.");
+
+if(user!=="admin"){
+
+return alert(
+"Kassa əməliyyatını yalnız müdir edə bilər."
+);
+
 }
 
-function clear(ids){ids.forEach(id=>document.getElementById(id).value="")}
+const amount=
+Number(document.getElementById("cashAmount").value);
+
+if(amount<=0){
+
+return alert("Məbləğ daxil edin.");
+
+}
+
+cash.push({
+
+amount,
+
+type:
+document.getElementById("cashType").value,
+
+note:
+document.getElementById("cashNote").value,
+
+date:new Date().toISOString(),
+
+user:user
+
+});
+
+save();
+
+clear([
+"cashAmount",
+"cashNote"
+]);
+
+update();
+
+alert("Kassa əməliyyatı əlavə edildi.");
+
+}
+
+
+/* TƏMİZLƏ */
+
+function clear(ids){
+
+ids.forEach(id=>{
+
+document.getElementById(id).value="";
+
+});
+
+}
+
+
+/* ANBAR */
 
 function getStock(){
- const s={};
- entries.forEach(e=>{
-   if(!s[e.product])s[e.product]={qty:0,total:0};
-   s[e.product].qty+=e.qty;s[e.product].total+=e.qty*e.price;
- });
- exits.forEach(e=>{
-   if(!s[e.product])s[e.product]={qty:0,total:0};
-   const avg=s[e.product].qty?s[e.product].total/s[e.product].qty:e.price;
-   s[e.product].qty-=e.qty;s[e.product].total-=e.qty*avg;
- });
- return s;
+
+const s={};
+
+entries.forEach(e=>{
+
+if(!s[e.product]){
+
+s[e.product]={
+qty:0,
+total:0
+};
+
 }
+
+s[e.product].qty+=e.qty;
+
+s[e.product].total+=
+e.qty*e.price;
+
+});
+
+
+exits.forEach(e=>{
+
+if(!s[e.product]){
+
+s[e.product]={
+qty:0,
+total:0
+};
+
+}
+
+const avg=
+s[e.product].qty
+?s[e.product].total/s[e.product].qty
+:e.price;
+
+s[e.product].qty-=e.qty;
+
+s[e.product].total-=
+e.qty*avg;
+
+});
+
+return s;
+
+}
+
+
+/* YENİLƏ */
 
 function update(){
- const stock=getStock();
- document.getElementById("stockCount").textContent=Object.values(stock).filter(x=>x.qty>0).length;
- document.getElementById("entryCount").textContent=entries.length;
- document.getElementById("exitCount").textContent=exits.length;
- const balance=cash.reduce((a,x)=>a+(x.type==="in"?x.amount:-x.amount),0);
- document.getElementById("cashCount").textContent=balance.toFixed(2)+" ₼";
 
- let html="";
- Object.entries(stock).forEach(([p,x])=>{
-   if(x.qty>0)html+=`<tr><td>${esc(p)}</td><td>${x.qty}</td><td>${(x.total/x.qty).toFixed(2)} ₼</td><td>${x.total.toFixed(2)} ₼</td></tr>`;
- });
- document.getElementById("stockTable").innerHTML=html||"<tr><td colspan='4'>Anbar boşdur.</td></tr>";
+const stock=getStock();
 
- document.getElementById("cashTable").innerHTML=cash.slice().reverse().map(x=>
- `<tr><td>${date(x.date)}</td><td>${x.type==="in"?"Mədaxil":"Məxaric"}</td><td>${x.amount.toFixed(2)} ₼</td><td>${esc(x.note||"")}</td></tr>`).join("")||"<tr><td colspan='4'>Əməliyyat yoxdur.</td></tr>";
+document.getElementById("stockCount")
+.textContent=
+Object.values(stock)
+.filter(x=>x.qty>0).length;
 
- const ops=[...entries.map(x=>({type:"Giriş",product:x.product,qty:x.qty,date:x.date})),...exits.map(x=>({type:"Çıxış",product:x.product,qty:x.qty,date:x.date}))].sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,8);
- document.getElementById("recent").innerHTML=ops.map(x=>`<p>📦 <b>${x.type}</b> — ${esc(x.product)} (${x.qty}) <small>${date(x.date)}</small></p>`).join("")||"<p>Əməliyyat yoxdur.</p>";
+document.getElementById("entryCount")
+.textContent=entries.length;
 
- document.getElementById("mEntry").textContent=entries.length;
- document.getElementById("mExit").textContent=exits.length;
- document.getElementById("mCash").textContent=balance.toFixed(2)+" ₼";
- document.getElementById("mOps").textContent=entries.length+exits.length+cash.length;
+document.getElementById("exitCount")
+.textContent=exits.length;
+
+
+const balance=
+cash.reduce(
+(a,x)=>
+a+(x.type==="in"
+?x.amount
+:-x.amount),
+0
+);
+
+document.getElementById("cashCount")
+.textContent=
+balance.toFixed(2)+" ₼";
+
+
+/* ANBAR CƏDVƏLİ */
+
+let html="";
+
+Object.entries(stock).forEach(
+([p,x])=>{
+
+if(x.qty>0){
+
+html+=`
+
+<tr>
+
+<td>${esc(p)}</td>
+
+<td>${x.qty}</td>
+
+<td>
+${(x.total/x.qty).toFixed(2)} ₼
+</td>
+
+<td>
+${x.total.toFixed(2)} ₼
+</td>
+
+</tr>
+
+`;
+
 }
+
+});
+
+document.getElementById("stockTable")
+.innerHTML=
+html||
+"<tr><td colspan='4'>Anbar boşdur.</td></tr>";
+
+
+/* KASSA */
+
+document.getElementById("cashTable")
+.innerHTML=
+
+cash.slice().reverse().map(x=>`
+
+<tr>
+
+<td>${date(x.date)}</td>
+
+<td>
+${x.type==="in"
+?"Mədaxil"
+:"Məxaric"}
+</td>
+
+<td>
+${x.amount.toFixed(2)} ₼
+</td>
+
+<td>
+${esc(x.note||"")}
+</td>
+
+</tr>
+
+`).join("")
+
+||
+
+"<tr><td colspan='4'>Əməliyyat yoxdur.</td></tr>";
+
+
+/* SON ƏMƏLİYYATLAR */
+
+const ops=[
+
+...entries.map(x=>({
+
+type:"Giriş",
+product:x.product,
+qty:x.qty,
+date:x.date,
+user:x.user
+
+})),
+
+...exits.map(x=>({
+
+type:"Çıxış",
+product:x.product,
+qty:x.qty,
+date:x.date,
+user:x.user
+
+}))
+
+]
+
+.sort(
+(a,b)=>
+new Date(b.date)-
+new Date(a.date)
+)
+
+.slice(0,8);
+
+
+document.getElementById("recent")
+.innerHTML=
+
+ops.map(x=>`
+
+<p>
+
+📦 <b>${x.type}</b>
+— ${esc(x.product)}
+(${x.qty})
+
+<small>
+${date(x.date)}
+</small>
+
+</p>
+
+`).join("")
+
+||
+
+"<p>Əməliyyat yoxdur.</p>";
+
+
+/* MÜDİR */
+
+document.getElementById("mEntry")
+.textContent=entries.length;
+
+document.getElementById("mExit")
+.textContent=exits.length;
+
+document.getElementById("mCash")
+.textContent=
+balance.toFixed(2)+" ₼";
+
+document.getElementById("mOps")
+.textContent=
+entries.length+
+exits.length+
+cash.length;
+
+}
+
+
+/* HESABAT */
 
 function report(){
- const f=document.getElementById("fromDate").value;
- const t=document.getElementById("toDate").value;
- let all=[...entries.map(x=>({...x,type:"Giriş"})),...exits.map(x=>({...x,type:"Çıxış"})),...cash.map(x=>({...x,type:x.type==="in"?"Mədaxil":"Məxaric"}))];
- if(f)all=all.filter(x=>x.date.slice(0,10)>=f);
- if(t)all=all.filter(x=>x.date.slice(0,10)<=t);
- const e=all.filter(x=>x.type==="Giriş").length;
- const x=all.filter(x=>x.type==="Çıxış").length;
- document.getElementById("reportResult").innerHTML=
- `<div class="cards">
- <div class="card"><small>Giriş</small><h2>${e}</h2></div>
- <div class="card"><small>Çıxış</small><h2>${x}</h2></div>
- <div class="card"><small>Kassa əməliyyatları</small><h2>${all.filter(x=>x.type==="Mədaxil"||x.type==="Məxaric").length}</h2></div>
- </div>
- <table><thead><tr><th>Tarix</th><th>Əməliyyat</th><th>Məhsul</th><th>Miqdar/Məbləğ</th></tr></thead>
- <tbody>${all.sort((a,b)=>new Date(b.date)-new Date(a.date)).map(x=>`<tr><td>${date(x.date)}</td><td>${x.type}</td><td>${esc(x.product||x.note||"-")}</td><td>${x.qty??x.amount} ${x.amount!=null?"₼":""}</td></tr>`).join("")||"<tr><td colspan='4'>Nəticə yoxdur.</td></tr>"}</tbody></table>`;
+
+if(user!=="admin"){
+
+return alert(
+"Hesabata yalnız müdir daxil ola bilər."
+);
+
 }
 
-function date(d){return new Date(d).toLocaleString("az-AZ")}
-function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+const f=
+document.getElementById("fromDate").value;
 
-const session=localStorage.getItem("session");
-if(session==="admin"||session==="isci"){user=session;startApp();}
+const t=
+document.getElementById("toDate").value;
+
+
+let all=[
+
+...entries.map(x=>({
+...x,
+type:"Giriş"
+})),
+
+...exits.map(x=>({
+...x,
+type:"Çıxış"
+})),
+
+...cash.map(x=>({
+...x,
+type:
+x.type==="in"
+?"Mədaxil"
+:"Məxaric"
+}))
+
+];
+
+
+if(f){
+
+all=all.filter(
+x=>x.date.slice(0,10)>=f
+);
+
+}
+
+if(t){
+
+all=all.filter(
+x=>x.date.slice(0,10)<=t
+);
+
+}
+
+
+const e=
+all.filter(
+x=>x.type==="Giriş"
+).length;
+
+const x=
+all.filter(
+x=>x.type==="Çıxış"
+).length;
+
+
+document.getElementById("reportResult")
+.innerHTML=`
+
+<div class="cards">
+
+<div class="card">
+<small>Giriş</small>
+<h2>${e}</h2>
+</div>
+
+<div class="card">
+<small>Çıxış</small>
+<h2>${x}</h2>
+</div>
+
+<div class="card">
+<small>Kassa əməliyyatları</small>
+<h2>
+${
+all.filter(
+x=>
+x.type==="Mədaxil"||
+x.type==="Məxaric"
+).length
+}
+</h2>
+</div>
+
+</div>
+
+
+<table>
+
+<thead>
+
+<tr>
+<th>Tarix</th>
+<th>Əməliyyat</th>
+<th>Məhsul</th>
+<th>Miqdar/Məbləğ</th>
+<th>İstifadəçi</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+${
+all.sort(
+(a,b)=>
+new Date(b.date)-
+new Date(a.date)
+)
+.map(x=>`
+
+<tr>
+
+<td>${date(x.date)}</td>
+
+<td>${x.type}</td>
+
+<td>
+${esc(x.product||x.note||"-")}
+</td>
+
+<td>
+${x.qty??x.amount}
+${x.amount!=null?" ₼":""}
+</td>
+
+<td>
+${x.user==="admin"
+?"Müdir"
+:"İşçi"}
+</td>
+
+</tr>
+
+`).join("")
+
+||
+
+"<tr><td colspan='5'>Nəticə yoxdur.</td></tr>"
+
+}
+
+</tbody>
+
+</table>
+
+`;
+
+}
+
+
+/* TARİX */
+
+function date(d){
+
+return new Date(d)
+.toLocaleString("az-AZ");
+
+}
+
+
+/* TƏHLÜKƏSİZ MƏTN */
+
+function esc(s){
+
+return String(s).replace(
+/[&<>"']/g,
+m=>({
+
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#039;"
+
+}[m])
+);
+
+}
+
+
+/* AVTOMATİK GİRİŞ */
+
+const session=
+localStorage.getItem("session");
+
+if(
+session==="admin"||
+session==="isci"
+){
+
+user=session;
+
+startApp();
+
+}
+
 </script>
+
 </body>
-    </html>
+  </html>
