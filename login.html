@@ -1,187 +1,499 @@
 <!DOCTYPE html>
 <html lang="az">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Şəxsi İstehsalat OS — Giriş</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
+<title>Şəxsi İstehsalat OS - Giriş</title>
 
-    body {
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: #111827;
-      color: white;
-      padding: 20px;
-    }
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
 
-    .login-box {
-      width: 100%;
-      max-width: 400px;
-      background: #1f2937;
-      padding: 30px;
-      border-radius: 18px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-    }
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #111827, #2563eb);
+    padding: 20px;
+}
 
-    .logo {
-      text-align: center;
-      font-size: 42px;
-      margin-bottom: 10px;
-    }
+.login-container {
+    width: 100%;
+    max-width: 420px;
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+}
 
-    h1 {
-      text-align: center;
-      font-size: 24px;
-      margin-bottom: 8px;
-    }
+.logo {
+    text-align: center;
+    margin-bottom: 25px;
+}
 
-    .subtitle {
-      text-align: center;
-      color: #9ca3af;
-      margin-bottom: 25px;
-      font-size: 14px;
-    }
+.logo h1 {
+    color: #111827;
+    font-size: 25px;
+    margin-bottom: 8px;
+}
 
-    label {
-      display: block;
-      margin-bottom: 7px;
-      font-size: 14px;
-    }
+.logo p {
+    color: #6b7280;
+    font-size: 14px;
+}
 
-    input {
-      width: 100%;
-      padding: 14px;
-      margin-bottom: 18px;
-      border: 1px solid #374151;
-      border-radius: 10px;
-      background: #111827;
-      color: white;
-      font-size: 16px;
-      outline: none;
-    }
+.tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 25px;
+}
 
-    input:focus {
-      border-color: #22c55e;
-    }
+.tab {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: #e5e7eb;
+    color: #374151;
+    font-weight: bold;
+    cursor: pointer;
+}
 
-    button {
-      width: 100%;
-      padding: 14px;
-      border: none;
-      border-radius: 10px;
-      background: #22c55e;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+.tab.active {
+    background: #2563eb;
+    color: white;
+}
 
-    button:hover {
-      background: #16a34a;
-    }
+.form-group {
+    margin-bottom: 17px;
+}
 
-    #error {
-      display: none;
-      margin-top: 15px;
-      padding: 12px;
-      border-radius: 8px;
-      background: #7f1d1d;
-      color: #fecaca;
-      text-align: center;
-      font-size: 14px;
-    }
+.form-group label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: bold;
+    color: #374151;
+}
 
-    .footer {
-      text-align: center;
-      margin-top: 20px;
-      color: #6b7280;
-      font-size: 12px;
-    }
-  </style>
+.form-group input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    font-size: 15px;
+    outline: none;
+}
+
+.form-group input:focus {
+    border-color: #2563eb;
+}
+
+.login-button {
+    width: 100%;
+    padding: 14px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.login-button:hover {
+    background: #1d4ed8;
+}
+
+.error {
+    margin-top: 15px;
+    text-align: center;
+    color: #dc2626;
+    font-size: 14px;
+}
+
+.success {
+    margin-top: 15px;
+    text-align: center;
+    color: #16a34a;
+    font-size: 14px;
+}
+
+.worker-info {
+    margin-top: 20px;
+    padding: 12px;
+    background: #f3f4f6;
+    border-radius: 10px;
+    font-size: 12px;
+    color: #6b7280;
+    text-align: center;
+}
+</style>
 </head>
 
 <body>
 
-  <div class="login-box">
+<div class="login-container">
 
-    <div class="logo">🏭</div>
-
-    <h1>Şəxsi İstehsalat OS</h1>
-
-    <div class="subtitle">
-      Sistemə giriş
+    <div class="logo">
+        <h1>Şəxsi İstehsalat OS</h1>
+        <p>Sistemə giriş</p>
     </div>
 
-    <form id="loginForm">
+    <!-- GİRİŞ NÖVÜ -->
 
-      <label for="username">İstifadəçi adı</label>
-      <input
-        type="text"
-        id="username"
-        placeholder="İstifadəçi adını daxil edin"
-        required
-      >
+    <div class="tabs">
 
-      <label for="password">Şifrə</label>
-      <input
-        type="password"
-        id="password"
-        placeholder="Şifrəni daxil edin"
-        required
-      >
+        <button
+            class="tab active"
+            id="managerTab"
+            onclick="selectLoginType('manager')">
+            Müdir
+        </button>
 
-      <button type="submit">
-        Daxil ol
-      </button>
+        <button
+            class="tab"
+            id="workerTab"
+            onclick="selectLoginType('worker')">
+            İşçi
+        </button>
 
-      <div id="error">
-        İstifadəçi adı və ya şifrə yanlışdır.
-      </div>
+    </div>
+
+
+    <!-- GİRİŞ FORMU -->
+
+    <form onsubmit="login(event)">
+
+        <div class="form-group">
+
+            <label>
+                İstifadəçi adı
+            </label>
+
+            <input
+                type="text"
+                id="username"
+                placeholder="İstifadəçi adınızı daxil edin"
+                autocomplete="username"
+                required>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Giriş kodu
+            </label>
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Giriş kodunuzu daxil edin"
+                autocomplete="current-password"
+                required>
+
+        </div>
+
+
+        <button
+            type="submit"
+            class="login-button">
+
+            Daxil ol
+
+        </button>
 
     </form>
 
-    <div class="footer">
-      Şəxsi İstehsalat OS © 2026
+
+    <div
+        id="message"
+        class="error">
     </div>
 
-  </div>
 
-  <script>
-    document.getElementById("loginForm").addEventListener("submit", function(e) {
-      e.preventDefault();
+    <div class="worker-info">
 
-      const username = document.getElementById("username").value.trim();
-      const password = document.getElementById("password").value;
+        İşçilər özlərinə verilmiş
+        istifadəçi adı və giriş kodu ilə
+        sistemə daxil ola bilərlər.
 
-      /*
-        Müvəqqəti giriş məlumatları.
-        Növbəti mərhələdə bunları real istifadəçi
-        sistemi ilə əvəz edəcəyik.
-      */
+    </div>
 
-      if (username === "admin" && password === "1234") {
+</div>
 
-        localStorage.setItem("loggedIn", "true");
-        localStorage.setItem("userRole", "manager");
+
+<script>
+
+/*
+==================================================
+ŞƏXSİ İSTEHSALAT OS
+GİRİŞ SİSTEMİ
+==================================================
+*/
+
+
+/* ------------------------------
+   GİRİŞ NÖVÜ
+------------------------------ */
+
+let loginType = "manager";
+
+
+function selectLoginType(type) {
+
+    loginType = type;
+
+    const managerTab =
+        document.getElementById("managerTab");
+
+    const workerTab =
+        document.getElementById("workerTab");
+
+
+    managerTab.classList.remove("active");
+
+    workerTab.classList.remove("active");
+
+
+    if (type === "manager") {
+
+        managerTab.classList.add("active");
+
+    } else {
+
+        workerTab.classList.add("active");
+
+    }
+
+
+    document.getElementById("username").value = "";
+
+    document.getElementById("password").value = "";
+
+    document.getElementById("message").textContent = "";
+
+}
+
+
+/* ------------------------------
+   İSTİFADƏÇİLƏRİ GƏTİR
+------------------------------ */
+
+function getUsers() {
+
+    const savedUsers =
+        localStorage.getItem("users");
+
+
+    if (savedUsers) {
+
+        return JSON.parse(savedUsers);
+
+    }
+
+
+    /*
+    İlk dəfə açıldıqda
+    standart hesablar
+    */
+
+    const defaultUsers = [
+
+        {
+            id: 1,
+            name: "Müdir",
+            username: "admin",
+            password: "1234",
+            role: "manager"
+        },
+
+        {
+            id: 2,
+            name: "İşçi 1",
+            username: "isci1",
+            password: "1111",
+            role: "worker"
+        }
+
+    ];
+
+
+    localStorage.setItem(
+        "users",
+        JSON.stringify(defaultUsers)
+    );
+
+
+    return defaultUsers;
+}
+
+
+/* ------------------------------
+   LOGIN
+------------------------------ */
+
+function login(event) {
+
+    event.preventDefault();
+
+
+    const username =
+        document
+        .getElementById("username")
+        .value
+        .trim();
+
+
+    const password =
+        document
+        .getElementById("password")
+        .value;
+
+
+    const message =
+        document.getElementById("message");
+
+
+    message.textContent = "";
+
+
+    const users = getUsers();
+
+
+    /*
+    İSTİFADƏÇİNİ TAP
+    */
+
+    const user =
+        users.find(function(item) {
+
+            return (
+                item.username === username &&
+                item.password === password
+            );
+
+        });
+
+
+    /*
+    İSTİFADƏÇİ YOXDUR
+    */
+
+    if (!user) {
+
+        message.className = "error";
+
+        message.textContent =
+            "İstifadəçi adı və ya giriş kodu yanlışdır.";
+
+        return;
+    }
+
+
+    /*
+    MÜDİR / İŞÇİ UYĞUNLUĞU
+    */
+
+    if (
+        loginType === "manager" &&
+        user.role !== "manager"
+    ) {
+
+        message.className = "error";
+
+        message.textContent =
+            "Bu hesab müdir hesabı deyil.";
+
+        return;
+    }
+
+
+    if (
+        loginType === "worker" &&
+        user.role !== "worker"
+    ) {
+
+        message.className = "error";
+
+        message.textContent =
+            "Bu hesab işçi hesabı deyil.";
+
+        return;
+    }
+
+
+    /*
+    AKTİV İSTİFADƏÇİNİ SAXLA
+    */
+
+    sessionStorage.setItem(
+        "currentUser",
+        JSON.stringify(user)
+    );
+
+
+    /*
+    GİRİŞ VAXTINI SAXLA
+    */
+
+    sessionStorage.setItem(
+        "loginTime",
+        new Date().toISOString()
+    );
+
+
+    message.className = "success";
+
+    message.textContent =
+        "Giriş uğurludur. Sistem açılır...";
+
+
+    /*
+    ƏSAS PANELƏ KEÇ
+    */
+
+    setTimeout(function() {
 
         window.location.href = "index.html";
 
-      } else {
+    }, 500);
 
-        document.getElementById("error").style.display = "block";
+}
 
-      }
-    });
-  </script>
+
+/* ------------------------------
+   ENTER İLƏ GİRİŞ
+------------------------------ */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.key === "Enter") {
+
+            const form =
+                document.querySelector("form");
+
+            if (form) {
+
+                form.requestSubmit();
+
+            }
+
+        }
+
+    }
+);
+
+</script>
 
 </body>
-  </html>
+</html>
