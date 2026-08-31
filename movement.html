@@ -1,392 +1,1161 @@
 <!DOCTYPE html>
 <html lang="az">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Giriş və Çıxışlar — Şəxsi İstehsalat OS</title>
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+>
+
+<title>Anbarlar — Şəxsi İstehsalat OS</title>
+
 
 <style>
-*{box-sizing:border-box;font-family:Arial,sans-serif}
-body{margin:0;background:#f4f6f8;color:#1f2937}
-.container{max-width:1100px;margin:auto;padding:25px}
-h1{margin-bottom:5px}
-.subtitle{color:#6b7280;margin-bottom:25px}
 
-.tabs{display:flex;gap:10px;margin-bottom:20px}
-.tab{padding:12px 20px;border:0;border-radius:8px;cursor:pointer;font-weight:bold}
-.tab.active{background:#111827;color:white}
+*{
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
 
-.panel{background:white;border-radius:14px;padding:22px;box-shadow:0 3px 12px rgba(0,0,0,.06);margin-bottom:20px}
+body{
+    margin:0;
+    background:#f4f6f8;
+    color:#1f2937;
+}
 
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
-label{display:block;font-size:14px;font-weight:bold;margin-bottom:6px}
-input,select,textarea{width:100%;padding:12px;border:1px solid #ddd;border-radius:8px}
-textarea{resize:vertical}
-
-button{border:0;border-radius:8px;padding:12px 18px;cursor:pointer;font-weight:bold}
-.primary{background:#111827;color:white}
-.danger{background:#fee2e2;color:#991b1b}
-
-.actions{margin-top:18px;display:flex;gap:10px}
-
-.table-wrap{overflow:auto}
-table{width:100%;border-collapse:collapse}
-th,td{text-align:left;padding:13px;border-bottom:1px solid #eee;white-space:nowrap}
-th{font-size:13px;color:#6b7280}
-
-.empty{text-align:center;color:#777;padding:25px}
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:20px;
+}
 
 .back{
-display:inline-block;
-margin-bottom:20px;
-text-decoration:none;
-color:#111827;
-font-weight:bold;
+    display:inline-block;
+    margin-bottom:20px;
+    text-decoration:none;
+    color:#111827;
+    font-weight:bold;
 }
 
-@media(max-width:700px){
-.grid{grid-template-columns:1fr}
-.container{padding:15px}
+h1{
+    margin-bottom:5px;
 }
+
+.subtitle{
+    color:#6b7280;
+    margin-bottom:25px;
+}
+
+.tabs{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+}
+
+.tab{
+    border:0;
+    border-radius:10px;
+    padding:13px 18px;
+    background:#e5e7eb;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.tab.active{
+    background:#111827;
+    color:white;
+}
+
+.panel{
+    background:white;
+    padding:22px;
+    border-radius:14px;
+    box-shadow:
+        0 3px 12px rgba(0,0,0,.06);
+    margin-bottom:20px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:
+        repeat(4,1fr);
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.stat{
+    padding:18px;
+    border-radius:12px;
+    background:#f9fafb;
+    border:1px solid #eee;
+}
+
+.stat-title{
+    color:#6b7280;
+    font-size:13px;
+    margin-bottom:7px;
+}
+
+.stat-value{
+    font-size:24px;
+    font-weight:bold;
+}
+
+.green{
+    color:#15803d;
+}
+
+.red{
+    color:#b91c1c;
+}
+
+.orange{
+    color:#b45309;
+}
+
+.table-wrap{
+    overflow:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,
+td{
+    text-align:left;
+    padding:13px;
+    border-bottom:1px solid #eee;
+    white-space:nowrap;
+}
+
+th{
+    color:#6b7280;
+    font-size:13px;
+}
+
+.balance{
+    font-weight:bold;
+}
+
+.balance-positive{
+    color:#15803d;
+}
+
+.balance-zero{
+    color:#b91c1c;
+}
+
+.balance-negative{
+    color:#b91c1c;
+}
+
+.status{
+    display:inline-block;
+    padding:6px 9px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.status-normal{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.status-empty{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.status-error{
+    background:#fecaca;
+    color:#7f1d1d;
+}
+
+.empty{
+    text-align:center;
+    color:#777;
+    padding:30px;
+}
+
+.refresh{
+    background:#111827;
+    color:white;
+    padding:10px 15px;
+    border-radius:8px;
+    border:0;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.info{
+    padding:13px;
+    background:#f9fafb;
+    border-radius:10px;
+    margin-bottom:18px;
+}
+
+@media(max-width:800px){
+
+    .stats{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:500px){
+
+    .container{
+        padding:14px;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .tab{
+        flex:1;
+    }
+
+}
+
 </style>
+
 </head>
+
 
 <body>
 
+
 <div class="container">
 
-<a class="back" href="index.html">← Əsas panelə qayıt</a>
 
-<h1>📦 Məhsul hərəkətləri</h1>
+<a
+class="back"
+href="index.html"
+>
+
+← Əsas panelə qayıt
+
+</a>
+
+
+<h1>
+🏬 Anbarlar
+</h1>
+
+
 <p class="subtitle">
-Anbara daxil olan və anbardan çıxan məhsulları qeyd edin.
+
+Giriş, çıxış və cari qalıqlar avtomatik hesablanır.
+
 </p>
+
 
 <div class="tabs">
 
-<button id="inTab" class="tab active" onclick="setType('in')">
-📥 Giriş
+
+<button
+class="tab active"
+onclick="showWarehouse('Yaş anbar',this)"
+>
+
+🥩 Yaş anbar
+
 </button>
 
-<button id="outTab" class="tab" onclick="setType('out')">
-📤 Çıxış
+
+<button
+class="tab"
+onclick="showWarehouse('Quru anbar',this)"
+>
+
+🌾 Quru anbar
+
 </button>
+
+
+<button
+class="tab"
+onclick="showWarehouse('Ədviyyat anbarı',this)"
+>
+
+🌶️ Ədviyyat anbarı
+
+</button>
+
 
 </div>
+
 
 <div class="panel">
 
-<div class="grid">
 
-<div>
-<label>Tarix</label>
-<input id="date" type="date">
-</div>
+<div class="info">
 
-<div>
-<label>Anbar</label>
+📊 <strong id="warehouseName">
+Yaş anbar
+</strong>
 
-<select id="warehouse">
+üzrə cari anbar vəziyyəti.
 
-<option>Yaş anbar</option>
-<option>Quru anbar</option>
-<option>Ədviyyat anbarı</option>
+<br>
 
-</select>
+Qalıq =
+<strong>Giriş − Çıxış</strong>
 
 </div>
 
-<div>
-<label>Məhsul</label>
-<input id="product" placeholder="Məsələn: Pomidor">
+
+<div class="stats">
+
+
+<div class="stat">
+
+<div class="stat-title">
+Məhsul sayı
 </div>
 
-<div>
-<label>Miqdar</label>
-<input id="quantity" type="number" step="0.01" placeholder="Məsələn: 50">
-</div>
+<div
+id="productCount"
+class="stat-value"
+>
 
-<div>
-<label>Ölçü vahidi</label>
+0
 
-<select id="unit">
-
-<option>kq</option>
-<option>qram</option>
-<option>ədəd</option>
-<option>litr</option>
-<option>ton</option>
-
-</select>
-
-</div>
-
-<div>
-<label id="personLabel">Kimdən daxil olub?</label>
-<input id="person" placeholder="Şəxs / şirkət">
 </div>
 
 </div>
 
-<div style="margin-top:15px">
 
-<label>Qeyd</label>
+<div class="stat">
 
-<textarea id="note" rows="3"
-placeholder="Əlavə məlumat..."></textarea>
+<div class="stat-title">
+Ümumi giriş
+</div>
+
+<div
+id="totalIn"
+class="stat-value green"
+>
+
+0
 
 </div>
 
-<div class="actions">
+</div>
 
-<button class="primary" onclick="saveMovement()">
-💾 Yadda saxla
+
+<div class="stat">
+
+<div class="stat-title">
+Ümumi çıxış
+</div>
+
+<div
+id="totalOut"
+class="stat-value red"
+>
+
+0
+
+</div>
+
+</div>
+
+
+<div class="stat">
+
+<div class="stat-title">
+Mövcud məhsul
+</div>
+
+<div
+id="activeProducts"
+class="stat-value orange"
+>
+
+0
+
+</div>
+
+</div>
+
+
+</div>
+
+
+<button
+class="refresh"
+onclick="renderWarehouse()"
+>
+
+🔄 Yenilə
+
 </button>
 
-<button class="danger" onclick="clearForm()">
-Təmizlə
-</button>
 
-</div>
+<div
+class="table-wrap"
+style="margin-top:20px"
+>
 
-</div>
-
-<div class="panel">
-
-<h2 id="tableTitle">📥 Giriş tarixçəsi</h2>
-
-<div class="table-wrap">
 
 <table>
+
 
 <thead>
 
 <tr>
 
-<th>Tarix</th>
-<th>Anbar</th>
-<th>Məhsul</th>
-<th>Miqdar</th>
-<th>Kimdən</th>
-<th>Qeyd</th>
+<th>
+Məhsul
+</th>
+
+<th>
+Giriş
+</th>
+
+<th>
+Çıxış
+</th>
+
+<th>
+Qalıq
+</th>
+
+<th>
+Ölçü
+</th>
+
+<th>
+Vəziyyət
+</th>
 
 </tr>
 
 </thead>
 
-<tbody id="tableBody"></tbody>
+
+<tbody
+id="warehouseTable"
+>
+</tbody>
+
 
 </table>
 
-</div>
 
 </div>
 
 </div>
+
+
+</div>
+
 
 <script>
 
-let currentType="in";
 
-const today=new Date().toISOString().split("T")[0];
+let currentWarehouse =
+"Yaş anbar";
 
-document.getElementById("date").value=today;
 
+/* =========================
+   MƏLUMATLARI GÖTÜR
+========================= */
 
 function getData(type){
 
-return JSON.parse(
-localStorage.getItem(type==="in"?"stock_in":"stock_out") || "[]"
+    try{
+
+        return JSON.parse(
+            localStorage.getItem(
+                type === "in"
+                ? "stock_in"
+                : "stock_out"
+            ) || "[]"
+        );
+
+    }catch(error){
+
+        console.error(error);
+
+        return [];
+
+    }
+
+}
+
+
+/* =========================
+   VAHİD QRUPU
+========================= */
+
+function normalizeUnit(unit){
+
+    if(
+        unit === "qram" ||
+        unit === "kq" ||
+        unit === "ton"
+    ){
+
+        return "weight";
+
+    }
+
+    if(unit === "ədəd")
+        return "piece";
+
+    if(unit === "litr")
+        return "liter";
+
+    return unit;
+
+}
+
+
+/* =========================
+   ÇƏKİNİ QRAMA ÇEVİR
+========================= */
+
+function toBaseQuantity(
+    quantity,
+    unit
+){
+
+    quantity = Number(quantity);
+
+
+    if(unit === "ton")
+        return quantity * 1000000;
+
+
+    if(unit === "kq")
+        return quantity * 1000;
+
+
+    if(unit === "qram")
+        return quantity;
+
+
+    return quantity;
+
+}
+
+
+/* =========================
+   QRAMI VAHİDƏ ÇEVİR
+========================= */
+
+function fromBaseQuantity(
+    quantity,
+    unit
+){
+
+    if(unit === "ton")
+        return quantity / 1000000;
+
+
+    if(unit === "kq")
+        return quantity / 1000;
+
+
+    if(unit === "qram")
+        return quantity;
+
+
+    return quantity;
+
+}
+
+
+/* =========================
+   FORMAT
+========================= */
+
+function formatNumber(number){
+
+    return Number(number)
+        .toLocaleString(
+            "az-AZ",
+            {
+                maximumFractionDigits:3
+            }
+        );
+
+}
+
+
+/* =========================
+   ANBAR DƏYİŞ
+========================= */
+
+function showWarehouse(
+    warehouse,
+    button
+){
+
+    currentWarehouse =
+        warehouse;
+
+
+    document
+    .querySelectorAll(".tab")
+    .forEach(
+        tab =>
+        tab.classList.remove("active")
+    );
+
+
+    button.classList.add("active");
+
+
+    renderWarehouse();
+
+}
+
+
+/* =========================
+   ANBAR HESABLANMASI
+========================= */
+
+function calculateWarehouse(){
+
+    const inputs =
+        getData("in");
+
+    const outputs =
+        getData("out");
+
+
+    const products = {};
+
+
+    /* =========================
+       GİRİŞLƏR
+    ========================= */
+
+    inputs.forEach(item => {
+
+        if(
+            item.warehouse !==
+            currentWarehouse
+        ){
+
+            return;
+
+        }
+
+
+        const name =
+            item.product
+            .trim();
+
+
+        const key =
+            name.toLowerCase();
+
+
+        if(!products[key]){
+
+            products[key] = {
+
+                product:name,
+
+                unit:item.unit,
+
+                unitType:
+                    normalizeUnit(
+                        item.unit
+                    ),
+
+                inputBase:0,
+
+                outputBase:0,
+
+                inputOriginal:0,
+
+                outputOriginal:0
+
+            };
+
+        }
+
+
+        const product =
+            products[key];
+
+
+        if(
+            normalizeUnit(item.unit)
+            !== product.unitType
+        ){
+
+            return;
+
+        }
+
+
+        if(
+            product.unitType ===
+            "weight"
+        ){
+
+            product.inputBase +=
+                toBaseQuantity(
+                    item.quantity,
+                    item.unit
+                );
+
+        }else{
+
+            product.inputBase +=
+                Number(item.quantity);
+
+        }
+
+    });
+
+
+    /* =========================
+       ÇIXIŞLAR
+    ========================= */
+
+    outputs.forEach(item => {
+
+        if(
+            item.warehouse !==
+            currentWarehouse
+        ){
+
+            return;
+
+        }
+
+
+        const name =
+            item.product.trim();
+
+
+        const key =
+            name.toLowerCase();
+
+
+        if(!products[key]){
+
+            products[key] = {
+
+                product:name,
+
+                unit:item.unit,
+
+                unitType:
+                    normalizeUnit(
+                        item.unit
+                    ),
+
+                inputBase:0,
+
+                outputBase:0
+
+            };
+
+        }
+
+
+        const product =
+            products[key];
+
+
+        if(
+            normalizeUnit(item.unit)
+            !== product.unitType
+        ){
+
+            return;
+
+        }
+
+
+        if(
+            product.unitType ===
+            "weight"
+        ){
+
+            product.outputBase +=
+                toBaseQuantity(
+                    item.quantity,
+                    item.unit
+                );
+
+        }else{
+
+            product.outputBase +=
+                Number(item.quantity);
+
+        }
+
+    });
+
+
+    return products;
+
+}
+
+
+/* =========================
+   ƏSAS CƏDVƏL
+========================= */
+
+function renderWarehouse(){
+
+    const table =
+        document
+        .getElementById(
+            "warehouseTable"
+        );
+
+
+    table.innerHTML = "";
+
+
+    const products =
+        calculateWarehouse();
+
+
+    const keys =
+        Object.keys(products);
+
+
+    document
+    .getElementById(
+        "warehouseName"
+    )
+    .innerText =
+        currentWarehouse;
+
+
+    if(keys.length === 0){
+
+        table.innerHTML = `
+
+        <tr>
+
+        <td
+        colspan="6"
+        class="empty"
+        >
+
+        Bu anbarda hələ məhsul yoxdur.
+
+        </td>
+
+        </tr>
+
+        `;
+
+
+        updateStats(
+            products
+        );
+
+        return;
+
+    }
+
+
+    let activeProducts = 0;
+
+
+    keys
+    .sort()
+    .forEach(key => {
+
+        const item =
+            products[key];
+
+
+        let input =
+            item.inputBase;
+
+
+        let output =
+            item.outputBase;
+
+
+        let balance =
+            input - output;
+
+
+        const unit =
+            item.unit;
+
+
+        const displayInput =
+            fromBaseQuantity(
+                input,
+                unit
+            );
+
+
+        const displayOutput =
+            fromBaseQuantity(
+                output,
+                unit
+            );
+
+
+        const displayBalance =
+            fromBaseQuantity(
+                balance,
+                unit
+            );
+
+
+        let status;
+
+
+        if(balance < 0){
+
+            status = `
+
+            <span
+            class="status status-error"
+            >
+
+            ❌ Mənfi qalıq
+
+            </span>
+
+            `;
+
+        }
+
+        else if(balance === 0){
+
+            status = `
+
+            <span
+            class="status status-empty"
+            >
+
+            🔴 Bitib
+
+            </span>
+
+            `;
+
+        }
+
+        else{
+
+            activeProducts++;
+
+
+            status = `
+
+            <span
+            class="status status-normal"
+            >
+
+            🟢 Mövcuddur
+
+            </span>
+
+            `;
+
+        }
+
+
+        const tr =
+            document.createElement("tr");
+
+
+        tr.innerHTML = `
+
+        <td>
+            <strong>
+            ${escapeHTML(item.product)}
+            </strong>
+        </td>
+
+        <td>
+            ${formatNumber(displayInput)}
+            ${escapeHTML(unit)}
+        </td>
+
+        <td>
+            ${formatNumber(displayOutput)}
+            ${escapeHTML(unit)}
+        </td>
+
+        <td
+        class="
+        balance
+        ${
+            balance > 0
+            ? "balance-positive"
+            : balance === 0
+            ? "balance-zero"
+            : "balance-negative"
+        }
+        "
+        >
+
+            ${formatNumber(displayBalance)}
+            ${escapeHTML(unit)}
+
+        </td>
+
+        <td>
+            ${escapeHTML(unit)}
+        </td>
+
+        <td>
+            ${status}
+        </td>
+
+        `;
+
+
+        table.appendChild(tr);
+
+    });
+
+
+    updateStats(
+        products,
+        activeProducts
+    );
+
+}
+
+
+/* =========================
+   STATİSTİKALAR
+========================= */
+
+function updateStats(
+    products,
+    activeProducts = 0
+){
+
+    const keys =
+        Object.keys(products);
+
+
+    let totalIn = 0;
+
+    let totalOut = 0;
+
+
+    keys.forEach(key => {
+
+        const item =
+            products[key];
+
+
+        /*
+        Çəki məhsullarında
+        ton/kq/qram qarışıq ola bilər.
+        Statistika baza vahidində
+        saxlanılır.
+        */
+
+        totalIn +=
+            item.inputBase;
+
+
+        totalOut +=
+            item.outputBase;
+
+    });
+
+
+    document
+    .getElementById(
+        "productCount"
+    )
+    .innerText =
+        keys.length;
+
+
+    document
+    .getElementById(
+        "totalIn"
+    )
+    .innerText =
+        formatNumber(
+            totalIn
+        );
+
+
+    document
+    .getElementById(
+        "totalOut"
+    )
+    .innerText =
+        formatNumber(
+            totalOut
+        );
+
+
+    document
+    .getElementById(
+        "activeProducts"
+    )
+    .innerText =
+        activeProducts;
+
+}
+
+
+/* =========================
+   HTML TƏHLÜKƏSİZLİYİ
+========================= */
+
+function escapeHTML(value){
+
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================
+   BAŞLAT
+========================= */
+
+renderWarehouse();
+
+
+/*
+Başqa səhifədən localStorage
+dəyişərsə, səhifəni yeniləmədən
+məlumatı təzələ.
+*/
+
+window.addEventListener(
+    "storage",
+    renderWarehouse
 );
 
-}
-
-
-function saveData(type,data){
-
-localStorage.setItem(
-type==="in"?"stock_in":"stock_out",
-JSON.stringify(data)
-);
-
-}
-
-
-function setType(type){
-
-currentType=type;
-
-document.getElementById("inTab")
-.classList.toggle("active",type==="in");
-
-document.getElementById("outTab")
-.classList.toggle("active",type==="out");
-
-
-document.getElementById("personLabel").innerText=
-type==="in"
-?"Kimdən daxil olub?"
-:"Kimə verilib?";
-
-
-document.getElementById("tableTitle").innerText=
-type==="in"
-?"📥 Giriş tarixçəsi"
-:"📤 Çıxış tarixçəsi";
-
-
-clearForm();
-
-renderTable();
-
-}
-
-
-function saveMovement(){
-
-const movement={
-
-date:document.getElementById("date").value,
-
-warehouse:document.getElementById("warehouse").value,
-
-product:document.getElementById("product").value.trim(),
-
-quantity:Number(document.getElementById("quantity").value),
-
-unit:document.getElementById("unit").value,
-
-person:document.getElementById("person").value.trim(),
-
-note:document.getElementById("note").value.trim()
-
-};
-
-
-if(!movement.date){
-
-alert("Tarixi seçin.");
-
-return;
-
-}
-
-
-if(!movement.product){
-
-alert("Məhsul adını yazın.");
-
-return;
-
-}
-
-
-if(!movement.quantity || movement.quantity<=0){
-
-alert("Miqdar düzgün daxil edilməyib.");
-
-return;
-
-}
-
-
-let data=getData(currentType);
-
-data.push(movement);
-
-saveData(currentType,data);
-
-alert(
-currentType==="in"
-?"Giriş uğurla yadda saxlanıldı."
-:"Çıxış uğurla yadda saxlanıldı."
-);
-
-clearForm();
-
-renderTable();
-
-}
-
-
-function renderTable(){
-
-const body=document.getElementById("tableBody");
-
-const data=getData(currentType);
-
-body.innerHTML="";
-
-
-if(data.length===0){
-
-body.innerHTML=`
-
-<tr>
-
-<td colspan="6" class="empty">
-
-Hələ məlumat yoxdur.
-
-</td>
-
-</tr>
-
-`;
-
-return;
-
-}
-
-
-data
-.slice()
-.reverse()
-.forEach(item=>{
-
-body.innerHTML+=`
-
-<tr>
-
-<td>${item.date}</td>
-
-<td>${item.warehouse}</td>
-
-<td>${item.product}</td>
-
-<td>${item.quantity} ${item.unit}</td>
-
-<td>${item.person || "-"}</td>
-
-<td>${item.note || "-"}</td>
-
-</tr>
-
-`;
-
-});
-
-}
-
-
-function clearForm(){
-
-document.getElementById("date").value=today;
-
-document.getElementById("product").value="";
-
-document.getElementById("quantity").value="";
-
-document.getElementById("person").value="";
-
-document.getElementById("note").value="";
-
-}
-
-
-renderTable();
 
 </script>
 
+
 </body>
-  </html>
+
+</html>
