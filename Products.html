@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Məhsullar — Şəxsi İstehsalat OS</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    margin:0;
+    background:#f4f6f8;
+    color:#1f2937;
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:20px;
+}
+
+.back{
+    display:inline-block;
+    margin-bottom:20px;
+    color:#111827;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+h1{
+    margin:0 0 6px;
+}
+
+.subtitle{
+    color:#6b7280;
+    margin-bottom:25px;
+}
+
+.panel{
+    background:white;
+    padding:22px;
+    border-radius:15px;
+    margin-bottom:20px;
+    box-shadow:0 3px 12px rgba(0,0,0,.06);
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+label{
+    display:block;
+    font-size:14px;
+    font-weight:bold;
+    margin-bottom:6px;
+}
+
+input,
+select{
+    width:100%;
+    padding:12px;
+    border:1px solid #d1d5db;
+    border-radius:9px;
+    font-size:15px;
+    outline:none;
+}
+
+input:focus,
+select:focus{
+    border-color:#111827;
+}
+
+.actions{
+    display:flex;
+    gap:10px;
+    margin-top:18px;
+}
+
+button{
+    border:0;
+    border-radius:9px;
+    padding:11px 16px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.primary{
+    background:#111827;
+    color:white;
+}
+
+.secondary{
+    background:#e5e7eb;
+    color:#111827;
+}
+
+.edit{
+    background:#e5e7eb;
+    color:#111827;
+    padding:7px 10px;
+}
+
+.delete{
+    background:#fee2e2;
+    color:#991b1b;
+    padding:7px 10px;
+}
+
+.search{
+    margin-bottom:18px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:#f9fafb;
+    border:1px solid #eee;
+    padding:18px;
+    border-radius:12px;
+}
+
+.stat-title{
+    font-size:13px;
+    color:#6b7280;
+    margin-bottom:7px;
+}
+
+.stat-value{
+    font-size:25px;
+    font-weight:bold;
+}
+
+.table-wrap{
+    overflow:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,
+td{
+    padding:13px;
+    text-align:left;
+    border-bottom:1px solid #eee;
+    white-space:nowrap;
+}
+
+th{
+    color:#6b7280;
+    font-size:13px;
+}
+
+.badge{
+    display:inline-block;
+    padding:6px 9px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.badge-normal{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.badge-warning{
+    background:#fef3c7;
+    color:#92400e;
+}
+
+.badge-danger{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.empty{
+    text-align:center;
+    color:#777;
+    padding:30px;
+}
+
+.hidden{
+    display:none;
+}
+
+@media(max-width:750px){
+
+    .container{
+        padding:14px;
+    }
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .actions{
+        flex-direction:column;
+    }
+
+    button{
+        width:100%;
+    }
+}
+</style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+<a href="index.html" class="back">
+← Əsas panelə qayıt
+</a>
+
+<h1>📦 Məhsul bazası</h1>
+
+<p class="subtitle">
+İstehsalatda istifadə olunan bütün məhsulları burada idarə edin.
+</p>
+
+
+<!-- =========================
+     STATİSTİKA
+========================= -->
+
+<div class="stats">
+
+<div class="stat">
+
+<div class="stat-title">
+Ümumi məhsul
+</div>
+
+<div
+id="totalProducts"
+class="stat-value"
+>
+0
+</div>
+
+</div>
+
+
+<div class="stat">
+
+<div class="stat-title">
+Aktiv məhsullar
+</div>
+
+<div
+id="activeProducts"
+class="stat-value"
+>
+0
+</div>
+
+</div>
+
+
+<div class="stat">
+
+<div class="stat-title">
+Anbar sayı
+</div>
+
+<div
+id="warehouseCount"
+class="stat-value"
+>
+0
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =========================
+     MƏHSUL FORMASI
+========================= -->
+
+<div class="panel">
+
+<h2 id="formTitle">
+➕ Yeni məhsul əlavə et
+</h2>
+
+
+<div class="grid">
+
+<div>
+
+<label>
+Məhsul adı *
+</label>
+
+<input
+id="productName"
+type="text"
+placeholder="Məsələn: Mal əti"
+autocomplete="off"
+>
+
+</div>
+
+
+<div>
+
+<label>
+Ölçü vahidi *
+</label>
+
+<select id="unit">
+
+<option value="kq">
+Kiloqram (kq)
+</option>
+
+<option value="qram">
+Qram
+</option>
+
+<option value="ton">
+Ton
+</option>
+
+<option value="ədəd">
+Ədəd
+</option>
+
+<option value="litr">
+Litr
+</option>
+
+</select>
+
+</div>
+
+
+<div>
+
+<label>
+Anbar *
+</label>
+
+<select id="warehouse">
+
+<option value="Yaş anbar">
+Yaş anbar
+</option>
+
+<option value="Quru anbar">
+Quru anbar
+</option>
+
+<option value="Ədviyyat anbarı">
+Ədviyyat anbarı
+</option>
+
+</select>
+
+</div>
+
+
+<div>
+
+<label>
+Minimum qalıq
+</label>
+
+<input
+id="minimumStock"
+type="number"
+step="0.001"
+min="0"
+placeholder="Məsələn: 100"
+>
+
+</div>
+
+</div>
+
+
+<div class="actions">
+
+<button
+class="primary"
+onclick="saveProduct()"
+>
+
+💾 Yadda saxla
+
+</button>
+
+
+<button
+class="secondary"
+onclick="resetForm()"
+>
+
+Təmizlə
+
+</button>
+
+</div>
+
+</div>
+
+
+<!-- =========================
+     MƏHSUL SİYAHISI
+========================= -->
+
+<div class="panel">
+
+<h2>
+📋 Məhsullar
+</h2>
+
+
+<div class="search">
+
+<input
+id="search"
+type="text"
+placeholder="🔎 Məhsul axtar..."
+oninput="renderProducts()"
+>
+
+</div>
+
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+Məhsul
+</th>
+
+<th>
+Ölçü vahidi
+</th>
+
+<th>
+Anbar
+</th>
+
+<th>
+Minimum qalıq
+</th>
+
+<th>
+Vəziyyət
+</th>
+
+<th>
+Əməliyyat
+</th>
+
+</tr>
+
+</thead>
+
+
+<tbody
+id="productTable"
+>
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* ==========================================
+   MƏHSUL BAZASININ AÇARI
+========================================== */
+
+const PRODUCT_KEY = "products";
+
+
+let editingId = null;
+
+
+/* ==========================================
+   MƏHSULLARI GÖTÜR
+========================================== */
+
+function getProducts(){
+
+    try{
+
+        return JSON.parse(
+            localStorage.getItem(
+                PRODUCT_KEY
+            ) || "[]"
+        );
+
+    }catch(error){
+
+        console.error(error);
+
+        return [];
+
+    }
+
+}
+
+
+/* ==========================================
+   MƏHSULLARI YADDA SAXLA
+========================================== */
+
+function saveProducts(products){
+
+    localStorage.setItem(
+        PRODUCT_KEY,
+        JSON.stringify(products)
+    );
+
+}
+
+
+/* ==========================================
+   YENİ ID
+========================================== */
+
+function createId(){
+
+    return Date.now() +
+        "_" +
+        Math.random()
+        .toString(36)
+        .substring(2,9);
+
+}
+
+
+/* ==========================================
+   MƏHSULU YADDA SAXLA
+========================================== */
+
+function saveProduct(){
+
+    const name =
+        document
+        .getElementById("productName")
+        .value
+        .trim();
+
+
+    const unit =
+        document
+        .getElementById("unit")
+        .value;
+
+
+    const warehouse =
+        document
+        .getElementById("warehouse")
+        .value;
+
+
+    const minimum =
+        Number(
+            document
+            .getElementById("minimumStock")
+            .value || 0
+        );
+
+
+    if(!name){
+
+        alert(
+            "❌ Məhsul adını yazın."
+        );
+
+        return;
+
+    }
+
+
+    if(minimum < 0){
+
+        alert(
+            "❌ Minimum qalıq mənfi ola bilməz."
+        );
+
+        return;
+
+    }
+
+
+    const products =
+        getProducts();
+
+
+    /*
+    Eyni adlı məhsulun
+    eyni anbarda təkrar
+    yaradılmasının qarşısını alırıq.
+    */
+
+    const duplicate =
+        products.find(item =>
+
+            item.id !== editingId &&
+
+            item.name
+            .trim()
+            .toLowerCase()
+            === name
+            .toLowerCase() &&
+
+            item.warehouse
+            === warehouse
+
+        );
+
+
+    if(duplicate){
+
+        alert(
+            "⚠️ Bu məhsul artıq həmin anbarda mövcuddur."
+        );
+
+        return;
+
+    }
+
+
+    if(editingId){
+
+        const index =
+            products.findIndex(
+                item =>
+                item.id === editingId
+            );
+
+
+        if(index !== -1){
+
+            products[index] = {
+
+                ...products[index],
+
+                name:name,
+
+                unit:unit,
+
+                warehouse:warehouse,
+
+                minimumStock:minimum,
+
+                updatedAt:
+                    new Date()
+                    .toISOString()
+
+            };
+
+        }
+
+    }else{
+
+        products.push({
+
+            id:createId(),
+
+            name:name,
+
+            unit:unit,
+
+            warehouse:warehouse,
+
+            minimumStock:minimum,
+
+            active:true,
+
+            createdAt:
+                new Date()
+                .toISOString()
+
+        });
+
+    }
+
+
+    saveProducts(products);
+
+
+    alert(
+        editingId
+        ? "✅ Məhsul yeniləndi."
+        : "✅ Məhsul əlavə edildi."
+    );
+
+
+    resetForm();
+
+    renderProducts();
+
+}
+
+
+/* ==========================================
+   REDAKTƏ
+========================================== */
+
+function editProduct(id){
+
+    const products =
+        getProducts();
+
+
+    const product =
+        products.find(
+            item =>
+            item.id === id
+        );
+
+
+    if(!product){
+
+        return;
+
+    }
+
+
+    editingId = id;
+
+
+    document
+    .getElementById("productName")
+    .value =
+        product.name;
+
+
+    document
+    .getElementById("unit")
+    .value =
+        product.unit;
+
+
+    document
+    .getElementById("warehouse")
+    .value =
+        product.warehouse;
+
+
+    document
+    .getElementById("minimumStock")
+    .value =
+        product.minimumStock || 0;
+
+
+    document
+    .getElementById("formTitle")
+    .innerText =
+        "✏️ Məhsulu redaktə et";
+
+
+    window.scrollTo({
+
+        top:0,
+
+        behavior:"smooth"
+
+    });
+
+}
+
+
+/* ==========================================
+   SİL
+========================================== */
+
+function deleteProduct(id){
+
+    const products =
+        getProducts();
+
+
+    const product =
+        products.find(
+            item =>
+            item.id === id
+        );
+
+
+    if(!product){
+
+        return;
+
+    }
+
+
+    const confirmed =
+        confirm(
+
+            "⚠️ Məhsulu silmək istəyirsiniz?\n\n" +
+
+            product.name +
+
+            "\n\n" +
+
+            "Qeyd: Bu əməliyyat məhsul bazasından siləcək."
+
+        );
+
+
+    if(!confirmed){
+
+        return;
+
+    }
+
+
+    const newProducts =
+        products.filter(
+            item =>
+            item.id !== id
+        );
+
+
+    saveProducts(
+        newProducts
+    );
+
+
+    renderProducts();
+
+}
+
+
+/* ==========================================
+   FORMU TƏMİZLƏ
+========================================== */
+
+function resetForm(){
+
+    editingId = null;
+
+
+    document
+    .getElementById("productName")
+    .value = "";
+
+
+    document
+    .getElementById("unit")
+    .value = "kq";
+
+
+    document
+    .getElementById("warehouse")
+    .value = "Yaş anbar";
+
+
+    document
+    .getElementById("minimumStock")
+    .value = "";
+
+
+    document
+    .getElementById("formTitle")
+    .innerText =
+        "➕ Yeni məhsul əlavə et";
+
+}
+
+
+/* ==========================================
+   QALIQ HESABLA
+========================================== */
+
+function getProductBalance(product){
+
+    let inputs = [];
+
+    let outputs = [];
+
+
+    try{
+
+        inputs =
+            JSON.parse(
+                localStorage
+                .getItem("stock_in")
+                || "[]"
+            );
+
+    }catch(e){
+
+        inputs = [];
+
+    }
+
+
+    try{
+
+        outputs =
+            JSON.parse(
+                localStorage
+                .getItem("stock_out")
+                || "[]"
+            );
+
+    }catch(e){
+
+        outputs = [];
+
+    }
+
+
+    const unitType =
+        normalizeUnit(
+            product.unit
+        );
+
+
+    let totalIn = 0;
+
+    let totalOut = 0;
+
+
+    inputs.forEach(item => {
+
+        if(
+
+            item.warehouse
+            === product.warehouse &&
+
+            item.product
+            .trim()
+            .toLowerCase()
+            === product.name
+            .trim()
+            .toLowerCase() &&
+
+            normalizeUnit(
+                item.unit
+            )
+            === unitType
+
+        ){
+
+            totalIn +=
+                toBase(
+                    item.quantity,
+                    item.unit
+                );
+
+        }
+
+    });
+
+
+    outputs.forEach(item => {
+
+        if(
+
+            item.warehouse
+            === product.warehouse &&
+
+            item.product
+            .trim()
+            .toLowerCase()
+            === product.name
+            .trim()
+            .toLowerCase() &&
+
+            normalizeUnit(
+                item.unit
+            )
+            === unitType
+
+        ){
+
+            totalOut +=
+                toBase(
+                    item.quantity,
+                    item.unit
+                );
+
+        }
+
+    });
+
+
+    const balanceBase =
+        totalIn - totalOut;
+
+
+    return fromBase(
+        balanceBase,
+        product.unit
+    );
+
+}
+
+
+/* ==========================================
+   VAHİD QRUPU
+========================================== */
+
+function normalizeUnit(unit){
+
+    if(
+        unit === "ton" ||
+        unit === "kq" ||
+        unit === "qram"
+    ){
+
+        return "weight";
+
+    }
+
+
+    if(unit === "ədəd"){
+
+        return "piece";
+
+    }
+
+
+    if(unit === "litr"){
+
+        return "liter";
+
+    }
+
+
+    return unit;
+
+}
+
+
+/* ==========================================
+   BAZA VAHİD
+========================================== */
+
+function toBase(
+    quantity,
+    unit
+){
+
+    quantity =
+        Number(quantity);
+
+
+    if(unit === "ton"){
+
+        return quantity *
+            1000000;
+
+    }
+
+
+    if(unit === "kq"){
+
+        return quantity *
+            1000;
+
+    }
+
+
+    if(unit === "qram"){
+
+        return quantity;
+
+    }
+
+
+    return quantity;
+
+}
+
+
+/* ==========================================
+   BAZADAN ÇIXIŞ
+========================================== */
+
+function fromBase(
+    quantity,
+    unit
+){
+
+    if(unit === "ton"){
+
+        return quantity /
+            1000000;
+
+    }
+
+
+    if(unit === "kq"){
+
+        return quantity /
+            1000;
+
+    }
+
+
+    if(unit === "qram"){
+
+        return quantity;
+
+    }
+
+
+    return quantity;
+
+}
+
+
+/* ==========================================
+   STATUS
+========================================== */
+
+function getStatus(
+    balance,
+    minimum
+){
+
+    if(balance < 0){
+
+        return `
+
+        <span
+        class="badge badge-danger"
+        >
+
+        ❌ Mənfi
+
+        </span>
+
+        `;
+
+    }
+
+
+    if(balance === 0){
+
+        return `
+
+        <span
+        class="badge badge-danger"
+        >
+
+        🔴 Bitib
+
+        </span>
+
+        `;
+
+    }
+
+
+    if(
+        minimum > 0 &&
+        balance <= minimum
+    ){
+
+        return `
+
+        <span
+        class="badge badge-warning"
+        >
+
+        ⚠️ Azalıb
+
+        </span>
+
+        `;
+
+    }
+
+
+    return `
+
+    <span
+    class="badge badge-normal"
+    >
+
+    🟢 Normal
+
+    </span>
+
+    `;
+
+}
+
+
+/* ==========================================
+   MƏHSULLARI GÖSTƏR
+========================================== */
+
+function renderProducts(){
+
+    const products =
+        getProducts();
+
+
+    const search =
+        document
+        .getElementById("search")
+        .value
+        .trim()
+        .toLowerCase();
+
+
+    const table =
+        document
+        .getElementById("productTable");
+
+
+    table.innerHTML = "";
+
+
+    const filtered =
+        products.filter(
+            product =>
+
+            product.name
+            .toLowerCase()
+            .includes(search)
+
+            ||
+
+            product.warehouse
+            .toLowerCase()
+            .includes(search)
+
+        );
+
+
+    if(filtered.length === 0){
+
+        table.innerHTML = `
+
+        <tr>
+
+        <td
+        colspan="6"
+        class="empty"
+        >
+
+        ${
+            products.length === 0
+            ? "Hələ məhsul əlavə edilməyib."
+            : "Axtarışa uyğun məhsul tapılmadı."
+        }
+
+        </td>
+
+        </tr>
+
+        `;
+
+        updateStats(products);
+
+        return;
+
+    }
+
+
+    filtered.forEach(product => {
+
+        const balance =
+            getProductBalance(
+                product
+            );
+
+
+        const status =
+            getStatus(
+                balance,
+                Number(
+                    product.minimumStock || 0
+                )
+            );
+
+
+        const tr =
+            document
+            .createElement("tr");
+
+
+        tr.innerHTML = `
+
+        <td>
+
+        <strong>
+        ${escapeHTML(product.name)}
+        </strong>
+
+        </td>
+
+
+        <td>
+        ${escapeHTML(product.unit)}
+        </td>
+
+
+        <td>
+        ${escapeHTML(product.warehouse)}
+        </td>
+
+
+        <td>
+
+        ${formatNumber(
+            product.minimumStock || 0
+        )}
+
+        ${escapeHTML(product.unit)}
+
+        </td>
+
+
+        <td>
+        ${status}
+        </td>
+
+
+        <td>
+
+        <button
+        class="edit"
+        onclick="editProduct('${product.id}')"
+        >
+
+        ✏️ Redaktə
+
+        </button>
+
+
+        <button
+        class="delete"
+        onclick="deleteProduct('${product.id}')"
+        >
+
+        🗑 Sil
+
+        </button>
+
+        </td>
+
+        `;
+
+
+        table.appendChild(tr);
+
+    });
+
+
+    updateStats(products);
+
+}
+
+
+/* ==========================================
+   STATİSTİKA
+========================================== */
+
+function updateStats(
+    products
+){
+
+    const warehouses =
+        new Set();
+
+
+    let active = 0;
+
+
+    products.forEach(product => {
+
+        warehouses.add(
+            product.warehouse
+        );
+
+
+        if(product.active !== false){
+
+            active++;
+
+        }
+
+    });
+
+
+    document
+    .getElementById(
+        "totalProducts"
+    )
+    .innerText =
+        products.length;
+
+
+    document
+    .getElementById(
+        "activeProducts"
+    )
+    .innerText =
+        active;
+
+
+    document
+    .getElementById(
+        "warehouseCount"
+    )
+    .innerText =
+        warehouses.size;
+
+}
+
+
+/* ==========================================
+   FORMAT
+========================================== */
+
+function formatNumber(
+    number
+){
+
+    return Number(number)
+        .toLocaleString(
+            "az-AZ",
+            {
+                maximumFractionDigits:3
+            }
+        );
+
+}
+
+
+/* ==========================================
+   TƏHLÜKƏSİZ HTML
+========================================== */
+
+function escapeHTML(
+    value
+){
+
+    return String(value)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* ==========================================
+   BAŞLAT
+========================================== */
+
+renderProducts();
+
+
+/*
+Başqa səhifədən localStorage
+dəyişərsə məhsul siyahısını yenilə.
+*/
+
+window.addEventListener(
+    "storage",
+    renderProducts
+);
+
+</script>
+
+</body>
+  </html>
