@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Məhsul hərəkətləri — Şəxsi İstehsalat OS</title>
+<title>Məhsul Hərəkətləri — Şəxsi İstehsalat OS</title>
 
 <style>
 *{
@@ -19,7 +19,7 @@ body{
 }
 
 .container{
-    max-width:1100px;
+    max-width:1150px;
     margin:auto;
     padding:20px;
 }
@@ -52,9 +52,9 @@ h1{
     padding:14px;
     border:0;
     border-radius:10px;
+    background:#e5e7eb;
     cursor:pointer;
     font-weight:bold;
-    background:#e5e7eb;
 }
 
 .tab.active{
@@ -64,10 +64,10 @@ h1{
 
 .panel{
     background:white;
-    border-radius:14px;
     padding:22px;
-    box-shadow:0 3px 12px rgba(0,0,0,.06);
+    border-radius:15px;
     margin-bottom:20px;
+    box-shadow:0 3px 12px rgba(0,0,0,.06);
 }
 
 .grid{
@@ -89,24 +89,63 @@ textarea{
     width:100%;
     padding:12px;
     border:1px solid #d1d5db;
-    border-radius:8px;
+    border-radius:9px;
     font-size:15px;
+    outline:none;
 }
 
-textarea{
-    resize:vertical;
+input:focus,
+select:focus,
+textarea:focus{
+    border-color:#111827;
+}
+
+select:disabled{
+    background:#f3f4f6;
+    color:#6b7280;
+}
+
+.balance-box{
+    margin-top:18px;
+    padding:16px;
+    border-radius:10px;
+    background:#f9fafb;
+    border:1px solid #e5e7eb;
+    display:none;
+}
+
+.balance-box.show{
+    display:block;
+}
+
+.balance-number{
+    font-size:24px;
+    font-weight:bold;
+    margin-top:5px;
+}
+
+.balance-ok{
+    color:#15803d;
+}
+
+.balance-warning{
+    color:#b45309;
+}
+
+.balance-danger{
+    color:#b91c1c;
 }
 
 .actions{
-    margin-top:18px;
     display:flex;
     gap:10px;
+    margin-top:18px;
 }
 
 button{
     border:0;
-    border-radius:8px;
-    padding:12px 18px;
+    border-radius:9px;
+    padding:12px 17px;
     cursor:pointer;
     font-weight:bold;
 }
@@ -116,36 +155,15 @@ button{
     color:white;
 }
 
-.danger{
+.secondary{
+    background:#e5e7eb;
+    color:#111827;
+}
+
+.delete{
     background:#fee2e2;
     color:#991b1b;
-}
-
-.balance-box{
-    margin-top:15px;
-    padding:15px;
-    border-radius:10px;
-    background:#f3f4f6;
-    display:none;
-}
-
-.balance-box.show{
-    display:block;
-}
-
-.balance-ok{
-    color:#15803d;
-    font-weight:bold;
-}
-
-.balance-warning{
-    color:#b45309;
-    font-weight:bold;
-}
-
-.balance-danger{
-    color:#b91c1c;
-    font-weight:bold;
+    padding:7px 10px;
 }
 
 .table-wrap{
@@ -159,8 +177,8 @@ table{
 
 th,
 td{
+    padding:13px;
     text-align:left;
-    padding:12px;
     border-bottom:1px solid #eee;
     white-space:nowrap;
 }
@@ -173,13 +191,20 @@ th{
 .empty{
     text-align:center;
     color:#777;
-    padding:25px;
+    padding:30px;
 }
 
-.delete-btn{
-    background:#fee2e2;
-    color:#991b1b;
-    padding:7px 10px;
+.notice{
+    padding:13px;
+    border-radius:9px;
+    background:#fff7ed;
+    color:#9a3412;
+    margin-bottom:18px;
+    display:none;
+}
+
+.notice.show{
+    display:block;
 }
 
 @media(max-width:700px){
@@ -192,16 +217,16 @@ th{
         grid-template-columns:1fr;
     }
 
-    .actions{
-        flex-direction:column;
-    }
-
     .tabs{
         flex-direction:column;
     }
 
-    table{
-        font-size:13px;
+    .actions{
+        flex-direction:column;
+    }
+
+    button{
+        width:100%;
     }
 }
 </style>
@@ -211,44 +236,62 @@ th{
 
 <div class="container">
 
-<a class="back" href="index.html">
+<a href="index.html" class="back">
 ← Əsas panelə qayıt
 </a>
 
 <h1>📦 Məhsul hərəkətləri</h1>
 
 <p class="subtitle">
-Anbara daxil olan və anbardan çıxan məhsulları idarə edin.
+Məhsulların anbara giriş və anbardan çıxış əməliyyatları.
 </p>
+
+
+<!-- GİRİŞ / ÇIXIŞ -->
 
 <div class="tabs">
 
-<button id="inTab"
+<button
+id="inTab"
 class="tab active"
-onclick="setType('in')">
-
+onclick="setType('in')"
+>
 📥 Giriş
-
 </button>
 
-<button id="outTab"
+<button
+id="outTab"
 class="tab"
-onclick="setType('out')">
-
+onclick="setType('out')"
+>
 📤 Çıxış
-
 </button>
 
 </div>
 
 
+<div
+id="productNotice"
+class="notice"
+>
+⚠️ Əvvəlcə <strong>products.html</strong> bölməsindən məhsul yaradın.
+</div>
+
+
+<!-- FORM -->
+
 <div class="panel">
 
 <div class="grid">
 
+
+<!-- TARİX -->
+
 <div>
 
-<label>Tarix</label>
+<label>
+Tarix *
+</label>
 
 <input
 id="date"
@@ -258,22 +301,21 @@ type="date"
 </div>
 
 
+<!-- MƏHSUL -->
+
 <div>
 
-<label>Anbar</label>
+<label>
+Məhsul *
+</label>
 
-<select id="warehouse">
+<select
+id="product"
+onchange="productChanged()"
+>
 
-<option value="Yaş anbar">
-Yaş anbar
-</option>
-
-<option value="Quru anbar">
-Quru anbar
-</option>
-
-<option value="Ədviyyat anbarı">
-Ədviyyat anbarı
+<option value="">
+-- Məhsul seçin --
 </option>
 
 </select>
@@ -281,22 +323,53 @@ Quru anbar
 </div>
 
 
+<!-- ANBAR -->
+
 <div>
 
-<label>Məhsul</label>
+<label>
+Anbar
+</label>
+
+<select
+id="warehouse"
+disabled
+>
+
+<option value="">
+Məhsul seçin
+</option>
+
+</select>
+
+</div>
+
+
+<!-- VAHİD -->
+
+<div>
+
+<label>
+Ölçü vahidi
+</label>
 
 <input
-id="product"
-placeholder="Məsələn: Mal əti"
-autocomplete="off"
+id="unit"
+type="text"
+readonly
+placeholder="Avtomatik"
 >
 
 </div>
 
 
+<!-- MİQDAR -->
+
 <div>
 
-<label>Miqdar</label>
+<label>
+Miqdar *
+</label>
 
 <input
 id="quantity"
@@ -304,31 +377,13 @@ type="number"
 step="0.001"
 min="0"
 placeholder="Məsələn: 500"
+oninput="showBalance()"
 >
 
 </div>
 
 
-<div>
-
-<label>Ölçü vahidi</label>
-
-<select id="unit">
-
-<option value="kq">kq</option>
-
-<option value="qram">qram</option>
-
-<option value="ton">ton</option>
-
-<option value="ədəd">ədəd</option>
-
-<option value="litr">litr</option>
-
-</select>
-
-</div>
-
+<!-- KİMDƏN / KİMƏ -->
 
 <div>
 
@@ -338,6 +393,7 @@ Kimdən daxil olub?
 
 <input
 id="person"
+type="text"
 placeholder="Şəxs / şirkət"
 >
 
@@ -346,19 +402,39 @@ placeholder="Şəxs / şirkət"
 </div>
 
 
+<!-- QALIQ -->
+
 <div
 id="balanceBox"
 class="balance-box"
 >
 
-<span id="balanceText"></span>
+<div>
+Cari qalıq
+</div>
+
+<div
+id="balanceNumber"
+class="balance-number"
+>
+0
+</div>
+
+<div
+id="balanceDetails"
+>
+</div>
 
 </div>
 
 
+<!-- QEYD -->
+
 <div style="margin-top:15px">
 
-<label>Qeyd</label>
+<label>
+Qeyd
+</label>
 
 <textarea
 id="note"
@@ -375,25 +451,22 @@ placeholder="Əlavə məlumat..."
 class="primary"
 onclick="saveMovement()"
 >
-
 💾 Yadda saxla
-
 </button>
-
 
 <button
-class="danger"
+class="secondary"
 onclick="clearForm()"
 >
-
 Təmizlə
-
 </button>
 
 </div>
 
 </div>
 
+
+<!-- TARİXÇƏ -->
 
 <div class="panel">
 
@@ -410,24 +483,21 @@ Təmizlə
 <tr>
 
 <th>Tarix</th>
-
-<th>Anbar</th>
-
 <th>Məhsul</th>
-
+<th>Anbar</th>
 <th>Miqdar</th>
-
 <th>Kimdən / Kimə</th>
-
 <th>Qeyd</th>
-
 <th>Əməliyyat</th>
 
 </tr>
 
 </thead>
 
-<tbody id="tableBody"></tbody>
+<tbody
+id="tableBody"
+>
+</tbody>
 
 </table>
 
@@ -440,28 +510,42 @@ Təmizlə
 
 <script>
 
+/* =====================================================
+   SİSTEM
+===================================================== */
+
+const PRODUCTS_KEY = "products";
+
+const STOCK_IN_KEY = "stock_in";
+
+const STOCK_OUT_KEY = "stock_out";
+
+
 let currentType = "in";
 
 
 const today =
-new Date().toISOString().split("T")[0];
+new Date()
+.toISOString()
+.split("T")[0];
 
-document.getElementById("date").value = today;
+
+document
+.getElementById("date")
+.value = today;
 
 
-/* =========================
-   MƏLUMAT FUNKSİYALARI
-========================= */
+/* =====================================================
+   MƏHSULLARI GÖTÜR
+===================================================== */
 
-function getData(type){
+function getProducts(){
 
     try{
 
         return JSON.parse(
             localStorage.getItem(
-                type === "in"
-                ? "stock_in"
-                : "stock_out"
+                PRODUCTS_KEY
             ) || "[]"
         );
 
@@ -476,106 +560,384 @@ function getData(type){
 }
 
 
-function saveData(type,data){
+/* =====================================================
+   STOCK MƏLUMATLARI
+===================================================== */
+
+function getStock(type){
+
+    try{
+
+        return JSON.parse(
+
+            localStorage.getItem(
+
+                type === "in"
+                ? STOCK_IN_KEY
+                : STOCK_OUT_KEY
+
+            ) || "[]"
+
+        );
+
+    }catch(error){
+
+        console.error(error);
+
+        return [];
+
+    }
+
+}
+
+
+function saveStock(type,data){
 
     localStorage.setItem(
+
         type === "in"
-        ? "stock_in"
-        : "stock_out",
+        ? STOCK_IN_KEY
+        : STOCK_OUT_KEY,
 
         JSON.stringify(data)
+
     );
 
 }
 
 
-/* =========================
-   ÖLÇÜ VAHİDİNİN NORMALİZASİYASI
-========================= */
+/* =====================================================
+   VAHİD QRUPU
+===================================================== */
 
 function normalizeUnit(unit){
 
-    if(unit === "qram")
+    if(
+        unit === "qram" ||
+        unit === "kq" ||
+        unit === "ton"
+    ){
+
         return "weight";
 
-    if(unit === "kq")
-        return "weight";
+    }
 
-    if(unit === "ton")
-        return "weight";
+    if(unit === "ədəd"){
 
-    if(unit === "ədəd")
         return "piece";
 
-    if(unit === "litr")
+    }
+
+    if(unit === "litr"){
+
         return "liter";
+
+    }
 
     return unit;
 
 }
 
 
-/* =========================
-   MİQDARI QRAMA ÇEVİR
-========================= */
+/* =====================================================
+   BAZA MİQDARI
+===================================================== */
 
-function toBaseQuantity(quantity,unit){
+function toBase(quantity,unit){
 
-    quantity = Number(quantity);
+    quantity =
+        Number(quantity);
 
-    if(unit === "ton")
+
+    if(unit === "ton"){
+
         return quantity * 1000000;
 
-    if(unit === "kq")
+    }
+
+    if(unit === "kq"){
+
         return quantity * 1000;
 
-    if(unit === "qram")
+    }
+
+    if(unit === "qram"){
+
         return quantity;
+
+    }
 
     return quantity;
 
 }
 
 
-/* =========================
-   BAZA MİQDARI GÖRÜNTÜ VƏHİDİNƏ ÇEVİR
-========================= */
+/* =====================================================
+   BAZADAN MİQDARA
+===================================================== */
 
-function fromBaseQuantity(quantity,unit){
+function fromBase(quantity,unit){
 
-    if(unit === "ton")
+    if(unit === "ton"){
+
         return quantity / 1000000;
 
-    if(unit === "kq")
+    }
+
+    if(unit === "kq"){
+
         return quantity / 1000;
 
-    if(unit === "qram")
+    }
+
+    if(unit === "qram"){
+
         return quantity;
+
+    }
 
     return quantity;
 
 }
 
 
-/* =========================
-   MƏHSULUN QALIQ HESABLANMASI
-========================= */
+/* =====================================================
+   FORMAT
+===================================================== */
 
-function calculateBalance(
-    warehouse,
-    product,
-    unit
-){
+function formatNumber(number){
 
-    const inputs = getData("in");
+    return Number(number)
+    .toLocaleString(
+        "az-AZ",
+        {
+            maximumFractionDigits:3
+        }
+    );
 
-    const outputs = getData("out");
+}
 
-    const normalizedProduct =
-        product.trim().toLowerCase();
 
-    const unitType =
-        normalizeUnit(unit);
+/* =====================================================
+   MƏHSUL SİYAHISINI YÜKLƏ
+===================================================== */
+
+function loadProducts(){
+
+    const select =
+        document
+        .getElementById("product");
+
+
+    const products =
+        getProducts();
+
+
+    select.innerHTML = `
+
+    <option value="">
+    -- Məhsul seçin --
+    </option>
+
+    `;
+
+
+    /*
+    Yalnız aktiv məhsulları göstəririk.
+    */
+
+    const activeProducts =
+        products.filter(
+            product =>
+            product.active !== false
+        );
+
+
+    activeProducts
+    .sort(
+        (a,b) =>
+        a.name.localeCompare(
+            b.name,
+            "az"
+        )
+    )
+    .forEach(product => {
+
+        const option =
+            document.createElement(
+                "option"
+            );
+
+
+        option.value =
+            product.id;
+
+
+        option.textContent =
+            product.name +
+            " — " +
+            product.warehouse;
+
+
+        select.appendChild(
+            option
+        );
+
+    });
+
+
+    document
+    .getElementById(
+        "productNotice"
+    )
+    .classList.toggle(
+        "show",
+        activeProducts.length === 0
+    );
+
+}
+
+
+/* =====================================================
+   SEÇİLMİŞ MƏHSULU TAP
+===================================================== */
+
+function getSelectedProduct(){
+
+    const id =
+        document
+        .getElementById("product")
+        .value;
+
+
+    if(!id){
+
+        return null;
+
+    }
+
+
+    const products =
+        getProducts();
+
+
+    return products.find(
+        product =>
+        String(product.id)
+        === String(id)
+    ) || null;
+
+}
+
+
+/* =====================================================
+   MƏHSUL SEÇİLDİ
+===================================================== */
+
+function productChanged(){
+
+    const product =
+        getSelectedProduct();
+
+
+    const warehouse =
+        document
+        .getElementById("warehouse");
+
+
+    const unit =
+        document
+        .getElementById("unit");
+
+
+    if(!product){
+
+        warehouse.innerHTML = `
+
+        <option value="">
+        Məhsul seçin
+        </option>
+
+        `;
+
+        warehouse.disabled = true;
+
+        unit.value = "";
+
+        hideBalance();
+
+        return;
+
+    }
+
+
+    warehouse.innerHTML = `
+
+    <option value="${escapeHTML(product.warehouse)}">
+
+    ${escapeHTML(product.warehouse)}
+
+    </option>
+
+    `;
+
+
+    warehouse.value =
+        product.warehouse;
+
+
+    warehouse.disabled =
+        true;
+
+
+    unit.value =
+        product.unit;
+
+
+    showBalance();
+
+}
+
+
+/* =====================================================
+   MƏHSULUN QALIQ HESABI
+===================================================== */
+
+function calculateBalance(product){
+
+    if(!product){
+
+        return {
+
+            balance:0,
+
+            input:0,
+
+            output:0
+
+        };
+
+    }
+
+
+    const inputs =
+        getStock("in");
+
+
+    const outputs =
+        getStock("out");
+
+
+    const productName =
+        product.name
+        .trim()
+        .toLowerCase();
+
+
+    const productUnitType =
+        normalizeUnit(
+            product.unit
+        );
 
 
     let totalIn = 0;
@@ -586,25 +948,25 @@ function calculateBalance(
     inputs.forEach(item => {
 
         if(
-            item.warehouse === warehouse &&
-            item.product.trim().toLowerCase()
-            === normalizedProduct &&
+
+            item.warehouse
+            === product.warehouse &&
+
+            item.product
+            .trim()
+            .toLowerCase()
+            === productName &&
+
             normalizeUnit(item.unit)
-            === unitType
+            === productUnitType
+
         ){
 
-            if(unitType === "weight"){
-
-                totalIn += toBaseQuantity(
+            totalIn +=
+                toBase(
                     item.quantity,
                     item.unit
                 );
-
-            }else{
-
-                totalIn += Number(item.quantity);
-
-            }
 
         }
 
@@ -614,85 +976,94 @@ function calculateBalance(
     outputs.forEach(item => {
 
         if(
-            item.warehouse === warehouse &&
-            item.product.trim().toLowerCase()
-            === normalizedProduct &&
+
+            item.warehouse
+            === product.warehouse &&
+
+            item.product
+            .trim()
+            .toLowerCase()
+            === productName &&
+
             normalizeUnit(item.unit)
-            === unitType
+            === productUnitType
+
         ){
 
-            if(unitType === "weight"){
-
-                totalOut += toBaseQuantity(
+            totalOut +=
+                toBase(
                     item.quantity,
                     item.unit
                 );
-
-            }else{
-
-                totalOut += Number(item.quantity);
-
-            }
 
         }
 
     });
 
 
-    const balanceBase =
+    const balance =
         totalIn - totalOut;
-
-
-    let balance =
-        fromBaseQuantity(
-            balanceBase,
-            unit
-        );
 
 
     return {
 
-        totalIn,
-        totalOut,
-        balance,
-        unitType
+        balance:
+            fromBase(
+                balance,
+                product.unit
+            ),
+
+        input:
+            fromBase(
+                totalIn,
+                product.unit
+            ),
+
+        output:
+            fromBase(
+                totalOut,
+                product.unit
+            )
 
     };
 
 }
 
 
-/* =========================
+/* =====================================================
    QALIQ GÖSTƏR
-========================= */
+===================================================== */
 
-function showCurrentBalance(){
+function showBalance(){
 
     const product =
-        document.getElementById("product")
-        .value.trim();
+        getSelectedProduct();
 
-    const warehouse =
-        document.getElementById("warehouse")
-        .value;
-
-    const unit =
-        document.getElementById("unit")
-        .value;
 
     const box =
-        document.getElementById("balanceBox");
+        document
+        .getElementById(
+            "balanceBox"
+        );
 
-    const text =
-        document.getElementById("balanceText");
+
+    if(!product){
+
+        hideBalance();
+
+        return;
+
+    }
 
 
-    if(
-        currentType !== "out" ||
-        !product
-    ){
+    /*
+    Yalnız çıxış zamanı
+    qalıq göstəririk.
+    */
 
-        box.classList.remove("show");
+    if(currentType !== "out"){
+
+        hideBalance();
 
         return;
 
@@ -701,108 +1072,144 @@ function showCurrentBalance(){
 
     const result =
         calculateBalance(
-            warehouse,
-            product,
-            unit
+            product
         );
 
 
-    box.classList.add("show");
+    const number =
+        document
+        .getElementById(
+            "balanceNumber"
+        );
 
 
-    if(result.balance < 0){
+    const details =
+        document
+        .getElementById(
+            "balanceDetails"
+        );
 
-        text.className =
-            "balance-danger";
 
-        text.innerHTML =
-            "❌ Mənfi qalıq: " +
-            formatNumber(result.balance) +
-            " " + unit;
+    box.classList.add(
+        "show"
+    );
+
+
+    number.innerText =
+        formatNumber(
+            result.balance
+        ) +
+        " " +
+        product.unit;
+
+
+    details.innerHTML =
+
+        "Giriş: <strong>" +
+        formatNumber(
+            result.input
+        ) +
+        " " +
+        escapeHTML(
+            product.unit
+        ) +
+        "</strong> &nbsp; | &nbsp; " +
+
+        "Çıxış: <strong>" +
+        formatNumber(
+            result.output
+        ) +
+        " " +
+        escapeHTML(
+            product.unit
+        ) +
+        "</strong>";
+
+
+    number.className =
+        "balance-number";
+
+
+    if(result.balance <= 0){
+
+        number.classList.add(
+            "balance-danger"
+        );
 
     }
+    else if(
+        product.minimumStock > 0 &&
+        result.balance <=
+        Number(
+            product.minimumStock
+        )
+    ){
 
-    else if(result.balance === 0){
-
-        text.className =
-            "balance-danger";
-
-        text.innerHTML =
-            "🔴 Cari qalıq: 0 " +
-            unit;
+        number.classList.add(
+            "balance-warning"
+        );
 
     }
-
     else{
 
-        text.className =
-            "balance-ok";
-
-        text.innerHTML =
-            "📦 Cari qalıq: " +
-            formatNumber(result.balance) +
-            " " + unit;
+        number.classList.add(
+            "balance-ok"
+        );
 
     }
 
 }
 
 
-/* =========================
-   ÇIXIŞ MƏLUMATI YOXLA
-========================= */
+/* =====================================================
+   QALIQ GİZLƏT
+===================================================== */
 
-function validateOutput(){
+function hideBalance(){
 
-    const warehouse =
-        document.getElementById("warehouse")
-        .value;
+    document
+    .getElementById(
+        "balanceBox"
+    )
+    .classList.remove(
+        "show"
+    );
 
-    const product =
-        document.getElementById("product")
-        .value.trim();
+}
 
-    const quantity =
-        Number(
-            document.getElementById("quantity")
-            .value
-        );
 
-    const unit =
-        document.getElementById("unit")
-        .value;
+/* =====================================================
+   ÇIXIŞIN YOXLAMASI
+===================================================== */
 
+function validateOutput(
+    product,
+    quantity
+){
 
     const result =
         calculateBalance(
-            warehouse,
-            product,
-            unit
+            product
         );
 
 
-    let requested;
-
-
-    if(result.unitType === "weight"){
-
-        requested =
-            toBaseQuantity(
-                quantity,
-                unit
-            );
-
-    }else{
-
-        requested = quantity;
-
-    }
+    const requested =
+        Number(quantity);
 
 
     if(result.balance <= 0){
 
         alert(
-            "❌ Bu məhsul üzrə anbarda qalıq yoxdur!"
+
+            "❌ Çıxış mümkün deyil!\n\n" +
+
+            "Məhsul: " +
+            product.name +
+            "\n" +
+
+            "Cari qalıq: 0 " +
+            product.unit
+
         );
 
         return false;
@@ -810,50 +1217,57 @@ function validateOutput(){
     }
 
 
-    let currentBase;
+    /*
+    Burada eyni vahid istifadə olunur,
+    çünki vahid products.html-dən
+    avtomatik götürülür.
+    */
 
-    if(result.unitType === "weight"){
+    if(
+        requested >
+        result.balance
+    ){
 
-        currentBase =
-            result.balance *
-            (
-                unit === "ton"
-                ? 1000000
-                : unit === "kq"
-                ? 1000
-                : 1
-            );
-
-    }else{
-
-        currentBase =
+        const shortage =
+            requested -
             result.balance;
 
-    }
-
-
-    if(requested > currentBase){
 
         alert(
+
             "❌ Çıxış mümkün deyil!\n\n" +
 
-            "Məhsul: " + product + "\n" +
+            "Məhsul: " +
+            product.name +
+            "\n" +
 
-            "Anbar: " + warehouse + "\n\n" +
+            "Anbar: " +
+            product.warehouse +
+            "\n\n" +
 
             "Cari qalıq: " +
-            formatNumber(result.balance) +
-            " " + unit + "\n\n" +
+            formatNumber(
+                result.balance
+            ) +
+            " " +
+            product.unit +
+            "\n" +
 
             "Çıxış miqdarı: " +
-            formatNumber(quantity) +
-            " " + unit + "\n\n" +
-
-            "Çatışmayan miqdar: " +
             formatNumber(
-                quantity - result.balance
+                requested
             ) +
-            " " + unit
+            " " +
+            product.unit +
+            "\n\n" +
+
+            "Çatışmayan: " +
+            formatNumber(
+                shortage
+            ) +
+            " " +
+            product.unit
+
         );
 
         return false;
@@ -866,17 +1280,20 @@ function validateOutput(){
 }
 
 
-/* =========================
-   GİRİŞ / ÇIXIŞ DƏYİŞ
-========================= */
+/* =====================================================
+   GİRİŞ / ÇIXIŞ
+===================================================== */
 
 function setType(type){
 
-    currentType = type;
+    currentType =
+        type;
 
 
     document
-    .getElementById("inTab")
+    .getElementById(
+        "inTab"
+    )
     .classList.toggle(
         "active",
         type === "in"
@@ -884,7 +1301,9 @@ function setType(type){
 
 
     document
-    .getElementById("outTab")
+    .getElementById(
+        "outTab"
+    )
     .classList.toggle(
         "active",
         type === "out"
@@ -892,16 +1311,22 @@ function setType(type){
 
 
     document
-    .getElementById("personLabel")
+    .getElementById(
+        "personLabel"
+    )
     .innerText =
+
         type === "in"
         ? "Kimdən daxil olub?"
         : "Kimə verilib?";
 
 
     document
-    .getElementById("tableTitle")
+    .getElementById(
+        "tableTitle"
+    )
     .innerText =
+
         type === "in"
         ? "📥 Giriş tarixçəsi"
         : "📤 Çıxış tarixçəsi";
@@ -909,97 +1334,66 @@ function setType(type){
 
     clearForm();
 
+
     renderTable();
 
 }
 
 
-/* =========================
+/* =====================================================
    YADDA SAXLA
-========================= */
+===================================================== */
 
 function saveMovement(){
 
-    const movement = {
+    const product =
+        getSelectedProduct();
 
-        id:
-            Date.now() +
-            "_" +
-            Math.random()
-            .toString(36)
-            .substring(2),
 
-        date:
+    const date =
+        document
+        .getElementById(
+            "date"
+        )
+        .value;
+
+
+    const quantity =
+        Number(
             document
-            .getElementById("date")
-            .value,
-
-        warehouse:
-            document
-            .getElementById("warehouse")
-            .value,
-
-        product:
-            document
-            .getElementById("product")
+            .getElementById(
+                "quantity"
+            )
             .value
-            .trim(),
-
-        quantity:
-            Number(
-                document
-                .getElementById("quantity")
-                .value
-            ),
-
-        unit:
-            document
-            .getElementById("unit")
-            .value,
-
-        person:
-            document
-            .getElementById("person")
-            .value
-            .trim(),
-
-        note:
-            document
-            .getElementById("note")
-            .value
-            .trim(),
-
-        createdAt:
-            new Date().toISOString()
-
-    };
+        );
 
 
-    if(!movement.date){
-
-        alert("Tarixi seçin.");
-
-        return;
-
-    }
-
-
-    if(!movement.product){
-
-        alert("Məhsul adını yazın.");
-
-        return;
-
-    }
+    const person =
+        document
+        .getElementById(
+            "person"
+        )
+        .value
+        .trim();
 
 
-    if(
-        !movement.quantity ||
-        movement.quantity <= 0
-    ){
+    const note =
+        document
+        .getElementById(
+            "note"
+        )
+        .value
+        .trim();
+
+
+    /* =========================
+       YOXLAMALAR
+    ========================= */
+
+    if(!product){
 
         alert(
-            "Miqdar 0-dan böyük olmalıdır."
+            "❌ Məhsul seçin."
         );
 
         return;
@@ -1007,11 +1401,45 @@ function saveMovement(){
     }
 
 
-    /* ÇIXIŞDA QALIQ YOXLAMASI */
+    if(!date){
 
-    if(currentType === "out"){
+        alert(
+            "❌ Tarix seçin."
+        );
 
-        if(!validateOutput()){
+        return;
+
+    }
+
+
+    if(
+        !quantity ||
+        quantity <= 0
+    ){
+
+        alert(
+            "❌ Miqdar 0-dan böyük olmalıdır."
+        );
+
+        return;
+
+    }
+
+
+    /*
+    ÇIXIŞDA QALIQ YOXLAMASI
+    */
+
+    if(
+        currentType === "out"
+    ){
+
+        if(
+            !validateOutput(
+                product,
+                quantity
+            )
+        ){
 
             return;
 
@@ -1020,281 +1448,107 @@ function saveMovement(){
     }
 
 
+    const movement = {
+
+        id:
+            createId(),
+
+        date:
+            date,
+
+        product:
+            product.name,
+
+        productId:
+            product.id,
+
+        warehouse:
+            product.warehouse,
+
+        quantity:
+            quantity,
+
+        unit:
+            product.unit,
+
+        person:
+            person,
+
+        note:
+            note,
+
+        createdAt:
+            new Date()
+            .toISOString()
+
+    };
+
+
     const data =
-        getData(currentType);
+        getStock(
+            currentType
+        );
 
 
-    data.push(movement);
+    data.push(
+        movement
+    );
 
 
-    saveData(
+    saveStock(
         currentType,
         data
     );
 
 
     alert(
+
         currentType === "in"
-        ? "✅ Giriş uğurla yadda saxlanıldı."
-        : "✅ Çıxış uğurla yadda saxlanıldı."
+
+        ? "✅ Məhsul girişi yadda saxlanıldı."
+
+        : "✅ Məhsul çıxışı yadda saxlanıldı."
+
     );
 
 
     clearForm();
 
-    renderTable();
-
-}
-
-
-/* =========================
-   CƏDVƏL
-========================= */
-
-function renderTable(){
-
-    const body =
-        document
-        .getElementById("tableBody");
-
-
-    const data =
-        getData(currentType);
-
-
-    body.innerHTML = "";
-
-
-    if(data.length === 0){
-
-        body.innerHTML = `
-
-        <tr>
-
-        <td
-        colspan="7"
-        class="empty"
-        >
-
-        Hələ məlumat yoxdur.
-
-        </td>
-
-        </tr>
-
-        `;
-
-        return;
-
-    }
-
-
-    data
-    .slice()
-    .reverse()
-    .forEach(item => {
-
-        const tr =
-            document.createElement("tr");
-
-
-        tr.innerHTML = `
-
-        <td>${escapeHTML(item.date)}</td>
-
-        <td>${escapeHTML(item.warehouse)}</td>
-
-        <td>${escapeHTML(item.product)}</td>
-
-        <td>
-            ${formatNumber(item.quantity)}
-            ${escapeHTML(item.unit)}
-        </td>
-
-        <td>
-            ${escapeHTML(item.person || "-")}
-        </td>
-
-        <td>
-            ${escapeHTML(item.note || "-")}
-        </td>
-
-        <td>
-
-            <button
-            class="delete-btn"
-            onclick="deleteMovement('${item.id || ""}')"
-            >
-
-            🗑 Sil
-
-            </button>
-
-        </td>
-
-        `;
-
-
-        body.appendChild(tr);
-
-    });
-
-}
-
-
-/* =========================
-   SİLMƏ
-========================= */
-
-function deleteMovement(id){
-
-    if(!id){
-
-        alert(
-            "Bu köhnə məlumat üçün silmə identifikatoru yoxdur."
-        );
-
-        return;
-
-    }
-
-
-    if(
-        !confirm(
-            "Bu əməliyyatı silmək istəyirsiniz?"
-        )
-    ){
-
-        return;
-
-    }
-
-
-    let data =
-        getData(currentType);
-
-
-    data =
-        data.filter(
-            item => item.id !== id
-        );
-
-
-    saveData(
-        currentType,
-        data
-    );
-
 
     renderTable();
 
 }
 
 
-/* =========================
+/* =====================================================
+   ID
+===================================================== */
+
+function createId(){
+
+    return Date.now() +
+        "_" +
+        Math.random()
+        .toString(36)
+        .substring(2,9);
+
+}
+
+
+/* =====================================================
    FORMU TƏMİZLƏ
-========================= */
+===================================================== */
 
 function clearForm(){
 
     document
-    .getElementById("date")
-    .value = today;
+    .getElementById(
+        "date"
+    )
+    .value =
+        today;
 
 
     document
-    .getElementById("product")
-    .value = "";
-
-
-    document
-    .getElementById("quantity")
-    .value = "";
-
-
-    document
-    .getElementById("person")
-    .value = "";
-
-
-    document
-    .getElementById("note")
-    .value = "";
-
-
-    document
-    .getElementById("balanceBox")
-    .classList.remove("show");
-
-}
-
-
-/* =========================
-   FORMAT
-========================= */
-
-function formatNumber(number){
-
-    return Number(number)
-        .toLocaleString(
-            "az-AZ",
-            {
-                maximumFractionDigits:3
-            }
-        );
-
-}
-
-
-/* =========================
-   TƏHLÜKƏSİZ HTML
-========================= */
-
-function escapeHTML(value){
-
-    return String(value)
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-
-}
-
-
-/* =========================
-   CANLI QALIQ
-========================= */
-
-document
-.getElementById("product")
-.addEventListener(
-    "input",
-    showCurrentBalance
-);
-
-
-document
-.getElementById("warehouse")
-.addEventListener(
-    "change",
-    showCurrentBalance
-);
-
-
-document
-.getElementById("unit")
-.addEventListener(
-    "change",
-    showCurrentBalance
-);
-
-
-/* BAŞLAT */
-
-renderTable();
-
-</script>
-
-</body>
-    </html>
+    .getElementById(
+        "p
