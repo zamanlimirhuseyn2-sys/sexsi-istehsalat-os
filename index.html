@@ -2,1187 +2,1230 @@
 <html lang="az">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#0f172a">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>İstehsalat OS</title>
 
 <style>
 *{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
 :root{
-    --primary:#2563eb;
-    --primary-dark:#1d4ed8;
-    --dark:#0f172a;
-    --dark2:#1e293b;
-    --bg:#f1f5f9;
-    --card:#ffffff;
-    --text:#0f172a;
-    --muted:#64748b;
-    --border:#e2e8f0;
-    --green:#16a34a;
-    --red:#dc2626;
-    --orange:#ea580c;
-    --purple:#7c3aed;
-    --shadow:0 8px 25px rgba(15,23,42,.07);
+  --blue:#2563eb;
+  --blue2:#1d4ed8;
+  --dark:#0f172a;
+  --dark2:#172554;
+  --bg:#f5f7fb;
+  --card:#ffffff;
+  --text:#172033;
+  --muted:#64748b;
+  --green:#16a34a;
+  --orange:#f97316;
+  --red:#dc2626;
+  --purple:#7c3aed;
+  --border:#e5e7eb;
+  --shadow:0 8px 25px rgba(15,23,42,.07);
 }
 
-html,body{
-    width:100%;
-    min-height:100%;
-    font-family:Arial,Helvetica,sans-serif;
-    background:var(--bg);
-    color:var(--text);
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
 }
 
-button,input,select{
-    font:inherit;
+button,input,select,textarea{
+  font:inherit;
 }
 
 button{
-    cursor:pointer;
+  cursor:pointer;
 }
 
-/* ================= LOGIN ================= */
-
-#loginScreen{
-    min-height:100vh;
-    min-height:100dvh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-    background:
-        radial-gradient(circle at top left,rgba(37,99,235,.35),transparent 35%),
-        radial-gradient(circle at bottom right,rgba(124,58,237,.3),transparent 35%),
-        #0f172a;
-}
-
-.login-box{
-    width:100%;
-    max-width:420px;
-    background:white;
-    border-radius:24px;
-    padding:35px 28px;
-    box-shadow:0 25px 70px rgba(0,0,0,.35);
-}
-
-.login-logo{
-    width:75px;
-    height:75px;
-    margin:0 auto 18px;
-    border-radius:20px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:linear-gradient(135deg,#2563eb,#7c3aed);
-    color:white;
-    font-size:34px;
-    font-weight:900;
-}
-
-.login-title{
-    text-align:center;
-    font-size:27px;
-    font-weight:900;
-    margin-bottom:7px;
-}
-
-.login-subtitle{
-    text-align:center;
-    color:var(--muted);
-    font-size:14px;
-    margin-bottom:28px;
-}
-
-.login-group{
-    margin-bottom:16px;
-}
-
-.login-group label{
-    display:block;
-    font-size:13px;
-    font-weight:700;
-    margin-bottom:7px;
-}
-
-.login-input-wrap{
-    position:relative;
-}
-
-.login-input{
-    width:100%;
-    height:50px;
-    border:1px solid var(--border);
-    border-radius:12px;
-    padding:0 15px;
-    outline:none;
-    transition:.2s;
-}
-
-.login-input:focus{
-    border-color:var(--primary);
-    box-shadow:0 0 0 3px rgba(37,99,235,.12);
-}
-
-.show-password{
-    position:absolute;
-    right:10px;
-    top:50%;
-    transform:translateY(-50%);
-    border:0;
-    background:none;
-    color:var(--muted);
-    padding:7px;
-}
-
-.login-btn{
-    width:100%;
-    height:52px;
-    border:0;
-    border-radius:13px;
-    background:linear-gradient(135deg,#2563eb,#1d4ed8);
-    color:white;
-    font-size:16px;
-    font-weight:800;
-    margin-top:7px;
-    box-shadow:0 8px 18px rgba(37,99,235,.25);
-}
-
-.login-btn:active{
-    transform:scale(.98);
-}
-
-.login-error{
-    display:none;
-    background:#fee2e2;
-    color:#991b1b;
-    border:1px solid #fecaca;
-    padding:11px 13px;
-    border-radius:10px;
-    margin-bottom:15px;
-    font-size:13px;
-    font-weight:600;
-}
-
-.login-info{
-    text-align:center;
-    color:#94a3b8;
-    font-size:12px;
-    margin-top:20px;
-}
-
-/* ================= APP ================= */
-
-#app{
-    display:none;
-    min-height:100vh;
-}
-
-.app-layout{
-    display:flex;
-    min-height:100vh;
+.app{
+  display:flex;
+  min-height:100vh;
 }
 
 /* SIDEBAR */
 
 .sidebar{
-    width:250px;
-    flex-shrink:0;
-    background:linear-gradient(180deg,#0f172a,#111827);
-    color:white;
-    position:fixed;
-    left:0;
-    top:0;
-    bottom:0;
-    z-index:1000;
-    display:flex;
-    flex-direction:column;
-    overflow-y:auto;
+  width:250px;
+  background:linear-gradient(180deg,#0f172a,#172554);
+  color:white;
+  position:fixed;
+  left:0;
+  top:0;
+  bottom:0;
+  z-index:1000;
+  padding:20px 14px;
+  overflow-y:auto;
 }
 
-.brand{
-    height:78px;
-    display:flex;
-    align-items:center;
-    gap:12px;
-    padding:0 20px;
-    border-bottom:1px solid rgba(255,255,255,.08);
+.logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:8px 10px 24px;
+  border-bottom:1px solid rgba(255,255,255,.1);
+  margin-bottom:18px;
 }
 
-.brand-icon{
-    width:40px;
-    height:40px;
-    border-radius:12px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:linear-gradient(135deg,#2563eb,#7c3aed);
-    font-weight:900;
-    font-size:18px;
+.logo-icon{
+  width:43px;
+  height:43px;
+  border-radius:13px;
+  background:#2563eb;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:23px;
 }
 
-.brand-text{
-    font-weight:900;
-    font-size:18px;
+.logo strong{
+  font-size:18px;
 }
 
-.brand-text small{
-    display:block;
-    font-size:10px;
-    font-weight:500;
-    color:#94a3b8;
-    margin-top:2px;
+.logo small{
+  display:block;
+  color:#94a3b8;
+  margin-top:3px;
+  font-size:11px;
 }
 
-.nav{
-    padding:18px 12px;
-    flex:1;
+.menu{
+  display:flex;
+  flex-direction:column;
+  gap:5px;
 }
 
-.nav-title{
-    color:#64748b;
-    text-transform:uppercase;
-    font-size:10px;
-    font-weight:800;
-    padding:0 10px 10px;
-    letter-spacing:1px;
+.menu button{
+  width:100%;
+  border:0;
+  background:transparent;
+  color:#cbd5e1;
+  text-align:left;
+  padding:12px 13px;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  transition:.2s;
 }
 
-.nav-btn{
-    width:100%;
-    border:0;
-    background:transparent;
-    color:#cbd5e1;
-    display:flex;
-    align-items:center;
-    gap:12px;
-    padding:13px 12px;
-    border-radius:10px;
-    margin-bottom:5px;
-    text-align:left;
-    font-weight:600;
-    transition:.2s;
+.menu button:hover{
+  background:rgba(255,255,255,.08);
+  color:white;
 }
 
-.nav-btn:hover{
-    background:rgba(255,255,255,.07);
-    color:white;
+.menu button.active{
+  background:#2563eb;
+  color:white;
+  box-shadow:0 5px 15px rgba(37,99,235,.3);
 }
 
-.nav-btn.active{
-    background:linear-gradient(90deg,#2563eb,#1d4ed8);
-    color:white;
-    box-shadow:0 6px 15px rgba(37,99,235,.2);
-}
-
-.nav-icon{
-    width:24px;
-    text-align:center;
-    font-size:18px;
+.menu-icon{
+  width:22px;
+  text-align:center;
+  font-size:18px;
 }
 
 .sidebar-bottom{
-    padding:15px;
-    border-top:1px solid rgba(255,255,255,.08);
+  margin-top:25px;
+  padding-top:18px;
+  border-top:1px solid rgba(255,255,255,.1);
 }
 
-.user-mini{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    margin-bottom:12px;
-}
-
-.avatar{
-    width:38px;
-    height:38px;
-    border-radius:50%;
-    background:#334155;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-weight:800;
-}
-
-.user-name{
-    font-size:13px;
-    font-weight:700;
-}
-
-.user-role{
-    color:#94a3b8;
-    font-size:11px;
-    margin-top:2px;
-}
-
-.logout-btn{
-    width:100%;
-    border:1px solid rgba(255,255,255,.1);
-    background:#1e293b;
-    color:#fca5a5;
-    border-radius:9px;
-    padding:10px;
-    font-weight:700;
-}
-
-.logout-btn:hover{
-    background:#3f1d24;
+.theme-btn{
+  background:rgba(255,255,255,.07);
+  border:0;
+  color:#cbd5e1;
+  width:100%;
+  padding:11px;
+  border-radius:10px;
 }
 
 /* MAIN */
 
 .main{
-    margin-left:250px;
-    width:calc(100% - 250px);
-    min-height:100vh;
+  margin-left:250px;
+  width:calc(100% - 250px);
+  min-height:100vh;
 }
 
 .topbar{
-    height:78px;
-    background:white;
-    border-bottom:1px solid var(--border);
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 28px;
-    position:sticky;
-    top:0;
-    z-index:900;
+  height:72px;
+  background:white;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 28px;
+  position:sticky;
+  top:0;
+  z-index:500;
 }
 
-.page-title{
-    font-size:23px;
-    font-weight:900;
-}
-
-.page-subtitle{
-    color:var(--muted);
-    font-size:12px;
-    margin-top:4px;
-}
-
-.topbar-right{
-    display:flex;
-    align-items:center;
-    gap:10px;
-}
-
-.date-badge{
-    background:#f8fafc;
-    border:1px solid var(--border);
-    padding:9px 12px;
-    border-radius:10px;
-    color:var(--muted);
-    font-size:12px;
+.top-left{
+  display:flex;
+  align-items:center;
+  gap:15px;
 }
 
 .mobile-menu{
-    display:none;
-    border:0;
-    background:#f1f5f9;
-    width:40px;
-    height:40px;
-    border-radius:10px;
-    font-size:20px;
+  display:none;
+  border:0;
+  background:#f1f5f9;
+  width:42px;
+  height:42px;
+  border-radius:10px;
+  font-size:20px;
+}
+
+.top-title{
+  font-size:20px;
+  font-weight:700;
+}
+
+.top-sub{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:3px;
+}
+
+.system-btn{
+  background:#f8fafc;
+  border:1px solid var(--border);
+  padding:9px 14px;
+  border-radius:10px;
+  color:#334155;
 }
 
 .content{
-    padding:28px;
+  padding:28px;
+  max-width:1500px;
+  margin:auto;
 }
 
-/* PAGES */
+/* PAGE HEADER */
 
-.page{
-    display:none;
+.page-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:24px;
+  gap:15px;
 }
 
-.page.active{
-    display:block;
+.page-head h1{
+  font-size:28px;
 }
 
-/* DASHBOARD */
-
-.welcome{
-    background:linear-gradient(135deg,#1d4ed8,#4f46e5);
-    color:white;
-    border-radius:18px;
-    padding:25px;
-    margin-bottom:22px;
-    box-shadow:0 12px 25px rgba(37,99,235,.16);
+.page-head p{
+  color:var(--muted);
+  margin-top:5px;
 }
 
-.welcome h2{
-    font-size:24px;
-    margin-bottom:6px;
+.primary{
+  border:0;
+  background:var(--blue);
+  color:white;
+  padding:11px 17px;
+  border-radius:10px;
+  font-weight:600;
 }
 
-.welcome p{
-    opacity:.85;
-    font-size:13px;
+.primary:hover{
+  background:var(--blue2);
 }
 
-.stats-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:16px;
-    margin-bottom:24px;
+.success{
+  background:var(--green);
 }
 
-.stat{
-    background:white;
-    border:1px solid var(--border);
-    border-radius:16px;
-    padding:20px;
-    box-shadow:var(--shadow);
+.danger{
+  background:var(--red);
 }
 
-.stat-top{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:15px;
-}
-
-.stat-icon{
-    width:42px;
-    height:42px;
-    border-radius:12px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:20px;
-}
-
-.blue{
-    background:#dbeafe;
-    color:#1d4ed8;
-}
-
-.green{
-    background:#dcfce7;
-    color:#15803d;
-}
-
-.orange{
-    background:#ffedd5;
-    color:#c2410c;
-}
-
-.purple{
-    background:#ede9fe;
-    color:#6d28d9;
-}
-
-.stat-label{
-    color:var(--muted);
-    font-size:12px;
-    font-weight:700;
-}
-
-.stat-value{
-    font-size:24px;
-    font-weight:900;
-}
-
-.stat-small{
-    color:#94a3b8;
-    font-size:11px;
-    margin-top:5px;
+.warning{
+  background:var(--orange);
 }
 
 /* CARDS */
 
-.card{
-    background:white;
-    border:1px solid var(--border);
-    border-radius:16px;
-    box-shadow:var(--shadow);
-    margin-bottom:20px;
-    overflow:hidden;
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+  margin-bottom:22px;
 }
 
-.card-header{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:10px;
-    padding:18px 20px;
-    border-bottom:1px solid var(--border);
+.stat{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:20px;
+  box-shadow:var(--shadow);
+  display:flex;
+  gap:15px;
+  align-items:center;
+}
+
+.stat-icon{
+  width:52px;
+  height:52px;
+  border-radius:14px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:24px;
+}
+
+.i-blue{background:#dbeafe;color:#2563eb}
+.i-green{background:#dcfce7;color:#16a34a}
+.i-orange{background:#ffedd5;color:#f97316}
+.i-purple{background:#ede9fe;color:#7c3aed}
+
+.stat-label{
+  color:var(--muted);
+  font-size:13px;
+}
+
+.stat-value{
+  font-size:25px;
+  font-weight:700;
+  margin-top:5px;
+}
+
+.stat-note{
+  color:#94a3b8;
+  font-size:11px;
+  margin-top:3px;
+}
+
+/* DASHBOARD */
+
+.dashboard-grid{
+  display:grid;
+  grid-template-columns:1.4fr 1fr;
+  gap:20px;
+}
+
+.card{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:16px;
+  box-shadow:var(--shadow);
+  padding:20px;
 }
 
 .card-title{
-    font-size:16px;
-    font-weight:800;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:18px;
 }
 
-.card-body{
-    padding:20px;
+.card-title h3{
+  font-size:17px;
 }
 
-/* GRID */
-
-.two-col{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:20px;
+.link-btn{
+  border:0;
+  background:none;
+  color:var(--blue);
+  font-size:13px;
 }
 
-/* FORM */
-
-.form-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:15px;
+.operation{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:13px 0;
+  border-bottom:1px solid #f1f5f9;
 }
 
-.form-group{
-    display:flex;
-    flex-direction:column;
-    gap:7px;
+.operation:last-child{
+  border-bottom:0;
 }
 
-.form-group.full{
-    grid-column:1/-1;
+.op-left{
+  display:flex;
+  align-items:center;
+  gap:12px;
 }
 
-.form-group label{
-    font-size:12px;
-    font-weight:800;
-    color:#475569;
+.op-icon{
+  width:40px;
+  height:40px;
+  border-radius:11px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-.form-control{
-    width:100%;
-    height:45px;
-    border:1px solid var(--border);
-    border-radius:9px;
-    padding:0 12px;
-    outline:none;
-    background:white;
+.op-title{
+  font-weight:600;
+  font-size:14px;
 }
 
-.form-control:focus{
-    border-color:var(--primary);
-    box-shadow:0 0 0 3px rgba(37,99,235,.1);
+.op-info{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:4px;
 }
 
-textarea.form-control{
-    height:90px;
-    padding-top:11px;
-    resize:vertical;
+.money{
+  font-weight:700;
+  font-size:13px;
 }
 
-.btn{
-    border:0;
-    border-radius:9px;
-    padding:11px 16px;
-    font-weight:800;
-    font-size:13px;
+.money.plus{
+  color:var(--green);
 }
 
-.btn-primary{
-    background:var(--primary);
-    color:white;
+.money.minus{
+  color:var(--red);
 }
 
-.btn-primary:hover{
-    background:var(--primary-dark);
+.stock{
+  padding:14px 0;
+  border-bottom:1px solid #f1f5f9;
 }
 
-.btn-success{
-    background:var(--green);
-    color:white;
+.stock:last-child{
+  border-bottom:0;
 }
 
-.btn-danger{
-    background:var(--red);
-    color:white;
+.stock-top{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:7px;
 }
 
-.btn-secondary{
-    background:#e2e8f0;
-    color:#334155;
+.stock-name{
+  font-weight:600;
+  font-size:14px;
 }
 
-.btn-sm{
-    padding:7px 10px;
-    font-size:11px;
+.stock-info{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.progress{
+  width:100%;
+  height:7px;
+  background:#f1f5f9;
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.progress span{
+  display:block;
+  height:100%;
+  background:#ef4444;
+  border-radius:20px;
 }
 
 /* TABLE */
 
+.table-card{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:16px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+
 .table-wrap{
-    width:100%;
-    overflow-x:auto;
+  overflow-x:auto;
 }
 
 table{
-    width:100%;
-    border-collapse:collapse;
-    min-width:600px;
+  width:100%;
+  border-collapse:collapse;
+  min-width:700px;
 }
 
 th{
-    text-align:left;
-    background:#f8fafc;
-    color:#64748b;
-    font-size:11px;
-    text-transform:uppercase;
-    letter-spacing:.3px;
-    padding:12px 15px;
-    border-bottom:1px solid var(--border);
+  background:#f8fafc;
+  color:#64748b;
+  text-align:left;
+  padding:14px 16px;
+  font-size:12px;
+  text-transform:uppercase;
 }
 
 td{
-    padding:13px 15px;
-    border-bottom:1px solid #f1f5f9;
-    font-size:13px;
+  padding:15px 16px;
+  border-top:1px solid #f1f5f9;
+  font-size:14px;
 }
 
-tr:last-child td{
-    border-bottom:0;
+.product-name{
+  font-weight:600;
+}
+
+.low{
+  color:var(--red);
+  font-weight:700;
 }
 
 .badge{
-    display:inline-flex;
-    align-items:center;
-    border-radius:20px;
-    padding:5px 9px;
-    font-size:10px;
-    font-weight:800;
+  display:inline-block;
+  padding:5px 8px;
+  border-radius:7px;
+  font-size:11px;
+  font-weight:700;
 }
 
 .badge-green{
-    background:#dcfce7;
-    color:#15803d;
+  background:#dcfce7;
+  color:#15803d;
 }
 
 .badge-red{
-    background:#fee2e2;
-    color:#b91c1c;
+  background:#fee2e2;
+  color:#b91c1c;
 }
 
 .badge-blue{
-    background:#dbeafe;
-    color:#1d4ed8;
-}
-
-.empty{
-    text-align:center;
-    padding:35px 20px;
-    color:#94a3b8;
-}
-
-.empty-icon{
-    font-size:35px;
-    margin-bottom:8px;
-}
-
-/* ACTIONS */
-
-.actions{
-    display:flex;
-    gap:7px;
-    flex-wrap:wrap;
+  background:#dbeafe;
+  color:#1d4ed8;
 }
 
 /* SEARCH */
 
-.toolbar{
-    display:flex;
-    justify-content:space-between;
-    gap:12px;
-    margin-bottom:15px;
+.search-row{
+  display:flex;
+  gap:10px;
+  margin-bottom:18px;
 }
 
 .search{
-    max-width:300px;
+  flex:1;
+  position:relative;
+}
+
+.search input{
+  width:100%;
+  padding:13px 15px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  outline:none;
+  background:white;
+}
+
+.search input:focus,
+.form-control:focus{
+  border-color:#93c5fd;
+  box-shadow:0 0 0 3px #dbeafe;
+}
+
+/* FORMS */
+
+.form-card{
+  max-width:1000px;
+  background:white;
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:22px;
+  box-shadow:var(--shadow);
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+
+.field.full{
+  grid-column:1/-1;
+}
+
+.field label{
+  font-size:13px;
+  font-weight:600;
+  color:#334155;
+}
+
+.form-control{
+  width:100%;
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:12px;
+  outline:none;
+  background:white;
+}
+
+textarea.form-control{
+  min-height:90px;
+  resize:vertical;
+}
+
+.form-footer{
+  margin-top:20px;
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+}
+
+/* TWO COLUMNS */
+
+.two-col{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+
+/* EMPTY */
+
+.empty{
+  text-align:center;
+  padding:45px 20px;
+  color:var(--muted);
+}
+
+.empty-icon{
+  font-size:40px;
+  margin-bottom:12px;
+}
+
+/* MODAL */
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(15,23,42,.55);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  z-index:2000;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-box{
+  width:100%;
+  max-width:550px;
+  background:white;
+  border-radius:18px;
+  padding:23px;
+  max-height:90vh;
+  overflow:auto;
+}
+
+.modal-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+.close{
+  border:0;
+  background:#f1f5f9;
+  width:35px;
+  height:35px;
+  border-radius:9px;
+  font-size:18px;
 }
 
 /* REPORT */
 
 .report-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:16px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
 }
 
 .report-box{
-    border:1px solid var(--border);
-    border-radius:13px;
-    padding:18px;
-    background:#fff;
+  background:white;
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:22px;
+  box-shadow:var(--shadow);
 }
 
 .report-box h4{
-    color:var(--muted);
-    font-size:12px;
-    margin-bottom:10px;
+  color:var(--muted);
+  font-size:13px;
 }
 
-.report-box strong{
-    font-size:23px;
-}
-
-/* CASH */
-
-.cash-balance{
-    background:linear-gradient(135deg,#15803d,#16a34a);
-    color:white;
-    border-radius:17px;
-    padding:24px;
-    margin-bottom:20px;
-}
-
-.cash-label{
-    opacity:.8;
-    font-size:12px;
-}
-
-.cash-value{
-    font-size:32px;
-    font-weight:900;
-    margin-top:6px;
+.report-number{
+  font-size:27px;
+  font-weight:700;
+  margin-top:10px;
 }
 
 /* TOAST */
 
-#toast{
-    position:fixed;
-    right:25px;
-    bottom:25px;
-    z-index:5000;
-    min-width:250px;
-    max-width:calc(100vw - 40px);
-    background:#0f172a;
-    color:white;
-    padding:14px 17px;
-    border-radius:11px;
-    box-shadow:0 15px 35px rgba(0,0,0,.2);
-    transform:translateY(120px);
-    opacity:0;
-    transition:.3s;
-    font-size:13px;
-    font-weight:700;
+.toast{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  background:#0f172a;
+  color:white;
+  padding:14px 18px;
+  border-radius:10px;
+  display:none;
+  z-index:3000;
+  box-shadow:var(--shadow);
 }
 
-#toast.show{
-    transform:translateY(0);
-    opacity:1;
+.toast.show{
+  display:block;
 }
 
-#toast.success{
-    background:#15803d;
+/* MOBILE */
+
+@media(max-width:1000px){
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .dashboard-grid,
+  .two-col{
+    grid-template-columns:1fr;
+  }
+
+  .form-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .report-grid{
+    grid-template-columns:1fr 1fr;
+  }
 }
 
-#toast.error{
-    background:#b91c1c;
-}
+@media(max-width:700px){
 
-/* MOBILE OVERLAY */
+  .sidebar{
+    transform:translateX(-100%);
+    transition:.25s;
+    width:270px;
+  }
 
-.mobile-overlay{
+  .sidebar.open{
+    transform:translateX(0);
+  }
+
+  .main{
+    margin-left:0;
+    width:100%;
+  }
+
+  .mobile-menu{
+    display:block;
+  }
+
+  .topbar{
+    padding:0 14px;
+    height:64px;
+  }
+
+  .system-btn{
     display:none;
+  }
+
+  .content{
+    padding:18px 13px 30px;
+  }
+
+  .top-title{
+    font-size:17px;
+  }
+
+  .stats{
+    grid-template-columns:1fr 1fr;
+    gap:11px;
+  }
+
+  .stat{
+    padding:14px;
+    border-radius:13px;
+    gap:9px;
+  }
+
+  .stat-icon{
+    width:42px;
+    height:42px;
+    font-size:19px;
+    flex-shrink:0;
+  }
+
+  .stat-label{
+    font-size:11px;
+  }
+
+  .stat-value{
+    font-size:20px;
+  }
+
+  .page-head{
+    align-items:flex-start;
+  }
+
+  .page-head h1{
+    font-size:22px;
+  }
+
+  .page-head .primary{
+    padding:9px 11px;
+    font-size:12px;
+  }
+
+  .card,
+  .form-card{
+    padding:15px;
+  }
+
+  .form-grid{
+    grid-template-columns:1fr;
+  }
+
+  .report-grid{
+    grid-template-columns:1fr;
+  }
+
+  .search-row{
+    flex-direction:column;
+  }
+
+  .operation{
+    align-items:flex-start;
+    gap:10px;
+  }
+
+  .money{
+    white-space:nowrap;
+  }
 }
 
-/* ================= MOBILE ================= */
+/* OVERLAY MOBILE */
 
-@media(max-width:900px){
-
-    .sidebar{
-        transform:translateX(-100%);
-        transition:.25s;
-        width:270px;
-        box-shadow:15px 0 40px rgba(0,0,0,.2);
-    }
-
-    .sidebar.open{
-        transform:translateX(0);
-    }
-
-    .main{
-        margin-left:0;
-        width:100%;
-    }
-
-    .mobile-menu{
-        display:block;
-    }
-
-    .mobile-overlay{
-        position:fixed;
-        inset:0;
-        background:rgba(15,23,42,.5);
-        z-index:950;
-    }
-
-    .mobile-overlay.show{
-        display:block;
-    }
-
-    .topbar{
-        height:70px;
-        padding:0 15px;
-    }
-
-    .page-title{
-        font-size:18px;
-    }
-
-    .page-subtitle{
-        display:none;
-    }
-
-    .date-badge{
-        display:none;
-    }
-
-    .content{
-        padding:15px;
-    }
-
-    .stats-grid{
-        grid-template-columns:repeat(2,1fr);
-        gap:12px;
-    }
-
-    .stat{
-        padding:15px;
-    }
-
-    .stat-value{
-        font-size:20px;
-    }
-
-    .two-col{
-        grid-template-columns:1fr;
-    }
-
-    .report-grid{
-        grid-template-columns:1fr;
-    }
-
-    .welcome{
-        padding:20px;
-    }
-
-    .welcome h2{
-        font-size:20px;
-    }
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.4);
+  z-index:900;
+  display:none;
 }
 
-@media(max-width:600px){
-
-    .login-box{
-        padding:30px 20px;
-        border-radius:20px;
-    }
-
-    .login-title{
-        font-size:23px;
-    }
-
-    .form-grid{
-        grid-template-columns:1fr;
-    }
-
-    .form-group.full{
-        grid-column:auto;
-    }
-
-    .card-header{
-        padding:15px;
-    }
-
-    .card-body{
-        padding:15px;
-    }
-
-    .toolbar{
-        flex-direction:column;
-    }
-
-    .search{
-        max-width:none;
-    }
-
-    .actions{
-        width:100%;
-    }
-
-    .actions .btn{
-        flex:1;
-    }
-
-    .stat-icon{
-        width:35px;
-        height:35px;
-        font-size:17px;
-    }
-
-    .stat-label{
-        font-size:10px;
-    }
-
-    #toast{
-        left:15px;
-        right:15px;
-        bottom:15px;
-        min-width:0;
-    }
+.overlay.show{
+  display:block;
 }
 </style>
 </head>
 
 <body>
 
-<!-- ================= LOGIN ================= -->
+<div class="app">
 
-<section id="loginScreen">
+  <aside class="sidebar" id="sidebar">
 
-    <div class="login-box">
+    <div class="logo">
+      <div class="logo-icon">🏭</div>
+      <div>
+        <strong>İstehsalat OS</strong>
+        <small>İdarəetmə sistemi</small>
+      </div>
+    </div>
 
-        <div class="login-logo">OS</div>
+    <nav class="menu">
 
-        <div class="login-title">İstehsalat OS</div>
+      <button class="active" data-page="dashboard">
+        <span class="menu-icon">🏠</span>
+        <span>Əsas panel</span>
+      </button>
 
-        <div class="login-subtitle">
-            İdarəetmə sisteminə giriş
+      <button data-page="warehouse">
+        <span class="menu-icon">📦</span>
+        <span>Anbar</span>
+      </button>
+
+      <button data-page="entries">
+        <span class="menu-icon">⬇️</span>
+        <span>Girişlər</span>
+      </button>
+
+      <button data-page="exits">
+        <span class="menu-icon">⬆️</span>
+        <span>Çıxışlar</span>
+      </button>
+
+      <button data-page="cash">
+        <span class="menu-icon">💰</span>
+        <span>Kassa</span>
+      </button>
+
+      <button data-page="reports">
+        <span class="menu-icon">📊</span>
+        <span>Hesabatlar</span>
+      </button>
+
+    </nav>
+
+    <div class="sidebar-bottom">
+      <button class="theme-btn" onclick="toggleTheme()">🌙 Dar tema</button>
+    </div>
+
+  </aside>
+
+  <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+  <main class="main">
+
+    <header class="topbar">
+
+      <div class="top-left">
+
+        <button class="mobile-menu" onclick="toggleSidebar()">☰</button>
+
+        <div>
+          <div class="top-title" id="topTitle">Əsas panel</div>
+          <div class="top-sub">İstehsalat və maliyyə idarəetməsi</div>
         </div>
 
-        <div id="loginError" class="login-error">
-            İstifadəçi adı və ya şifrə yanlışdır.
+      </div>
+
+      <button class="system-btn">⚙️ Sistem</button>
+
+    </header>
+
+    <section class="content" id="content"></section>
+
+  </main>
+
+</div>
+
+<!-- MODAL -->
+
+<div class="modal" id="modal">
+
+  <div class="modal-box">
+
+    <div class="modal-head">
+      <h3 id="modalTitle">Əlavə et</h3>
+      <button class="close" onclick="closeModal()">×</button>
+    </div>
+
+    <div id="modalBody"></div>
+
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+
+/* =========================================================
+   DATA
+========================================================= */
+
+let data = JSON.parse(localStorage.getItem("istehsalatOS")) || {
+
+  products:[
+    {id:1,name:"Farş (1800)",qty:50,unit:"kq",price:3.60,min:10},
+    {id:2,name:"Paxlava (1kq)",qty:20,unit:"ədəd",price:12,min:5},
+    {id:3,name:"Un (50kq)",qty:15,unit:"ədəd",price:20,min:5},
+    {id:4,name:"Şəkər (50kq)",qty:8,unit:"ədəd",price:30,min:5},
+    {id:5,name:"Yumurta (ədəd)",qty:5,unit:"ədəd",price:.20,min:20},
+    {id:6,name:"Kərə yağı (kq)",qty:1.2,unit:"kq",price:18,min:5}
+  ],
+
+  entries:[
+    {
+      id:1,
+      product:"Farş (1800)",
+      qty:100,
+      unit:"kq",
+      price:3.60,
+      total:360,
+      date:"02.06.2025 13:15",
+      note:""
+    },
+    {
+      id:2,
+      product:"Paxlava (1kq)",
+      qty:20,
+      unit:"ədəd",
+      price:12,
+      total:240,
+      date:"01.06.2025 12:10",
+      note:""
+    }
+  ],
+
+  exits:[
+    {
+      id:1,
+      product:"Farş (1800)",
+      qty:50,
+      unit:"kq",
+      price:3.60,
+      total:180,
+      date:"02.06.2025 14:30",
+      customer:""
+    },
+    {
+      id:2,
+      product:"Paxlava (1kq)",
+      qty:10,
+      unit:"ədəd",
+      price:12,
+      total:120,
+      date:"01.06.2025 18:45",
+      customer:""
+    }
+  ],
+
+  cash:[
+    {
+      id:1,
+      type:"in",
+      amount:360,
+      note:"Giriş ödənişi",
+      date:"02.06.2025 13:15"
+    },
+    {
+      id:2,
+      type:"out",
+      amount:180,
+      note:"Satış çıxışı",
+      date:"02.06.2025 14:30"
+    }
+  ]
+};
+
+function saveData(){
+  localStorage.setItem("istehsalatOS",JSON.stringify(data));
+}
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function money(value){
+  return Number(value || 0).toFixed(2)+" ₼";
+}
+
+function totalWarehouse(){
+  return data.products.reduce((s,p)=>s+(Number(p.qty)*Number(p.price)),0);
+}
+
+function today(){
+  const d=new Date();
+  return String(d.getDate()).padStart(2,"0")+"."+
+         String(d.getMonth()+1).padStart(2,"0")+"."+
+         d.getFullYear()+" "+
+         String(d.getHours()).padStart(2,"0")+":"+
+         String(d.getMinutes()).padStart(2,"0");
+}
+
+function showToast(text){
+  const t=document.getElementById("toast");
+  t.textContent=text;
+  t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"),2200);
+}
+
+function escapeHtml(text){
+  return String(text ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+const titles={
+  dashboard:"Əsas panel",
+  warehouse:"Anbar",
+  entries:"Girişlər",
+  exits:"Çıxışlar",
+  cash:"Kassa",
+  reports:"Hesabatlar"
+};
+
+document.querySelectorAll(".menu button").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const page=btn.dataset.page;
+
+    document.querySelectorAll(".menu button")
+      .forEach(x=>x.classList.remove("active"));
+
+    btn.classList.add("active");
+
+    document.getElementById("topTitle").textContent=titles[page];
+
+    render(page);
+    closeSidebar();
+  });
+});
+
+function render(page){
+  if(page==="dashboard") renderDashboard();
+  if(page==="warehouse") renderWarehouse();
+  if(page==="entries") renderEntries();
+  if(page==="exits") renderExits();
+  if(page==="cash") renderCash();
+  if(page==="reports") renderReports();
+}
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+function renderDashboard(){
+
+  const low=data.products.filter(p=>Number(p.qty)<Number(p.min));
+
+  let operations=[];
+
+  data.exits.slice(-3).reverse().forEach(x=>{
+    operations.push({
+      type:"exit",
+      product:x.product,
+      qty:x.qty,
+      date:x.date,
+      total:x.total
+    });
+  });
+
+  data.entries.slice(-3).reverse().forEach(x=>{
+    operations.push({
+      type:"entry",
+      product:x.product,
+      qty:x.qty,
+      date:x.date,
+      total:x.total
+    });
+  });
+
+  operations.sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+
+  document.getElementById("content").innerHTML=`
+
+    <div class="page-head">
+      <div>
+        <h1>Əsas panel</h1>
+        <p>Xoş gəldiniz! İstehsalat vəziyyətinizə ümumi baxış.</p>
+      </div>
+    </div>
+
+    <div class="stats">
+
+      <div class="stat">
+        <div class="stat-icon i-blue">📦</div>
+        <div>
+          <div class="stat-label">Anbar məhsulları</div>
+          <div class="stat-value">${data.products.length}</div>
+          <div class="stat-note">Ümumi məhsul sayı</div>
         </div>
+      </div>
 
-        <form id="loginForm">
-
-            <div class="login-group">
-                <label>İstifadəçi adı</label>
-                <input
-                    id="loginUsername"
-                    class="login-input"
-                    type="text"
-                    autocomplete="username"
-                    placeholder="İstifadəçi adını daxil edin"
-                    required
-                >
-            </div>
-
-            <div class="login-group">
-                <label>Şifrə</label>
-
-                <div class="login-input-wrap">
-
-                    <input
-                        id="loginPassword"
-                        class="login-input"
-                        type="password"
-                        autocomplete="current-password"
-                        placeholder="Şifrəni daxil edin"
-                        required
-                    >
-
-                    <button
-                        type="button"
-                        class="show-password"
-                        onclick="togglePassword()"
-                    >👁</button>
-
-                </div>
-            </div>
-
-            <button class="login-btn" type="submit">
-                Sistemə daxil ol
-            </button>
-
-        </form>
-
-        <div class="login-info">
-            Demo giriş: <b>admin</b> / <b>1234</b>
+      <div class="stat">
+        <div class="stat-icon i-green">⬇️</div>
+        <div>
+          <div class="stat-label">Girişlər</div>
+          <div class="stat-value">${data.entries.length}</div>
+          <div class="stat-note">Ümumi giriş sayı</div>
         </div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-icon i-orange">⬆️</div>
+        <div>
+          <div class="stat-label">Çıxışlar</div>
+          <div class="stat-value">${data.exits.length}</div>
+          <div class="stat-note">Ümumi çıxış sayı</div>
+        </div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-icon i-purple">💰</div>
+        <div>
+          <div class="stat-label">Kassa</div>
+          <div class="stat-value">${money(cashBalance())}</div>
+          <div class="stat-note">Cari balans</div>
+        </div>
+      </div>
 
     </div>
 
-</section>
+    <div class="dashboard-grid">
 
+      <div class="card">
 
-<!-- ================= APP ================= -->
+        <div class="card-title">
+          <h3>Son əməliyyatlar</h3>
+          <button class="link-btn" onclick="goPage('entries')">
+            Hamısına bax
+          </button>
+        </div>
 
-<div id="app">
+        ${
+          operations.length===0
+          ? `<div class="empty">
+               <div class="empty-icon">📋</div>
+               Hələ əməliyyat yoxdur.
+             </div>`
+          :
+          operations.slice(0,6).map(o=>`
 
-    <div class="app-layout">
+            <div class="operation">
 
-        <!-- SIDEBAR -->
+              <div class="op-left">
 
-        <aside class="sidebar" id="sidebar">
-
-            <div class="brand">
-
-                <div class="brand-icon">
-                    OS
+                <div class="op-icon ${
+                  o.type==="entry" ? "i-green":"i-orange"
+                }">
+                  ${o.type==="entry" ? "⬇️":"⬆️"}
                 </div>
 
-                <div class="brand-text">
-                    İstehsalat OS
-                    <small>İdarəetmə sistemi</small>
+                <div>
+                  <div class="op-title">
+                    ${o.type==="entry" ? "Giriş":"Çıxış"} — ${escapeHtml(o.product)}
+                  </div>
+
+                  <div class="op-info">
+                    Miqdar: ${o.qty} • ${o.date}
+                  </div>
                 </div>
+
+              </div>
+
+              <div class="money ${o.type==="entry"?"plus":"minus"}">
+                ${o.type==="entry"?"+":"-"}${money(o.total)}
+              </div>
 
             </div>
 
+          `).join("")
+        }
 
-            <nav class="nav">
+      </div>
 
-                <div class="nav-title">
-                    Əsas menyu
-                </div>
+      <div class="card">
 
-                <button
-                    class="nav-btn active"
-                    onclick="openPage('dashboard',this)"
-                >
-                    <span class="nav-icon">🏠</span>
-                    Əsas panel
-                </button>
-
-                <button
-                    class="nav-btn"
-                    onclick="openPage('warehouse',this)"
-                >
-                    <span class="nav-icon">📦</span>
-                    Anbar
-                </button>
-
-                <button
-                    class="nav-btn"
-                    onclick="openPage('income',this)"
-                >
-                    <span class="nav-icon">📥</span>
-                    Girişlər
-                </button>
-
-                <button
-                    class="nav-btn"
-                    onclick="openPage('outcome',this)"
-                >
-                    <span class="nav-icon">📤</span>
-                    Çıxışlar
-                </button>
-
-                <button
-                    class="nav-btn"
-                    onclick="openPage('cash',this)"
-                >
-                    <span class="nav-icon">💰</span>
-                    Kassa
-                </button>
-
-                <button
-                    class="nav-btn"
-                    onclick="openPage('reports',this)"
-                >
-                    <span class="nav-icon">📊</span>
-                    Hesabatlar
-                </button>
-
-            </nav>
-
-
-            <div class="sidebar-bottom">
-
-                <div class="user-mini">
-
-                    <div class="avatar">
-                        A
-                    </div>
-
-                    <div>
-                        <div class="user-name" id="sidebarUser">
-                            Admin
-                        </div>
-
-                        <div class="user-role">
-                            Administrator
-                        </div>
-                    </div>
-
-                </div>
-
-                <button
-                    class="logout-btn"
-                    onclick="logout()"
-                >
-                    🚪 Sistemdən çıx
-                </button>
-
-            </div>
-
-        </aside>
-
-
-        <div
-            class="mobile-overlay"
-            id="mobileOverlay"
-            onclick="closeSidebar()"
-        ></div>
-
-
-        <!-- MAIN -->
-
-        <main class="main">
-
-            <header class="topbar">
-
-                <div style="display:flex;align-items:center;gap:12px;">
-
-                    <button
-                        class="mobile-menu"
-                        onclick="toggleSidebar()"
-                    >
-                        ☰
-                    </button>
-
-                    <div>
-
-                        <div
-                            class="page-title"
-                            id="pageTitle"
-                        >
-                            Əsas panel
-                        </div>
-
-                        <div class="page-subtitle">
-                            İstehsalat və anbar idarəetməsi
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <div class="topbar-right">
-
-                    <div class="date-badge" id="currentDate">
-                    </div>
-
-                </div>
-
-            </header>
-
-
-            <div class="content">
-
-
-                <!-- ================= DASHBOARD ================= -->
-
-                <section
-                    id="dashboard"
-                    class="page active"
-                >
-
-                    <div class="welcome">
-
-     
+        <div class="card-title">
+          <h3>Aşağı stok xəbərdarlıqları</h3>
+          <span class="badge badge-r
