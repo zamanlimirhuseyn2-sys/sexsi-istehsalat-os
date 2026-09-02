@@ -6,27 +6,22 @@
 <title>İstehsalat OS</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
+*{box-sizing:border-box;margin:0;padding:0}
 
 :root{
   --blue:#2563eb;
   --blue2:#1d4ed8;
-  --dark:#0f172a;
-  --dark2:#172554;
+  --navy:#101b3d;
   --bg:#f5f7fb;
-  --card:#ffffff;
+  --card:#fff;
   --text:#172033;
-  --muted:#64748b;
+  --muted:#7b8498;
+  --border:#e8ebf2;
   --green:#16a34a;
   --orange:#f97316;
-  --red:#dc2626;
+  --red:#ef4444;
   --purple:#7c3aed;
-  --border:#e5e7eb;
-  --shadow:0 8px 25px rgba(15,23,42,.07);
+  --shadow:0 8px 25px rgba(25,35,65,.06);
 }
 
 body{
@@ -36,13 +31,7 @@ body{
   min-height:100vh;
 }
 
-button,input,select,textarea{
-  font:inherit;
-}
-
-button{
-  cursor:pointer;
-}
+button,input,select,textarea{font:inherit}
 
 .app{
   display:flex;
@@ -50,38 +39,38 @@ button{
 }
 
 /* SIDEBAR */
-
 .sidebar{
   width:250px;
-  background:linear-gradient(180deg,#0f172a,#172554);
-  color:white;
+  background:var(--navy);
+  color:#fff;
   position:fixed;
   left:0;
   top:0;
   bottom:0;
   z-index:1000;
-  padding:20px 14px;
-  overflow-y:auto;
+  display:flex;
+  flex-direction:column;
+  transition:.25s;
 }
 
 .logo{
+  height:78px;
   display:flex;
   align-items:center;
   gap:12px;
-  padding:8px 10px 24px;
-  border-bottom:1px solid rgba(255,255,255,.1);
-  margin-bottom:18px;
+  padding:0 22px;
+  border-bottom:1px solid rgba(255,255,255,.08);
 }
 
 .logo-icon{
-  width:43px;
-  height:43px;
-  border-radius:13px;
+  width:40px;
+  height:40px;
+  border-radius:12px;
   background:#2563eb;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:23px;
+  font-size:21px;
 }
 
 .logo strong{
@@ -90,65 +79,74 @@ button{
 
 .logo small{
   display:block;
-  color:#94a3b8;
-  margin-top:3px;
+  color:#91a0c5;
   font-size:11px;
+  margin-top:3px;
 }
 
 .menu{
-  display:flex;
-  flex-direction:column;
-  gap:5px;
+  padding:16px 12px;
+  overflow:auto;
+  flex:1;
 }
 
-.menu button{
+.menu-title{
+  color:#64739b;
+  font-size:10px;
+  text-transform:uppercase;
+  padding:8px 12px;
+  letter-spacing:1px;
+}
+
+.nav{
   width:100%;
   border:0;
   background:transparent;
-  color:#cbd5e1;
-  text-align:left;
-  padding:12px 13px;
+  color:#aeb9d3;
+  padding:12px 14px;
   border-radius:10px;
+  margin-bottom:4px;
   display:flex;
   align-items:center;
   gap:12px;
+  cursor:pointer;
+  text-align:left;
+  font-size:14px;
   transition:.2s;
 }
 
-.menu button:hover{
-  background:rgba(255,255,255,.08);
-  color:white;
+.nav:hover{
+  background:rgba(255,255,255,.07);
+  color:#fff;
 }
 
-.menu button.active{
+.nav.active{
   background:#2563eb;
-  color:white;
-  box-shadow:0 5px 15px rgba(37,99,235,.3);
+  color:#fff;
 }
 
-.menu-icon{
+.nav-icon{
   width:22px;
   text-align:center;
-  font-size:18px;
+  font-size:17px;
 }
 
 .sidebar-bottom{
-  margin-top:25px;
-  padding-top:18px;
-  border-top:1px solid rgba(255,255,255,.1);
+  padding:14px 12px;
+  border-top:1px solid rgba(255,255,255,.08);
 }
 
 .theme-btn{
-  background:rgba(255,255,255,.07);
-  border:0;
-  color:#cbd5e1;
   width:100%;
+  border:0;
+  background:rgba(255,255,255,.06);
+  color:#b5c0d9;
   padding:11px;
   border-radius:10px;
+  cursor:pointer;
 }
 
 /* MAIN */
-
 .main{
   margin-left:250px;
   width:calc(100% - 250px);
@@ -156,13 +154,13 @@ button{
 }
 
 .topbar{
-  height:72px;
-  background:white;
+  height:78px;
+  background:#fff;
   border-bottom:1px solid var(--border);
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:0 28px;
+  padding:0 30px;
   position:sticky;
   top:0;
   z-index:500;
@@ -177,84 +175,74 @@ button{
 .mobile-menu{
   display:none;
   border:0;
-  background:#f1f5f9;
-  width:42px;
-  height:42px;
+  background:#f2f5fa;
+  width:40px;
+  height:40px;
   border-radius:10px;
+  cursor:pointer;
   font-size:20px;
 }
 
-.top-title{
-  font-size:20px;
-  font-weight:700;
-}
-
-.top-sub{
-  color:var(--muted);
-  font-size:12px;
-  margin-top:3px;
+.brand-mobile{
+  font-weight:bold;
+  display:none;
 }
 
 .system-btn{
-  background:#f8fafc;
   border:1px solid var(--border);
-  padding:9px 14px;
+  background:#fff;
+  padding:10px 15px;
   border-radius:10px;
-  color:#334155;
+  cursor:pointer;
 }
 
 .content{
   padding:28px;
-  max-width:1500px;
+  max-width:1600px;
   margin:auto;
 }
 
-/* PAGE HEADER */
-
 .page-head{
   display:flex;
-  justify-content:space-between;
   align-items:center;
-  margin-bottom:24px;
-  gap:15px;
+  justify-content:space-between;
+  margin-bottom:25px;
 }
 
-.page-head h1{
-  font-size:28px;
+.page-title{
+  font-size:27px;
+  font-weight:700;
 }
 
-.page-head p{
+.page-subtitle{
   color:var(--muted);
-  margin-top:5px;
+  margin-top:6px;
+  font-size:13px;
 }
 
 .primary{
   border:0;
   background:var(--blue);
-  color:white;
+  color:#fff;
   padding:11px 17px;
   border-radius:10px;
+  cursor:pointer;
   font-weight:600;
 }
 
-.primary:hover{
-  background:var(--blue2);
-}
+.primary:hover{background:var(--blue2)}
 
-.success{
+.green-btn{
   background:var(--green);
+  color:#fff;
+  border:0;
+  padding:12px 18px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:600;
 }
 
-.danger{
-  background:var(--red);
-}
-
-.warning{
-  background:var(--orange);
-}
-
-/* CARDS */
-
+/* DASHBOARD CARDS */
 .stats{
   display:grid;
   grid-template-columns:repeat(4,1fr);
@@ -263,14 +251,14 @@ button{
 }
 
 .stat{
-  background:white;
+  background:var(--card);
   border:1px solid var(--border);
   border-radius:16px;
-  padding:20px;
+  padding:21px;
   box-shadow:var(--shadow);
   display:flex;
-  gap:15px;
   align-items:center;
+  gap:15px;
 }
 
 .stat-icon{
@@ -278,47 +266,47 @@ button{
   height:52px;
   border-radius:14px;
   display:flex;
-  justify-content:center;
   align-items:center;
-  font-size:24px;
+  justify-content:center;
+  font-size:23px;
+  flex:none;
 }
 
-.i-blue{background:#dbeafe;color:#2563eb}
-.i-green{background:#dcfce7;color:#16a34a}
-.i-orange{background:#ffedd5;color:#f97316}
-.i-purple{background:#ede9fe;color:#7c3aed}
+.blue-bg{background:#e9f0ff;color:#2563eb}
+.green-bg{background:#e9f9ef;color:#16a34a}
+.orange-bg{background:#fff1e8;color:#f97316}
+.purple-bg{background:#f1eaff;color:#7c3aed}
 
-.stat-label{
+.stat-name{
   color:var(--muted);
   font-size:13px;
+  margin-bottom:6px;
 }
 
 .stat-value{
   font-size:25px;
   font-weight:700;
-  margin-top:5px;
 }
 
 .stat-note{
-  color:#94a3b8;
+  color:#9aa3b5;
   font-size:11px;
   margin-top:3px;
 }
 
-/* DASHBOARD */
-
+/* GRID */
 .dashboard-grid{
   display:grid;
-  grid-template-columns:1.4fr 1fr;
+  grid-template-columns:1.5fr 1fr;
   gap:20px;
 }
 
 .card{
-  background:white;
+  background:#fff;
   border:1px solid var(--border);
   border-radius:16px;
   box-shadow:var(--shadow);
-  padding:20px;
+  padding:22px;
 }
 
 .card-title{
@@ -332,30 +320,22 @@ button{
   font-size:17px;
 }
 
-.link-btn{
-  border:0;
-  background:none;
+.link{
   color:var(--blue);
   font-size:13px;
+  cursor:pointer;
 }
 
+/* OPERATIONS */
 .operation{
   display:flex;
-  justify-content:space-between;
   align-items:center;
+  gap:13px;
   padding:13px 0;
-  border-bottom:1px solid #f1f5f9;
+  border-bottom:1px solid #f0f2f6;
 }
 
-.operation:last-child{
-  border-bottom:0;
-}
-
-.op-left{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
+.operation:last-child{border-bottom:0}
 
 .op-icon{
   width:40px;
@@ -366,59 +346,48 @@ button{
   justify-content:center;
 }
 
-.op-title{
-  font-weight:600;
+.op-info{flex:1}
+
+.op-name{
   font-size:14px;
+  font-weight:600;
 }
 
-.op-info{
+.op-meta{
   color:var(--muted);
-  font-size:12px;
+  font-size:11px;
   margin-top:4px;
 }
 
-.money{
+.amount{
   font-weight:700;
   font-size:13px;
 }
 
-.money.plus{
-  color:var(--green);
-}
+.amount.in{color:var(--green)}
+.amount.out{color:var(--red)}
 
-.money.minus{
-  color:var(--red);
-}
-
+/* STOCK */
 .stock{
-  padding:14px 0;
-  border-bottom:1px solid #f1f5f9;
+  padding:15px 0;
+  border-bottom:1px solid #f0f2f6;
 }
 
-.stock:last-child{
-  border-bottom:0;
-}
+.stock:last-child{border-bottom:0}
 
-.stock-top{
+.stock-row{
   display:flex;
   justify-content:space-between;
-  margin-bottom:7px;
+  font-size:13px;
+  margin-bottom:9px;
 }
 
-.stock-name{
-  font-weight:600;
-  font-size:14px;
-}
-
-.stock-info{
-  color:var(--muted);
-  font-size:12px;
-}
+.stock-name{font-weight:600}
+.stock-count{color:var(--red)}
 
 .progress{
-  width:100%;
   height:7px;
-  background:#f1f5f9;
+  background:#f0f1f5;
   border-radius:20px;
   overflow:hidden;
 }
@@ -426,43 +395,54 @@ button{
 .progress span{
   display:block;
   height:100%;
-  background:#ef4444;
+  background:var(--red);
   border-radius:20px;
 }
 
 /* TABLE */
-
 .table-card{
-  background:white;
+  background:#fff;
   border:1px solid var(--border);
   border-radius:16px;
   box-shadow:var(--shadow);
   overflow:hidden;
 }
 
-.table-wrap{
-  overflow-x:auto;
+.table-tools{
+  padding:18px;
+  display:flex;
+  gap:10px;
+  border-bottom:1px solid var(--border);
 }
 
-table{
+.search{
+  flex:1;
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:11px 14px;
+  outline:none;
+  background:#fafbfc;
+}
+
+.search:focus{border-color:#8db0ff}
+
+.table{
   width:100%;
   border-collapse:collapse;
-  min-width:700px;
 }
 
-th{
-  background:#f8fafc;
-  color:#64748b;
-  text-align:left;
-  padding:14px 16px;
+.table th{
+  color:#8b94a7;
+  background:#fafbfc;
   font-size:12px;
-  text-transform:uppercase;
+  text-align:left;
+  padding:14px 18px;
 }
 
-td{
-  padding:15px 16px;
-  border-top:1px solid #f1f5f9;
-  font-size:14px;
+.table td{
+  padding:15px 18px;
+  border-top:1px solid #f0f2f6;
+  font-size:13px;
 }
 
 .product-name{
@@ -474,65 +454,17 @@ td{
   font-weight:700;
 }
 
-.badge{
-  display:inline-block;
-  padding:5px 8px;
-  border-radius:7px;
-  font-size:11px;
+.total-row td{
   font-weight:700;
+  font-size:14px;
 }
 
-.badge-green{
-  background:#dcfce7;
-  color:#15803d;
-}
-
-.badge-red{
-  background:#fee2e2;
-  color:#b91c1c;
-}
-
-.badge-blue{
-  background:#dbeafe;
-  color:#1d4ed8;
-}
-
-/* SEARCH */
-
-.search-row{
-  display:flex;
-  gap:10px;
-  margin-bottom:18px;
-}
-
-.search{
-  flex:1;
-  position:relative;
-}
-
-.search input{
-  width:100%;
-  padding:13px 15px;
-  border:1px solid var(--border);
-  border-radius:10px;
-  outline:none;
-  background:white;
-}
-
-.search input:focus,
-.form-control:focus{
-  border-color:#93c5fd;
-  box-shadow:0 0 0 3px #dbeafe;
-}
-
-/* FORMS */
-
+/* FORM */
 .form-card{
-  max-width:1000px;
-  background:white;
+  background:#fff;
   border:1px solid var(--border);
   border-radius:16px;
-  padding:22px;
+  padding:24px;
   box-shadow:var(--shadow);
 }
 
@@ -549,173 +481,162 @@ td{
 }
 
 .field.full{
-  grid-column:1/-1;
+  grid-column:span 2;
 }
 
 .field label{
-  font-size:13px;
+  font-size:12px;
   font-weight:600;
-  color:#334155;
+  color:#626c81;
 }
 
-.form-control{
+.field input,
+.field select,
+.field textarea{
   width:100%;
   border:1px solid var(--border);
   border-radius:10px;
   padding:12px;
   outline:none;
-  background:white;
+  background:#fff;
 }
 
-textarea.form-control{
-  min-height:90px;
+.field textarea{
+  min-height:95px;
   resize:vertical;
 }
 
-.form-footer{
-  margin-top:20px;
+.form-actions{
+  margin-top:22px;
   display:flex;
   justify-content:flex-end;
+}
+
+/* FILTER */
+.filters{
+  display:flex;
   gap:10px;
+  margin-bottom:18px;
 }
 
-/* TWO COLUMNS */
-
-.two-col{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:20px;
+.filters select{
+  border:1px solid var(--border);
+  background:#fff;
+  padding:11px;
+  border-radius:10px;
 }
 
-/* EMPTY */
-
-.empty{
-  text-align:center;
-  padding:45px 20px;
-  color:var(--muted);
-}
-
-.empty-icon{
-  font-size:40px;
-  margin-bottom:12px;
-}
-
-/* MODAL */
-
-.modal{
-  position:fixed;
-  inset:0;
-  background:rgba(15,23,42,.55);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  z-index:2000;
-}
-
-.modal.show{
-  display:flex;
-}
-
-.modal-box{
-  width:100%;
-  max-width:550px;
-  background:white;
-  border-radius:18px;
-  padding:23px;
-  max-height:90vh;
-  overflow:auto;
-}
-
-.modal-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:20px;
-}
-
-.close{
-  border:0;
-  background:#f1f5f9;
-  width:35px;
-  height:35px;
-  border-radius:9px;
-  font-size:18px;
-}
-
-/* REPORT */
-
-.report-grid{
+/* MONEY */
+.money-card{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:18px;
 }
 
-.report-box{
-  background:white;
+.money-box{
+  background:#fff;
   border:1px solid var(--border);
   border-radius:16px;
   padding:22px;
   box-shadow:var(--shadow);
 }
 
-.report-box h4{
+.money-label{
   color:var(--muted);
   font-size:13px;
 }
 
-.report-number{
-  font-size:27px;
-  font-weight:700;
-  margin-top:10px;
+.money-value{
+  font-size:25px;
+  font-weight:bold;
+  margin-top:8px;
 }
 
-/* TOAST */
+/* REPORT */
+.report-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
 
-.toast{
-  position:fixed;
-  right:20px;
-  bottom:20px;
-  background:#0f172a;
-  color:white;
-  padding:14px 18px;
-  border-radius:10px;
+.bar-chart{
+  height:230px;
+  display:flex;
+  align-items:flex-end;
+  gap:14px;
+  padding-top:20px;
+}
+
+.bar{
+  flex:1;
+  background:#2563eb;
+  border-radius:7px 7px 0 0;
+  min-height:20px;
+  position:relative;
+}
+
+.bar small{
+  position:absolute;
+  bottom:-22px;
+  width:100%;
+  text-align:center;
+  color:var(--muted);
+}
+
+/* EMPTY */
+.empty{
+  padding:45px 20px;
+  text-align:center;
+  color:var(--muted);
+}
+
+.empty-icon{
+  font-size:38px;
+  margin-bottom:10px;
+}
+
+/* PAGES */
+.page{display:none}
+.page.active{display:block}
+
+/* OVERLAY */
+.overlay{
   display:none;
-  z-index:3000;
-  box-shadow:var(--shadow);
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  z-index:900;
 }
 
-.toast.show{
-  display:block;
+/* DARK */
+body.dark{
+  --bg:#0f172a;
+  --card:#172033;
+  --text:#edf2ff;
+  --muted:#98a5bd;
+  --border:#28344b;
+}
+
+body.dark .topbar,
+body.dark .table th,
+body.dark .search,
+body.dark .field input,
+body.dark .field select,
+body.dark .field textarea,
+body.dark .system-btn,
+body.dark .filters select{
+  background:#172033;
+  color:#edf2ff;
+}
+
+body.dark .table th{
+  background:#131d30;
 }
 
 /* MOBILE */
-
-@media(max-width:1000px){
-  .stats{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .dashboard-grid,
-  .two-col{
-    grid-template-columns:1fr;
-  }
-
-  .form-grid{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .report-grid{
-    grid-template-columns:1fr 1fr;
-  }
-}
-
-@media(max-width:700px){
-
+@media(max-width:900px){
   .sidebar{
     transform:translateX(-100%);
-    transition:.25s;
-    width:270px;
   }
 
   .sidebar.open{
@@ -731,101 +652,108 @@ textarea.form-control{
     display:block;
   }
 
-  .topbar{
-    padding:0 14px;
-    height:64px;
+  .brand-mobile{
+    display:block;
   }
 
-  .system-btn{
-    display:none;
+  .topbar{
+    padding:0 16px;
+    height:65px;
   }
 
   .content{
-    padding:18px 13px 30px;
-  }
-
-  .top-title{
-    font-size:17px;
+    padding:18px 14px 90px;
   }
 
   .stats{
     grid-template-columns:1fr 1fr;
-    gap:11px;
+    gap:12px;
   }
 
   .stat{
-    padding:14px;
-    border-radius:13px;
-    gap:9px;
+    padding:15px;
   }
 
   .stat-icon{
     width:42px;
     height:42px;
-    font-size:19px;
-    flex-shrink:0;
-  }
-
-  .stat-label{
-    font-size:11px;
+    font-size:18px;
   }
 
   .stat-value{
     font-size:20px;
   }
 
-  .page-head{
-    align-items:flex-start;
+  .dashboard-grid,
+  .report-grid{
+    grid-template-columns:1fr;
   }
 
-  .page-head h1{
+  .page-head{
+    align-items:flex-start;
+    gap:10px;
+  }
+
+  .page-title{
     font-size:22px;
   }
 
-  .page-head .primary{
-    padding:9px 11px;
+  .primary{
+    padding:10px 12px;
     font-size:12px;
   }
 
-  .card,
-  .form-card{
-    padding:15px;
+  .table-card{
+    overflow-x:auto;
+  }
+
+  .table{
+    min-width:650px;
   }
 
   .form-grid{
     grid-template-columns:1fr;
   }
 
-  .report-grid{
+  .field.full{
+    grid-column:auto;
+  }
+
+  .money-card{
     grid-template-columns:1fr;
   }
 
-  .search-row{
+  .filters{
+    flex-wrap:wrap;
+  }
+
+  .overlay.show{
+    display:block;
+  }
+}
+
+@media(max-width:500px){
+  .stats{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .stat{
     flex-direction:column;
+    align-items:flex-start;
+    gap:8px;
+  }
+
+  .system-btn{
+    display:none;
   }
 
   .operation{
     align-items:flex-start;
-    gap:10px;
   }
 
-  .money{
+  .amount{
     white-space:nowrap;
   }
-}
-
-/* OVERLAY MOBILE */
-
-.overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.4);
-  z-index:900;
-  display:none;
-}
-
-.overlay.show{
-  display:block;
 }
 </style>
 </head>
@@ -834,398 +762,406 @@ textarea.form-control{
 
 <div class="app">
 
-  <aside class="sidebar" id="sidebar">
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
 
-    <div class="logo">
-      <div class="logo-icon">🏭</div>
-      <div>
-        <strong>İstehsalat OS</strong>
-        <small>İdarəetmə sistemi</small>
-      </div>
+  <div class="logo">
+    <div class="logo-icon">🏭</div>
+    <div>
+      <strong>İstehsalat OS</strong>
+      <small>İdarəetmə sistemi</small>
     </div>
+  </div>
 
-    <nav class="menu">
+  <div class="menu">
 
-      <button class="active" data-page="dashboard">
-        <span class="menu-icon">🏠</span>
-        <span>Əsas panel</span>
-      </button>
+    <div class="menu-title">Əsas</div>
 
-      <button data-page="warehouse">
-        <span class="menu-icon">📦</span>
-        <span>Anbar</span>
-      </button>
+    <button class="nav active" onclick="showPage('dashboard',this)">
+      <span class="nav-icon">⌂</span>
+      Əsas panel
+    </button>
 
-      <button data-page="entries">
-        <span class="menu-icon">⬇️</span>
-        <span>Girişlər</span>
-      </button>
+    <button class="nav" onclick="showPage('warehouse',this)">
+      <span class="nav-icon">📦</span>
+      Anbar
+    </button>
 
-      <button data-page="exits">
-        <span class="menu-icon">⬆️</span>
-        <span>Çıxışlar</span>
-      </button>
+    <button class="nav" onclick="showPage('entries',this)">
+      <span class="nav-icon">↓</span>
+      Girişlər
+    </button>
 
-      <button data-page="cash">
-        <span class="menu-icon">💰</span>
-        <span>Kassa</span>
-      </button>
+    <button class="nav" onclick="showPage('exits',this)">
+      <span class="nav-icon">↑</span>
+      Çıxışlar
+    </button>
 
-      <button data-page="reports">
-        <span class="menu-icon">📊</span>
-        <span>Hesabatlar</span>
-      </button>
+    <button class="nav" onclick="showPage('cash',this)">
+      <span class="nav-icon">₼</span>
+      Kassa
+    </button>
 
-    </nav>
+    <div class="menu-title">İdarəetmə</div>
 
-    <div class="sidebar-bottom">
-      <button class="theme-btn" onclick="toggleTheme()">🌙 Dar tema</button>
-    </div>
+    <button class="nav" onclick="showPage('calendar',this)">
+      <span class="nav-icon">📅</span>
+      Təqvim
+    </button>
 
-  </aside>
+    <button class="nav" onclick="showPage('customers',this)">
+      <span class="nav-icon">👥</span>
+      Müştərilər
+    </button>
 
-  <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+    <button class="nav" onclick="showPage('suppliers',this)">
+      <span class="nav-icon">🚚</span>
+      Təchizatçılar
+    </button>
 
-  <main class="main">
+    <button class="nav" onclick="showPage('reports',this)">
+      <span class="nav-icon">📊</span>
+      Hesabatlar
+    </button>
 
-    <header class="topbar">
-
-      <div class="top-left">
-
-        <button class="mobile-menu" onclick="toggleSidebar()">☰</button>
-
-        <div>
-          <div class="top-title" id="topTitle">Əsas panel</div>
-          <div class="top-sub">İstehsalat və maliyyə idarəetməsi</div>
-        </div>
-
-      </div>
-
-      <button class="system-btn">⚙️ Sistem</button>
-
-    </header>
-
-    <section class="content" id="content"></section>
-
-  </main>
-
-</div>
-
-<!-- MODAL -->
-
-<div class="modal" id="modal">
-
-  <div class="modal-box">
-
-    <div class="modal-head">
-      <h3 id="modalTitle">Əlavə et</h3>
-      <button class="close" onclick="closeModal()">×</button>
-    </div>
-
-    <div id="modalBody"></div>
+    <button class="nav" onclick="showPage('settings',this)">
+      <span class="nav-icon">⚙</span>
+      Ayarlar
+    </button>
 
   </div>
 
-</div>
+  <div class="sidebar-bottom">
+    <button class="theme-btn" onclick="toggleDark()">
+      🌙 &nbsp; Dar tema
+    </button>
+  </div>
 
-<div class="toast" id="toast"></div>
+</aside>
 
-<script>
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
 
-/* =========================================================
-   DATA
-========================================================= */
+<!-- MAIN -->
+<main class="main">
 
-let data = JSON.parse(localStorage.getItem("istehsalatOS")) || {
+<header class="topbar">
 
-  products:[
-    {id:1,name:"Farş (1800)",qty:50,unit:"kq",price:3.60,min:10},
-    {id:2,name:"Paxlava (1kq)",qty:20,unit:"ədəd",price:12,min:5},
-    {id:3,name:"Un (50kq)",qty:15,unit:"ədəd",price:20,min:5},
-    {id:4,name:"Şəkər (50kq)",qty:8,unit:"ədəd",price:30,min:5},
-    {id:5,name:"Yumurta (ədəd)",qty:5,unit:"ədəd",price:.20,min:20},
-    {id:6,name:"Kərə yağı (kq)",qty:1.2,unit:"kq",price:18,min:5}
-  ],
+  <div class="top-left">
+    <button class="mobile-menu" onclick="openMenu()">☰</button>
+    <div class="brand-mobile">🏭 İstehsalat OS</div>
+  </div>
 
-  entries:[
-    {
-      id:1,
-      product:"Farş (1800)",
-      qty:100,
-      unit:"kq",
-      price:3.60,
-      total:360,
-      date:"02.06.2025 13:15",
-      note:""
-    },
-    {
-      id:2,
-      product:"Paxlava (1kq)",
-      qty:20,
-      unit:"ədəd",
-      price:12,
-      total:240,
-      date:"01.06.2025 12:10",
-      note:""
-    }
-  ],
+  <button class="system-btn">⚙ Sistem</button>
 
-  exits:[
-    {
-      id:1,
-      product:"Farş (1800)",
-      qty:50,
-      unit:"kq",
-      price:3.60,
-      total:180,
-      date:"02.06.2025 14:30",
-      customer:""
-    },
-    {
-      id:2,
-      product:"Paxlava (1kq)",
-      qty:10,
-      unit:"ədəd",
-      price:12,
-      total:120,
-      date:"01.06.2025 18:45",
-      customer:""
-    }
-  ],
+</header>
 
-  cash:[
-    {
-      id:1,
-      type:"in",
-      amount:360,
-      note:"Giriş ödənişi",
-      date:"02.06.2025 13:15"
-    },
-    {
-      id:2,
-      type:"out",
-      amount:180,
-      note:"Satış çıxışı",
-      date:"02.06.2025 14:30"
-    }
-  ]
-};
 
-function saveData(){
-  localStorage.setItem("istehsalatOS",JSON.stringify(data));
-}
+<div class="content">
 
-/* =========================================================
-   HELPERS
-========================================================= */
+<!-- DASHBOARD -->
+<section id="dashboard" class="page active">
 
-function money(value){
-  return Number(value || 0).toFixed(2)+" ₼";
-}
+  <div class="page-head">
+    <div>
+      <div class="page-title">Əsas panel</div>
+      <div class="page-subtitle">Xoş gəldiniz!</div>
+    </div>
+  </div>
 
-function totalWarehouse(){
-  return data.products.reduce((s,p)=>s+(Number(p.qty)*Number(p.price)),0);
-}
+  <div class="stats">
 
-function today(){
-  const d=new Date();
-  return String(d.getDate()).padStart(2,"0")+"."+
-         String(d.getMonth()+1).padStart(2,"0")+"."+
-         d.getFullYear()+" "+
-         String(d.getHours()).padStart(2,"0")+":"+
-         String(d.getMinutes()).padStart(2,"0");
-}
-
-function showToast(text){
-  const t=document.getElementById("toast");
-  t.textContent=text;
-  t.classList.add("show");
-  setTimeout(()=>t.classList.remove("show"),2200);
-}
-
-function escapeHtml(text){
-  return String(text ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-}
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-const titles={
-  dashboard:"Əsas panel",
-  warehouse:"Anbar",
-  entries:"Girişlər",
-  exits:"Çıxışlar",
-  cash:"Kassa",
-  reports:"Hesabatlar"
-};
-
-document.querySelectorAll(".menu button").forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    const page=btn.dataset.page;
-
-    document.querySelectorAll(".menu button")
-      .forEach(x=>x.classList.remove("active"));
-
-    btn.classList.add("active");
-
-    document.getElementById("topTitle").textContent=titles[page];
-
-    render(page);
-    closeSidebar();
-  });
-});
-
-function render(page){
-  if(page==="dashboard") renderDashboard();
-  if(page==="warehouse") renderWarehouse();
-  if(page==="entries") renderEntries();
-  if(page==="exits") renderExits();
-  if(page==="cash") renderCash();
-  if(page==="reports") renderReports();
-}
-
-/* =========================================================
-   DASHBOARD
-========================================================= */
-
-function renderDashboard(){
-
-  const low=data.products.filter(p=>Number(p.qty)<Number(p.min));
-
-  let operations=[];
-
-  data.exits.slice(-3).reverse().forEach(x=>{
-    operations.push({
-      type:"exit",
-      product:x.product,
-      qty:x.qty,
-      date:x.date,
-      total:x.total
-    });
-  });
-
-  data.entries.slice(-3).reverse().forEach(x=>{
-    operations.push({
-      type:"entry",
-      product:x.product,
-      qty:x.qty,
-      date:x.date,
-      total:x.total
-    });
-  });
-
-  operations.sort((a,b)=>String(b.date).localeCompare(String(a.date)));
-
-  document.getElementById("content").innerHTML=`
-
-    <div class="page-head">
+    <div class="stat">
+      <div class="stat-icon blue-bg">📦</div>
       <div>
-        <h1>Əsas panel</h1>
-        <p>Xoş gəldiniz! İstehsalat vəziyyətinizə ümumi baxış.</p>
+        <div class="stat-name">Anbar məhsulları</div>
+        <div class="stat-value" id="productCount">6</div>
+        <div class="stat-note">Ümumi məhsul sayı</div>
       </div>
     </div>
 
-    <div class="stats">
+    <div class="stat">
+      <div class="stat-icon green-bg">↓</div>
+      <div>
+        <div class="stat-name">Girişlər</div>
+        <div class="stat-value" id="entryCount">2</div>
+        <div class="stat-note">Bu ay</div>
+      </div>
+    </div>
 
-      <div class="stat">
-        <div class="stat-icon i-blue">📦</div>
-        <div>
-          <div class="stat-label">Anbar məhsulları</div>
-          <div class="stat-value">${data.products.length}</div>
-          <div class="stat-note">Ümumi məhsul sayı</div>
-        </div>
+    <div class="stat">
+      <div class="stat-icon orange-bg">↑</div>
+      <div>
+        <div class="stat-name">Çıxışlar</div>
+        <div class="stat-value" id="exitCount">2</div>
+        <div class="stat-note">Bu ay</div>
+      </div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-icon purple-bg">₼</div>
+      <div>
+        <div class="stat-name">Kassa</div>
+        <div class="stat-value" id="cashBalance">0.00 ₼</div>
+        <div class="stat-note">Cari balans</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="dashboard-grid">
+
+    <div class="card">
+
+      <div class="card-title">
+        <h3>Son əməliyyatlar</h3>
+        <span class="link" onclick="showPageByName('entries')">Hamısına bax</span>
       </div>
 
-      <div class="stat">
-        <div class="stat-icon i-green">⬇️</div>
-        <div>
-          <div class="stat-label">Girişlər</div>
-          <div class="stat-value">${data.entries.length}</div>
-          <div class="stat-note">Ümumi giriş sayı</div>
+      <div id="recentOperations">
+
+        <div class="operation">
+          <div class="op-icon orange-bg">↑</div>
+          <div class="op-info">
+            <div class="op-name">Çıxış — Farş (1800)</div>
+            <div class="op-meta">Miqdar: 50 • 02.06.2025 14:30</div>
+          </div>
+          <div class="amount out">-180.00 ₼</div>
         </div>
+
+        <div class="operation">
+          <div class="op-icon green-bg">↓</div>
+          <div class="op-info">
+            <div class="op-name">Giriş — Farş (1800)</div>
+            <div class="op-meta">Miqdar: 100 • 02.06.2025 13:15</div>
+          </div>
+          <div class="amount in">+360.00 ₼</div>
+        </div>
+
+        <div class="operation">
+          <div class="op-icon orange-bg">↑</div>
+          <div class="op-info">
+            <div class="op-name">Çıxış — Paxlava (1kq)</div>
+            <div class="op-meta">Miqdar: 10 • 01.06.2025 18:45</div>
+          </div>
+          <div class="amount out">-120.00 ₼</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="card">
+
+      <div class="card-title">
+        <h3>Aşağı stok xəbərdarlıqları</h3>
+        <span class="amount out">2</span>
       </div>
 
-      <div class="stat">
-        <div class="stat-icon i-orange">⬆️</div>
-        <div>
-          <div class="stat-label">Çıxışlar</div>
-          <div class="stat-value">${data.exits.length}</div>
-          <div class="stat-note">Ümumi çıxış sayı</div>
+      <div class="stock">
+        <div class="stock-row">
+          <span class="stock-name">Yumurta (ədəd)</span>
+          <span class="stock-count">5 / 20</span>
         </div>
+        <div class="progress"><span style="width:25%"></span></div>
       </div>
 
-      <div class="stat">
-        <div class="stat-icon i-purple">💰</div>
-        <div>
-          <div class="stat-label">Kassa</div>
-          <div class="stat-value">${money(cashBalance())}</div>
-          <div class="stat-note">Cari balans</div>
+      <div class="stock">
+        <div class="stock-row">
+          <span class="stock-name">Kərə yağı (kq)</span>
+          <span class="stock-count">1.2 / 5</span>
         </div>
+        <div class="progress"><span style="width:24%"></span></div>
       </div>
 
     </div>
 
-    <div class="dashboard-grid">
+  </div>
 
-      <div class="card">
+</section>
 
-        <div class="card-title">
-          <h3>Son əməliyyatlar</h3>
-          <button class="link-btn" onclick="goPage('entries')">
-            Hamısına bax
-          </button>
-        </div>
 
-        ${
-          operations.length===0
-          ? `<div class="empty">
-               <div class="empty-icon">📋</div>
-               Hələ əməliyyat yoxdur.
-             </div>`
-          :
-          operations.slice(0,6).map(o=>`
+<!-- WAREHOUSE -->
+<section id="warehouse" class="page">
 
-            <div class="operation">
+  <div class="page-head">
+    <div>
+      <div class="page-title">Anbar qalığı</div>
+      <div class="page-subtitle">Məhsullar və cari qalıqlar</div>
+    </div>
 
-              <div class="op-left">
+    <button class="primary" onclick="showPageByName('newEntry')">
+      + Yeni məhsul
+    </button>
+  </div>
 
-                <div class="op-icon ${
-                  o.type==="entry" ? "i-green":"i-orange"
-                }">
-                  ${o.type==="entry" ? "⬇️":"⬆️"}
-                </div>
+  <div class="table-card">
 
-                <div>
-                  <div class="op-title">
-                    ${o.type==="entry" ? "Giriş":"Çıxış"} — ${escapeHtml(o.product)}
-                  </div>
+    <div class="table-tools">
+      <input class="search" id="productSearch"
+             placeholder="Məhsul axtar..."
+             oninput="searchProducts()">
+    </div>
 
-                  <div class="op-info">
-                    Miqdar: ${o.qty} • ${o.date}
-                  </div>
-                </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Məhsul</th>
+          <th>Qalıq miqdarı</th>
+          <th>Orta qiymət</th>
+          <th>Məbləğ</th>
+        </tr>
+      </thead>
 
-              </div>
+      <tbody id="productTable">
 
-              <div class="money ${o.type==="entry"?"plus":"minus"}">
-                ${o.type==="entry"?"+":"-"}${money(o.total)}
-              </div>
+        <tr>
+          <td class="product-name">🥩 Farş (1800)</td>
+          <td>50 kq</td>
+          <td>3.60 ₼</td>
+          <td>180.00 ₼</td>
+        </tr>
 
-            </div>
+        <tr>
+          <td class="product-name">🥮 Paxlava (1kq)</td>
+          <td>20 kq</td>
+          <td>12.00 ₼</td>
+          <td>240.00 ₼</td>
+        </tr>
 
-          `).join("")
-        }
+        <tr>
+          <td class="product-name">🌾 Un (50kq)</td>
+          <td>15 ədəd</td>
+          <td>20.00 ₼</td>
+          <td>300.00 ₼</td>
+        </tr>
 
+        <tr>
+          <td class="product-name">🍚 Şəkər (50kq)</td>
+          <td>8 ədəd</td>
+          <td>30.00 ₼</td>
+          <td>240.00 ₼</td>
+        </tr>
+
+        <tr>
+          <td class="product-name">🥚 Yumurta (ədəd)</td>
+          <td class="low">5 ədəd</td>
+          <td>0.20 ₼</td>
+          <td>1.00 ₼</td>
+        </tr>
+
+        <tr>
+          <td class="product-name">🧈 Kərə yağı (kq)</td>
+          <td class="low">1.2 kq</td>
+          <td>18.00 ₼</td>
+          <td>21.60 ₼</td>
+        </tr>
+
+        <tr class="total-row">
+          <td>Cəmi</td>
+          <td></td>
+          <td></td>
+          <td>982.60 ₼</td>
+        </tr>
+
+      </tbody>
+    </table>
+
+  </div>
+
+</section>
+
+
+<!-- NEW ENTRY -->
+<section id="newEntry" class="page">
+
+  <div class="page-head">
+    <div>
+      <div class="page-title">Məhsul girişi</div>
+      <div class="page-subtitle">Anbar → Məhsul girişi</div>
+    </div>
+  </div>
+
+  <div class="form-card">
+
+    <div class="form-grid">
+
+      <div class="field">
+        <label>Məhsul</label>
+        <input id="entryProduct" placeholder="Məhsul seçin və ya ad yazın">
       </div>
 
-      <div class="card">
+      <div class="field">
+        <label>Miqdar</label>
+        <input id="entryQty" type="number" placeholder="Miqdar daxil edin">
+      </div>
 
-        <div class="card-title">
-          <h3>Aşağı stok xəbərdarlıqları</h3>
-          <span class="badge badge-r
+      <div class="field">
+        <label>Vahid qiymət (₼)</label>
+        <input id="entryPrice" type="number" step="0.01" placeholder="0.00">
+      </div>
+
+      <div class="field full">
+        <label>Qeyd</label>
+        <textarea id="entryNote" placeholder="Əlavə qeydlər (opsional)"></textarea>
+      </div>
+
+      <div class="field">
+        <label>Təchizatçı</label>
+        <select id="entrySupplier">
+          <option value="">Təchizatçı seçin</option>
+          <option>ABC MMC</option>
+          <option>Ərzaq Təchizat MMC</option>
+          <option>Digər</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Tarix</label>
+        <input id="entryDate" type="date">
+      </div>
+
+    </div>
+
+    <div class="form-actions">
+      <button class="green-btn" onclick="addEntry()">
+        + Giriş əlavə et
+      </button>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ENTRIES -->
+<section id="entries" class="page">
+
+  <div class="page-head">
+    <div>
+      <div class="page-title">Girişlər</div>
+      <div class="page-subtitle">Anbara daxil olan məhsullar</div>
+    </div>
+
+    <button class="primary" onclick="showPageByName('newEntry')">
+      + Giriş əlavə et
+    </button>
+  </div>
+
+  <div class="table-card">
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Tarix</th>
+          <th>Məhsul</th>
+          <th>Miqdar</th>
+          <th>Qiymət</th>
+          <th>Məbləğ</th>
+        </tr>
+      </thead>
+
+      <tbody id="entriesTable">
+
+        <tr>
+          <td>02.06.2025</td>
+          <td class="product-name">Farş (1800)</td>
+          
